@@ -1,0 +1,16 @@
+/* Toast styling */
+.toast {
+    border: 2px solid #F5F5F5;
+    padding: 16px;
+    background-color: #140D1E;
+    color: #B28EFB;
+    font-family: sans-serif;
+    /* Add any additional styles or adjustments here */
+  }
+  
+  /* Toast animation */
+  .toast.show {
+    opacity: 1;
+  }
+  
+  

@@ -1,0 +1,55 @@
+<div className="bg-background-main  w-full  text-maincolor flex h-screen ">
+
+<div className="flex px-5 p-5  w-full h-full  container mx-auto">
+
+  <div className="px-4 p-5  w-full h-full bg-background ">
+  <span className="  text-4xl text-maincolor "> 
+
+Network
+  </span>
+
+<div className="flex  bg-background text-maincolor py-6 font-normal  text-2xl">
+
+{network}
+
+</div>
+
+<span className="  text-4xl text-maincolor "> 
+
+Currency
+  </span>
+<div className="flex bg-background  text-maincolor py-6 font-normal  text-2xl">
+
+{currency}
+
+
+
+</div>
+
+
+<span className="  text-4xl text-maincolor "> 
+
+Address
+  </span>
+
+<div className="flex bg-background  text-maincolor py-6 font-normal  text-2xl">
+
+
+{address}
+
+
+</div>
+
+
+
+<button
+                          type="submit"
+                          className="  relative  my-6 w-1/2 rounded-full border   h-16 bg-extra-color  text-maincolor border-extra-color  text-md p-2  mb-6 hover:bg-extra-color hover-text-white"
+                        >
+                        Deposit
+                        </button>
+
+  </div>
+  </div>
+          </div>
+          

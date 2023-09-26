@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0px 1000px #006400  inset;
+  box-shadow: 0 0 0px 1000px #006400  inset;
+  transition: background-color 5000s ease-in-out 0s;
+
+  color: white;
+}
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+
+
+
+.accordion {
+  
+  max-width: 400px;
+}
+
+.accordion-item {
+  
+  margin-bottom: 1px;
+
+}
+
+.accordion-toggle {
+  
+  display: block;
+  width: 100%;
+
+  text-align: left;
+  cursor: pointer;
+}
+
+.accordion-content {
+  
+  padding: 10px;
+  display: none;
+}
+
+/* Show the content when the button is clicked */
+.accordion-toggle:focus + .accordion-content {
+  display: block;
+}
