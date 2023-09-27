@@ -45,17 +45,17 @@ const handleDeleteButton = async (ID) =>{
           <table className="relative bg-transparent w-full ">
           <thead className="md:table-header-group w-full border-b border-gray-500">
               <tr>
-              <th className="h-4 font-normal leading-5 text-maincolor px-4 text-left text-lg">
+              <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                 Company  Name
                 </th>
-                <th className="h-4 font-normal leading-5 text-maincolor px-4 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Name
                 </th>
 
-                <th className="h-4 font-normal leading-5 text-maincolor px-4 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Duplicate
                 </th>
-                <th className="h-4 font-normal leading-5 text-maincolor p-10 text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   <div className="flex grid-col-2 gap-2 text-lg">
                     <button
                       onClick={() => handleColumnSort("Price")}
@@ -81,21 +81,21 @@ const handleDeleteButton = async (ID) =>{
                   </div>
                 </th>
 
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg ">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Industry 1
                 </th>
 
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Industry 2
                 </th>
 
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                  Company Linked In
                 </th>
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Country
                 </th>
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Region 
                 </th>
 
