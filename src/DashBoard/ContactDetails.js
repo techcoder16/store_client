@@ -45,7 +45,7 @@ const handleDeleteButton = async (ID) =>{
       <div className="bg-transparent py-7 rounded-lg border-transparent mt-2 w-full h-full ">
         <div className="overflow-x-auto scrollbar scrollbar-thumb-textColor">
           <table className="relative bg-transparent w-full ">
-            <thead className=" md:table-header-group  h-fit lg:w-max xl:w-max 2xl:w-max md:w-max sm:w-max border-b border-gray-500 ">
+          <thead className="md:table-header-group w-full border-b border-gray-500">
               <tr>
                 <th className="h-4 font-normal leading-5 text-maincolor px-4 text-left text-lg">
                   Name
@@ -78,44 +78,44 @@ const handleDeleteButton = async (ID) =>{
                 <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg ">
                   Duplicate
                 </th>
-                <th className="h-4 font-normal leading-5 mx-2 text-maincolor px-4 text-left text-lg ">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Industry 1
                 </th>
 
-                <th className="h-4 font-normal leading-5  text-maincolor px-4 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Industry 2
                 </th>
-                <th className="h-4 font-normal leading-5 text-maincolor px-4 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Employee Count
                 </th>
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Phone Number
                 </th>
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Linked In
                 </th>
 
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   City
                 </th>
 
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Region
                 </th>
 
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Country
                 </th>
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   First Name
                 </th>
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Last Name
                 </th>
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Job Role
                 </th>
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg">
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Email
                 </th>
               </tr>
@@ -125,7 +125,7 @@ const handleDeleteButton = async (ID) =>{
               {currentItems &&
                 currentItems.map((item, index) => (
                   <React.Fragment key={index}>
-                    <tr className="hidden lg:table-row xl:table-row 2xl:table-row">
+                    <tr className=" lg:table-row xl:table-row 2xl:table-row">
                       <td className="px-3 py-7 text-maincolor ">{item.name}</td>
                       <td className="px-3 py-7 text-maincolor">
                         {item.website}

@@ -43,7 +43,7 @@ const handleDeleteButton = async (ID) =>{
       <div className="bg-transparent py-7 rounded-lg border-transparent mt-2 w-full h-full ">
         <div className="overflow-x-auto scrollbar scrollbar-thumb-textColor">
           <table className="relative bg-transparent w-full ">
-            <thead className="hidden md:table-header-group  h-fit lg:w-max xl:w-max 2xl:w-max md:w-max sm:w-max border-b border-gray-500 ">
+          <thead className="md:table-header-group w-full border-b border-gray-500">
               <tr>
               <th className="h-4 font-normal leading-5 text-maincolor px-4 text-left text-lg">
                 Company  Name
