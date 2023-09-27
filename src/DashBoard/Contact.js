@@ -632,7 +632,26 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
                 ></Select>
               </div>
 
-              <div className="md:w-56 ml-0  mt-2 md:mt-0 md:ml-4">
+          
+
+              <div className="md:w-56 ml-0   mt-2  md:mt-0 md:ml-4">
+                <Select
+                  isSearchable={true}
+                  options={optionsElement("industry2")}
+                  placeholder="Select Industry 2" // Set the placeholder text
+                  styles={customStyles}
+                  isMulti={false}
+                  onChange={(selected) => handleSelect("industry2", selected)}
+                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
+                ></Select>
+              </div>
+            </div>
+          </div>
+
+
+          <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
+            <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
+          <div className="md:w-56 ml-0  mt-2 md:mt-0 md:ml-4">
                 <Select
                   isSearchable={true}
                   options={optionsElement("name")}
@@ -667,20 +686,9 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
                   className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
                 ></Select>
               </div>
-
-              <div className="md:w-56 ml-0   mt-2  md:mt-0 md:ml-4">
-                <Select
-                  isSearchable={true}
-                  options={optionsElement("industry2")}
-                  placeholder="Select Industry 2" // Set the placeholder text
-                  styles={customStyles}
-                  isMulti={false}
-                  onChange={(selected) => handleSelect("industry2", selected)}
-                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
-                ></Select>
               </div>
-            </div>
-          </div>
+              </div>
+              
 
           <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
             <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
