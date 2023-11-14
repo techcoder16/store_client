@@ -15,6 +15,7 @@ import GetApiData from "../helpers/getApiData";
 import axios from "axios";
 import ContactDetails from "./ContactDetails";
 // import "./Dashboard.css";
+import { CircularLoader } from "./CircularLoader";
 import Dropzone from "react-dropzone";
 import postApiData from '../helpers/postApiData';
 import { AiOutlineUpload } from "react-icons/ai";
@@ -31,6 +32,7 @@ import ToasterGen from "../Container/ToasterGen";
 
 const Contact = () => {
   const navigate = useNavigate();
+  const [circularProgress, setCircularProgress] = useState(false);
   const dispatch = useDispatch();
   let contact = useSelector((state) => state.contact);
   const [selectedOptions, setSelectedOptions] = useState();
@@ -66,8 +68,12 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
 
 
 
+setCircularProgress(true);
+
 
       const response = await axios.post('http://localhost:5001/contact/upload', formData);
+      setCircularProgress(false);
+
       console.log('File uploaded successfully:', response.data);
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -525,7 +531,7 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
 
   useEffect(() => {
     dispatch(contactData());
-  }, [dispatch]);
+  }, [circularProgress]);
 
   useEffect(() => {
     dispatch(contactData());
@@ -571,7 +577,12 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
     <React.Fragment>
       <Header></Header>
 
+{
+  circularProgress == true ?
+<CircularLoader>
 
+</CircularLoader>:<></>
+}
       <ToasterGen>
         
       </ToasterGen>
@@ -623,10 +634,14 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
               </Dropzone>
               </div> */}
 <div 
-
+ className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4"
 >
       <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
+      <button 
+      
+   className="w-36 h-16 rounded-xl border-1 font-bold  text-xl  bg-textColor justify-center items-center"
+
+      onClick={handleUpload}>Upload</button>
     </div>
 
   
