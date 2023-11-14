@@ -5,13 +5,14 @@ import Header from "../Container/Header";
 import React from "react";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { contactData } from "../helpers/AuthStore/contactSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch,useCallback } from "react-redux";
 import { useLayoutEffect, useEffect, useState, useMemo } from "react";
 import Select from "react-select";
 import { toast, Toaster, ToastBar } from "react-hot-toast";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
 import GetApiData from "../helpers/getApiData";
+import axios from "axios";
 import ContactDetails from "./ContactDetails";
 // import "./Dashboard.css";
 import Dropzone from "react-dropzone";
@@ -52,6 +53,26 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
 
 
 
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+
+
+
+      const response = await axios.post('http://localhost:5001/contact/upload', formData);
+      console.log('File uploaded successfully:', response.data);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
   useEffect(() => {
     const user = localStorage.getItem("user_data");
     if (user) {
@@ -64,28 +85,28 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
 
 
   
-  const handleUpload = (acceptedFiles) => {
-    const fileReader = new FileReader();
-    fileReader.onload = function (e) {
-      const arrayBuffer = e.target.result;
-      const workbook = XLSX.read(arrayBuffer, { type: "buffer" });
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
-      const result = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-      setData(result);
-    };
+  // const handleUpload = (acceptedFiles) => {
+  //   const fileReader = new FileReader();
+  //   fileReader.onload = function (e) {
+  //     const arrayBuffer = e.target.result;
+  //     const workbook = XLSX.read(arrayBuffer, { type: "buffer" });
+  //     const sheetName = workbook.SheetNames[0];
+  //     const sheet = workbook.Sheets[sheetName];
+  //     const result = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+  //     setData(result);
+  //   };
 
 
-    fileReader.readAsArrayBuffer(acceptedFiles[0]);
+  //   fileReader.readAsArrayBuffer(acceptedFiles[0]);
 
-    if(data.length > 0)
-    {
-      postApiData("contact/uplift_data",{data:data});
+  //   if(data.length > 0)
+  //   {
+  //     postApiData("contact/uplift_data",{data:data});
 
-    }
+  //   }
 
 
-  };
+  // };
 
 
 
@@ -170,10 +191,14 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
   const itemsPerPage = 10;
   const filteredcontact = contact.contacts.contact
     ? contact.contacts.contact.filter((item) => {
-        const isNameMatch = item.name
+      let isNameMatch = "";
+    if (item.name)
+    {
+       isNameMatch = item.name
           .toLowerCase()
           .includes(searchQuery.toLowerCase());
-      
+    }
+
         const isWebsiteMatch =
           selectedFilters.Website == "" ||
           !selectedFilters.Website ||
@@ -504,6 +529,7 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
 
   useEffect(() => {
     dispatch(contactData());
+    console.log("asdasdasd");
   }, [deletedState]);
 
 
@@ -534,6 +560,8 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
     sortColumn,
     sortDirection,
   ]);
+
+
 
 
 
@@ -578,7 +606,7 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
         </div>
       </div>
 
-
+{/* 
 
       <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
             <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4"></div>
@@ -593,7 +621,17 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
                   </div>
                 )}
               </Dropzone>
-              </div>
+              </div> */}
+<div 
+
+>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleUpload}>Upload</button>
+    </div>
+
+  
+
+
 
   
 

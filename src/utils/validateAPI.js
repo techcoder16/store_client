@@ -339,6 +339,7 @@ async function verify_ContactPlatform(error = {}, values) {
 
     jobRole: values.jobRole,
     email: values.email,
+    remarks:values.remarks
   };
 
 
@@ -370,6 +371,7 @@ async function verify_ContactPlatformEdit(error = {}, values) {
 
     jobRole: values.jobRole,
     email: values.email,
+    remarks:values.remarks,
     id: values.id,
   };
 

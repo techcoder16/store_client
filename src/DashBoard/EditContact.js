@@ -46,6 +46,7 @@ const navigate =useNavigate();
 
       jobRole:contactState.jobRole,
       email: contactState.email,
+      remarks:contactState.remarks,
       id:contactState._id,
       navigate:navigate,
     },
@@ -208,9 +209,8 @@ const navigate =useNavigate();
                           <input
                             {...formik.getFieldProps("phoneNumber")}
                             id="phoneNumber"
-                            type="phone"
+                            type="text"
                             min={0}
-                            pattern="[0-9]{7,}"
                             className="w-full h-12 px-4 py-2  border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
                             placeholder=""
                           />
@@ -305,6 +305,21 @@ const navigate =useNavigate();
                           />
                         </div>
                       </div>
+
+                      
+                      <div className="py-4 flex-1">
+                          <span className="font-dmsans font-normal text-xs text-maincolor ">
+                            Remarks
+                          </span>
+
+                          <input
+                            {...formik.getFieldProps("remarks")}
+                            id="remarks"
+                            type="text"
+                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            placeholder=""
+                          />
+                        </div>
 
                       <div className="py-5 w-full flex justify-center">
                         <button type="submit" className="w-36 h-16 rounded-xl border-1 font-bold  text-xl  bg-textColor justify-center items-center">

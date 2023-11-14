@@ -120,10 +120,17 @@ const Header = () => {
           "auth/get_avatar/" + userData._id,
           ""
         );
+
+        try{
         if (response && response.user) {
-          setFileName(response.user[0].avatar.filename);
+          setFileName(response.user && response.user[0].avatar && response.user[0].avatar.filename);
           setContentType(response.user[0].avatar.contentType);
         }
+      }
+      catch(err)
+      {
+        
+      }
       }
     }
 

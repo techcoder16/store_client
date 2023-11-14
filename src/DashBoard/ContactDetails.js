@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import auth from "../assets/auth.png";
 import best from "../assets/best.png";
 import { useNavigate } from "react-router-dom";
-import { companyData } from "../helpers/AuthStore/companySlice";
+import { contactData } from "../helpers/AuthStore/contactSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 import { AiOutlineArrowDown } from "react-icons/ai";
@@ -30,10 +30,10 @@ const ContactDetails = ({
     }, []);
 
   const navigate = useNavigate();
-const handleDeleteButton = async (ID) =>{
+const handleDeleteButton = async ( ID) =>{
 
   await postApiData("contact/delete_contact",{ID:ID});
-  dispatch(companyData());
+  dispatch(contactData());
 
   deletedState(ID);
 
@@ -118,6 +118,11 @@ const handleDeleteButton = async (ID) =>{
                 <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Email
                 </th>
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
+                  Remarks
+                </th>
+                
+
               </tr>
             </thead>
 
@@ -134,7 +139,7 @@ const handleDeleteButton = async (ID) =>{
                       <td className="px-3 py-7 text-maincolor ">{item.duplicate == true ? "True" : "False"}</td>
 
                       <td className="px-3 py-7 text-maincolor">
-                        {item.industry}
+                        {item.industry1}
                       </td>
                       <td className="px-3 py-7 text-maincolor">
                         {item.industry2}
@@ -150,10 +155,10 @@ const handleDeleteButton = async (ID) =>{
                       </td>
                       <td className="px-3 py-7 text-maincolor">{item.city}</td>
                       <td className="px-3 py-7 text-maincolor">
-                        {item.Region}
+                        {item.region}
                       </td>
                       <td className="px-3 py-7 text-maincolor">
-                        {item.Country}
+                        {item.country}
                       </td>
                       <td className="px-3 py-7 text-maincolor">
                         {item.firstName}
@@ -164,8 +169,14 @@ const handleDeleteButton = async (ID) =>{
                       <td className="px-3 py-7 text-maincolor">
                         {item.jobRole}
                       </td>
+
+                      
                       <td className="px-3 py-7 text-maincolor">{item.email}</td>
 
+                      <td className="px-3 py-7 text-maincolor">
+                        {item.remarks}
+                      </td>
+                      
                       <td className=" flex   items-center justify-end py-8">
                         <button
                           onClick={() => {
