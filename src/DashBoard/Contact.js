@@ -74,9 +74,13 @@ setCircularProgress(true);
       const response = await axios.post('http://localhost:5001/contact/upload', formData);
       setCircularProgress(false);
 
+
       console.log('File uploaded successfully:', response.data);
     } catch (error) {
       console.error('Error uploading file:', error);
+      setCircularProgress(false);
+      
+
     }
   };
   useEffect(() => {
@@ -305,6 +309,52 @@ setCircularProgress(true);
       setOptions((prev) => ({ ...prev, companyName: results7 }));
 
 
+      let results8 = [];
+      results8.push({ key: 0, value: "" });
+      data.role.map((value, index) => {
+        results8.push({ value: index, label: value });
+      });
+      setOptions((prev) => ({ ...prev, role: results8 }));
+
+
+
+      
+
+      let results10 = [];
+      results10.push({ key: 0, value: "" });
+      data.quality.map((value, index) => {
+        results10.push({ value: index, label: value });
+      });
+      setOptions((prev) => ({ ...prev, quality: results10 }));
+
+
+      let results11 = [];
+      results11.push({ key: 0, value: "" });
+      data.result.map((value, index) => {
+        results11.push({ value: index, label: value });
+      });
+      setOptions((prev) => ({ ...prev, result: results11 }));
+
+
+      let results12 = [];
+      results12.push({ key: 0, value: "" });
+      data.free.map((value, index) => {
+        results12.push({ value: index, label: value });
+      });
+      setOptions((prev) => ({ ...prev, free: results12 }));
+
+
+
+      let results13 = [];
+      results13.push({ key: 0, value: "" });
+      data.date.map((value, index) => {
+        results13.push({ value: index, label: value });
+      });
+      setOptions((prev) => ({ ...prev, date: results13 }));
+
+
+
+
     }
 
     fetchData();
@@ -406,6 +456,21 @@ setCircularProgress(true);
         return options.companyName;
       case "companyLinkedIn":
         return options.companyLinkedIn;
+        case "role":
+        return options.role;
+        case "quality":
+        return options.quality;
+        case "result":
+        return options.result;
+        case "free":
+        return options.free;
+
+        case "date":
+        return options.date;
+        
+
+        
+        
     }
   };
 
@@ -636,13 +701,38 @@ setCircularProgress(true);
 <div 
  className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4"
 >
-      <input type="file" onChange={handleFileChange} />
+    </div>
+
+
+
+    <div className="flex items-center justify-center w-full">
+    <label for="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+
+
+            
       <button 
       
-   className="w-36 h-16 rounded-xl border-1 font-bold  text-xl  bg-textColor justify-center items-center"
+         onClick={handleUpload}>
 
-      onClick={handleUpload}>Upload</button>
-    </div>
+<svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            </svg>
+
+
+         </button>
+
+
+
+            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> </p>
+            
+            <p className="text-xs text-gray-500 dark:text-gray-400">XLSX</p>
+        </div>
+        <input type="file" onChange={handleFileChange}  />
+    </label>
+</div> 
+
+
 
   
 
@@ -740,8 +830,10 @@ setCircularProgress(true);
                 ></Select>
               </div>
               </div>
+
               </div>
               
+
 
           <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
             <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
@@ -788,7 +880,95 @@ setCircularProgress(true);
 
 
             </div>
+
+
+
           </div>
+
+
+
+          
+
+          <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
+            <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
+              <div className="md:w-56 ml-0  mt-2   md:mt-0 md:ml-4">
+                <Select
+                  isSearchable={true}
+                  options={optionsElement("date")}
+                  placeholder="Select Date" // Set the placeholder text
+                  styles={customStyles}
+                  isMulti={false}
+                  onChange={(selected) => handleSelect("date", selected)}
+                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
+                ></Select>
+              </div>
+
+
+
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+          <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
+            <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
+              <div className="md:w-56 ml-0  mt-2   md:mt-0 md:ml-4">
+                <Select
+                  isSearchable={true}
+                  options={optionsElement("quality")}
+                  placeholder="Select Quality" // Set the placeholder text
+                  styles={customStyles}
+                  isMulti={false}
+                  onChange={(selected) => handleSelect("quality", selected)}
+                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
+                ></Select>
+              </div>
+
+              <div className="md:w-56 ml-0  mt-2   md:mt-0 md:ml-4">
+                <Select
+                  isSearchable={true}
+                  selectedOptions={selectedOptions}
+                  options={optionsElement("role")}
+                  placeholder="Select Role" // Set the placeholder text
+                  styles={customStyles}
+                  isMulti={false}
+                  onChange={(selected) => handleSelect("role", selected)}
+                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
+                ></Select>
+              </div>
+
+              <div className="md:w-64 ml-0   mt-2  md:mt-0 md:ml-4">
+                <Select
+                  isSearchable={true}
+                  options={optionsElement("result")}
+                  placeholder="Select  Result" // Set the placeholder text
+                  styles={customStyles}
+                  isMulti={false}
+                  onChange={(selected) =>
+                    handleSelect("result", selected)
+                  }
+                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
+                ></Select>
+              </div>
+
+
+
+
+
+            </div>
+
+
+
+          </div>
+          
+
+
+
 
       <div className="mt-0 bg-white grid grid-cols-1 sm:grid-cols-5 gap-2 sm:px-2 md:px-16 lg:px-28 xl:px-28 2xl:px-28 px-2">
         <div

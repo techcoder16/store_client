@@ -325,21 +325,41 @@ async function verify_ContactPlatform(error = {}, values) {
   const Values = {
     date: values.date,
     name: values.name,
-    website: values.website,
     industry1: values.industry1,
     industry2: values.industry2,
+    
+    
     empcount: values.empcount,
     phoneNumber: values.phoneNumber,
-    linkedin: values.linkedin,
+    website: values.website,
+    
+    companyLinkedin: values.companyLinkedin,
+
+
     city: values.city,
     region: values.region,
     country: values.country,
+
     firstName: values.firstName,
     lastName: values.lastName,
 
     jobRole: values.jobRole,
     email: values.email,
-    remarks:values.remarks
+
+
+    quality:values.quality,
+    result:values.quality,
+    free:values.free,
+    role:values.role,
+    
+
+    phoneNumber2:values.phoneNumber2,
+    linkedin:values.linkedin,
+    remarks:values.remarks,
+
+    recordMarksheet:values.recordMarksheet,
+
+
   };
 
 
@@ -356,12 +376,17 @@ async function verify_ContactPlatformEdit(error = {}, values) {
   const Values = {
     date: values.date,
     name: values.name,
-    website: values.website,
     industry1: values.industry1,
     industry2: values.industry2,
+    
+    
     empcount: values.empcount,
     phoneNumber: values.phoneNumber,
-    linkedin: values.linkedin,
+    website: values.website,
+    
+    companyLinkedin: values.companyLinkedin,
+
+
     city: values.city,
     region: values.region,
     country: values.country,
@@ -371,8 +396,32 @@ async function verify_ContactPlatformEdit(error = {}, values) {
 
     jobRole: values.jobRole,
     email: values.email,
+
+
+    quality:values.quality,
+    result:values.quality,
+    free:values.free,
+    role:values.role,
+    
+
+    phoneNumber2:values.phoneNumber2,
+    linkedin:values.linkedin,
     remarks:values.remarks,
+
+    recordMarksheet:values.recordMarksheet,
+    
     id: values.id,
+
+
+
+
+
+
+
+
+
+    
+    
   };
 
 

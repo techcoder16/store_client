@@ -41,12 +41,21 @@ const navigate =useNavigate();
       city: contactState.city,
       region: contactState.region,
       country: contactState.country,
+      companyLinkedin:contactState.companyLinkedin,
       firstName: contactState.firstName,
       lastName: contactState.lastName,
 
       jobRole:contactState.jobRole,
       email: contactState.email,
       remarks:contactState.remarks,
+      recordMarksheet:contactState.recordMarksheet,
+      phoneNumber2:contactState.phoneNumber2,
+
+      quality:contactState.quality,
+      free:contactState.free,
+      result:contactState.result,
+      role:contactState.role,
+      
       id:contactState._id,
       navigate:navigate,
     },
@@ -171,15 +180,15 @@ const navigate =useNavigate();
 
                         <div className="py-4 flex-1">
                           <span className="font-dmsans font-normal text-xs text-maincolor ">
-                            Linked In
+                           Company Linked In
                           </span>
 
                           <input
-                            {...formik.getFieldProps("linkedin")}
-                            id="linkedin"
+                            {...formik.getFieldProps("companyLinkedin")}
+                            id="companyLinkedin"
                             type="text"
                             className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
-                            placeholder=""
+                          s  placeholder=""
                           />
                         </div>
                       </div>
@@ -293,6 +302,26 @@ const navigate =useNavigate();
 
                         <div className="py-4 flex-1">
                           <span className="font-dmsans font-normal text-xs text-maincolor ">
+                            Record Marksheet
+                          </span>
+
+                          <input
+                            {...formik.getFieldProps("recordMarksheet")}
+                            id="recordMarksheet"
+                            type="text"
+                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            placeholder=""
+                          />
+                        </div>
+                      </div>
+
+
+
+                      <div className="flex  md:w-11/12 gap-10">
+                      
+
+                        <div className="py-4 flex-1">
+                          <span className="font-dmsans font-normal text-xs text-maincolor ">
                             Job Role
                           </span>
 
@@ -306,7 +335,72 @@ const navigate =useNavigate();
                         </div>
                       </div>
 
+                      <div className="flex  md:w-11/12 gap-10">
+                      <div className="py-4 flex-1">
+                          <span className="font-dmsans font-normal text-xs text-maincolor ">
+                          Quality
+                          </span>
+
+                          <input
+                            {...formik.getFieldProps("quality")}
+                            id="quality"
+                            type="text"
+                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            placeholder=""
+                          />
+                        </div>
+
+                        <div className="py-4 flex-1">
+                          <span className="font-dmsans font-normal text-xs text-maincolor ">
+                           Free
+                          </span>
+
+                          <input
+                            {...formik.getFieldProps("free")}
+                            id="free"
+                            type="text"
+                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            placeholder=""
+                          />
+                        </div>
+                      </div>
+
+
                       
+                      <div className="flex  md:w-11/12 gap-10">
+                      <div className="py-4 flex-1">
+                          <span className="font-dmsans font-normal text-xs text-maincolor ">
+                          Role
+                          </span>
+
+                          <input
+                            {...formik.getFieldProps("role")}
+                            id="role"
+                            type="text"
+                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            placeholder=""
+                          />
+                        </div>
+
+                        <div className="py-4 flex-1">
+                          <span className="font-dmsans font-normal text-xs text-maincolor ">
+                           Result
+                          </span>
+
+                          <input
+                            {...formik.getFieldProps("result")}
+                            id="result"
+                            type="text"
+                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            placeholder=""
+                          />
+                        </div>
+                      </div>
+                      
+
+
+                      <div className="flex  md:w-11/12 gap-10">
+
                       <div className="py-4 flex-1">
                           <span className="font-dmsans font-normal text-xs text-maincolor ">
                             Remarks
@@ -320,6 +414,23 @@ const navigate =useNavigate();
                             placeholder=""
                           />
                         </div>
+
+
+                        <div className="py-4 flex-1">
+                          <span className="font-dmsans font-normal text-xs text-maincolor ">
+                           Phone Number 2
+                          </span>
+
+                          <input
+                            {...formik.getFieldProps("phoneNumber2")}
+                            id="phoneNumber2"
+                            type="text"
+                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            placeholder=""
+                          />
+                        </div>
+
+</div>
 
                       <div className="py-5 w-full flex justify-center">
                         <button type="submit" className="w-36 h-16 rounded-xl border-1 font-bold  text-xl  bg-textColor justify-center items-center">

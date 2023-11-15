@@ -47,9 +47,34 @@ const handleDeleteButton = async ( ID) =>{
           <table className="relative bg-transparent w-full ">
           <thead className="md:table-header-group w-full border-b border-gray-500">
               <tr>
+
+
+              <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg ">
+                  Sr No
+                </th>
+
+
                 <th className="h-4 font-normal leading-5 text-maincolor px-4 text-left text-lg">
                   Name
                 </th>
+                
+                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg ">
+                  Duplicate
+                </th>
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
+                  Industry 1
+                </th>
+
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
+                  Industry 2
+                </th>
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
+                  Employee Count
+                </th>
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
+                  Phone Number
+                </th>
+
                 <th className="h-4 font-normal leading-5 text-maincolor p-10 text-lg">
                   <div className="flex grid-col-2 gap-2 text-lg">
                     <button
@@ -75,24 +100,11 @@ const handleDeleteButton = async ( ID) =>{
                     </button>
                   </div>
                 </th>
-                <th className="h-4 font-normal leading-5 text-maincolor px-0 text-left text-lg ">
-                  Duplicate
-                </th>
-                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
-                  Industry 1
-                </th>
+
+                
 
                 <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
-                  Industry 2
-                </th>
-                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
-                  Employee Count
-                </th>
-                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
-                  Phone Number
-                </th>
-                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
-                  Linked In
+                  Company LinkedIn 
                 </th>
 
                 <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
@@ -118,8 +130,38 @@ const handleDeleteButton = async ( ID) =>{
                 <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Email
                 </th>
+                
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
+                    Quality
+                </th>
+                
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
+                  Result
+                </th>
+                
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
+                  Free
+                </th>
+                
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
+                  Role
+                </th>
+                
+
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
+                  Phone Number
+                </th>
+
+                <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
+                  LinkedIn
+                </th>
+
                 <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
                   Remarks
+                </th>
+                  <th className="font-normal leading-5 text-maincolor px-4 text-left text-lg w-full">
+                  Record in Mastersheet
+
                 </th>
                 
 
@@ -131,11 +173,10 @@ const handleDeleteButton = async ( ID) =>{
                 currentItems.map((item, index) => (
                   <React.Fragment key={index}>
                     <tr className=" lg:table-row xl:table-row 2xl:table-row">
+                    <td className="px-3 py-7 text-maincolor ">{item.srno}</td>
+                   
                       <td className="px-3 py-7 text-maincolor ">{item.name}</td>
-                      <td className="px-3 py-7 text-maincolor">
-                        {item.website}
-                      </td>
-
+                   
                       <td className="px-3 py-7 text-maincolor ">{item.duplicate == true ? "True" : "False"}</td>
 
                       <td className="px-3 py-7 text-maincolor">
@@ -150,8 +191,14 @@ const handleDeleteButton = async ( ID) =>{
                       <td className="px-3 py-7 text-maincolor">
                         {item.phoneNumber}
                       </td>
+
                       <td className="px-3 py-7 text-maincolor">
-                        {item.linkedin}
+                        {item.website}
+                      </td>
+
+
+                      <td className="px-3 py-7 text-maincolor">
+                        {item.companyLinkedin}
                       </td>
                       <td className="px-3 py-7 text-maincolor">{item.city}</td>
                       <td className="px-3 py-7 text-maincolor">
@@ -168,15 +215,49 @@ const handleDeleteButton = async ( ID) =>{
                       </td>
                       <td className="px-3 py-7 text-maincolor">
                         {item.jobRole}
+                      </td>   <td className="px-3 py-7 text-maincolor">{item.email}</td>
+
+                      <td className="px-3 py-7 text-maincolor">
+                        {item.quality}
+                      </td>
+                      <td className="px-3 py-7 text-maincolor">
+                        {item.result}
                       </td>
 
-                      
-                      <td className="px-3 py-7 text-maincolor">{item.email}</td>
+                      <td className="px-3 py-7 text-maincolor">
+                        {item.free}
+                      </td>
 
+                      <td className="px-3 py-7 text-maincolor">
+                        {item.role}
+                      </td>
+                      
+                      <td className="px-3 py-7 text-maincolor">
+                        {item.phoneNumber2}
+                      </td>
+                      <td className="px-3 py-7 text-maincolor">
+                        {item.linkedin}
+                      </td>
+                       
+                      
+                      
+                      
+                      
+                     
+
+                      
                       <td className="px-3 py-7 text-maincolor">
                         {item.remarks}
                       </td>
                       
+
+                      
+                      <td className="px-3 py-7 text-maincolor">
+                        {item.recordMarksheet}
+                      </td>
+                      
+
+
                       <td className=" flex   items-center justify-end py-8">
                         <button
                           onClick={() => {
