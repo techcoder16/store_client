@@ -198,7 +198,7 @@ setCircularProgress(true);
     }),
   };
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 100;
   const filteredcontact = contact.contacts.contact
     ? contact.contacts.contact.filter((item) => {
       let isNameMatch = "";
