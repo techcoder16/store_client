@@ -226,7 +226,7 @@ setCircularProgress(true);
     indexOfLastItem
   );
 
-  let totalPages = Math.ceil(filteredcontact.length / itemsPerPage);
+  let totalPages = Math.ceil(contact.contacts.contactCount/itemsPerPage);
   const [options, setOptions] = useState([]);
 
   const [sortColumn, setSortColumn] = useState(null);
