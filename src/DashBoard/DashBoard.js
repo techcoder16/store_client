@@ -7,6 +7,7 @@ import { companyData } from "../helpers/AuthStore/companySlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useLayoutEffect, useEffect, useState, useMemo } from "react";
 import Select from "react-select";
+import axios from "axios";
 
 import Dropzone from "react-dropzone";
 import postApiData from '../helpers/postApiData';
@@ -22,6 +23,8 @@ import CompanyDetails from "./CompanyDetails";
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
 
+import { TiArrowSortedDown } from "react-icons/ti";
+import { TiArrowSortedUp } from "react-icons/ti";
 import SideMenu from "../Container/SideMenu";
 
 
@@ -34,7 +37,7 @@ const DashBoard = () => {
   let company = useSelector((state) => state.company);
   const [selectedOptions, setSelectedOptions] = useState();
 
-  const [deletedState, setDeletedState] = useState();
+  const [deletedState, setDeletedState] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const location = useLocation();
@@ -42,6 +45,9 @@ const DashBoard = () => {
   const [type, setType] = useState("buyer");
   const [sideMenuShow, setSideMenuShow] = useState(true);
   const [data, setData] = useState([]);
+  const [filter,setFilter] = useState(true);
+  const [circularProgress, setCircularProgress] = useState(false);
+
   function handleScroll() {
     window.scroll({
       top: document.body.offsetTop,
@@ -49,30 +55,6 @@ const DashBoard = () => {
       behavior: "smooth",
     });
   }
-
-
-  const handleUpload = (acceptedFiles) => {
-    const fileReader = new FileReader();
-    fileReader.onload = function (e) {
-      const arrayBuffer = e.target.result;
-      const workbook = XLSX.read(arrayBuffer, { type: "buffer" });
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
-      const result = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-      setData(result);
-    };
-
-
-    fileReader.readAsArrayBuffer(acceptedFiles[0]);
-
-    if(data.length > 0)
-    {
-      postApiData("company/uplift_data",{data:data});
-
-    }
-
-
-  };
 
 
 
@@ -183,6 +165,44 @@ const DashBoard = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredcompany.slice(indexOfFirstItem, indexOfLastItem);
 
+  
+  const handleUpload =async(acceptedFiles) => {
+    console.log(acceptedFiles);
+    const fileReader = new FileReader();
+    try {
+      setCircularProgress(true);
+console.log('Uploading');
+const formData = new FormData();
+formData.append('file', acceptedFiles[0]);
+
+
+      const response = await axios.post('http://localhost:5001/company/uplift_data', formData);
+      
+      setCircularProgress(false);
+
+
+      console.log('File uploaded successfully:', response.data);
+      toast.success("File uploaded successfully");
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      setCircularProgress(false);
+      
+
+
+      
+    };
+
+    fileReader.onload = function (e) {
+      const arrayBuffer = e.target.result;
+      const workbook = XLSX.read(arrayBuffer, { type: "buffer" });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const result = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+      setData(result);
+      
+  }
+}
+
   let totalPages = Math.ceil(company.companys.companyCount / itemsPerPage);
   const [options, setOptions] = useState({});
 
@@ -209,21 +229,151 @@ const DashBoard = () => {
   const optionsElement = (value) => {
     switch (value) {
       case "name":
-        return options.name;
+        return (
+          options.name &&
+          options.name.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
       case "website":
-        return options.website;
+        return (
+          options.website &&
+          options.website.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
       case "industry":
-        return options.industry;
+        return (
+          options.industry &&
+          options.industry.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
       case "industry2":
-        return options.industry2;
+        return (
+          options.industry2 &&
+          options.industry2.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
       case "Region":
-        return options.Region;
-      case "Country":
-        return options.Country;
+        return (
+          options.Region &&
+          options.Region.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
+      case "country":
+        return (
+          options.Country &&
+          options.Country.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
       case "companyName":
-        return options.companyName;
+        return (
+          options.companyName &&
+          options.companyName.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
+
+        case "date":
+        return (
+          options.date &&
+          options.date.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
       case "companyLinkedIn":
-        return options.companyLinkedIn;
+        return (
+          options.companyLinkedIn &&
+          options.companyLinkedIn.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
+
+        case "quality":
+          return (
+            options.quality &&
+            options.quality.map((option) => (
+              <option
+                key={option.value}
+                className="scrollbar-thumb-maincolor text-Poppins text-md"
+                value={option.label}
+              >
+                {option.label}
+              </option>
+            ))
+          );
+          
+        case "role":
+          return (
+            options.role &&
+            options.role.map((option) => (
+              <option
+                key={option.value}
+                className="scrollbar-thumb-maincolor text-Poppins text-md"
+                value={option.label}
+              >
+                {option.label}
+              </option>
+            ))
+          );
     }
   };
 
@@ -508,6 +658,7 @@ const DashBoard = () => {
   const isLoading = !company.companys;
 
   useEffect(() => {
+    let timer = setTimeout(() =>{
     dispatch(
       companyData({
         page: currentPage,
@@ -517,6 +668,11 @@ const DashBoard = () => {
         sortDirection: sortDirection,
       })
     );
+  },500);
+  return (()=>{
+    clearTimeout(timer);  
+});
+
   }, [
     dispatch,
     currentPage,
@@ -535,29 +691,225 @@ const DashBoard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-10 gap-0 bg-white">
         <div
           className={` ${
-            sideMenuShow == true ? "lg:col-span-2 w-full" : "lg:col-span-0 "
+            sideMenuShow == true ? "lg:col-span-1 w-full" : "lg:col-span-0 "
           }   lg:flex bg-white `}
         >
-          <SideMenu />
+          <SideMenu setSideMenuShow={setSideMenuShow} />
         </div>
 
       
 
         <div
           className={` ${
-            sideMenuShow == true ? "lg:col-span-8" : "lg:col-span-10"
-          } bg-background-main w-full`}
+            sideMenuShow == true ? "lg:col-span-9" : "lg:col-span-10"
+          } bg-white w-full`}
         >
-          <div className="relative w-full  bg-white">
-            <div className="flex flex-col h-auto p-4 md:p-8 text-center">
-              <p className="font-bold  text-2xl  md:text-lg text-maincolor font-dmsans mb-2">
-                Welcome to Marketing Data Store
-              </p>
-              <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-dmsans"></p>
-            </div>
-          </div>
+         
 
-          <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
+      <div className="relative w-full  bg-white">
+        <div className="flex flex-col h-auto p-4 md:p-8 text-center">
+          <p className="font-bold   text-4xl  md:text-lg text-green-600  font-Poppins font-dmsans mb-2">
+          Company Data
+            
+          </p>
+          <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-dmsans">
+         
+          </p>
+        </div>
+      </div>
+
+
+
+
+          <div className="m-auto w-4/5 font-Poppins">
+
+<div className="flex flex-col">
+  <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg">
+
+  <div class="relative w-full">
+          
+
+          <div class="items-center justify-center max-w-xl mx-auto">
+      
+            <Dropzone onDrop={handleUpload} accept=".xls, .xlsx, .csv">
+                      {({ getRootProps, getInputProps }) => (
+                        <div
+                          {...getRootProps()}
+                          className="  "
+                          >
+                            
+                          {/* <input {...getInputProps()} />
+                           */}
+                          {/* <AiOutlineUpload></AiOutlineUpload>  */}
+                          <label class="flex justify-center w-full h-32 px-4   bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-300 ease-in-out" id="drop">
+                            <span class="flex items-center space-x-2">
+                            
+                            <span class="font-medium text-gray-600">Drop files to Attach, or<span class="text-green-600 underline ml-[4px]">browse</span></span></span>
+                           </label>
+      
+      
+                            
+                        </div>
+                      )}
+                    </Dropzone>
+      
+          </div>
+        </div>
+
+
+
+    Filters
+    <form className="">
+      <div className="relative mb-10 w-full flex  items-center justify-between rounded-md">
+        <svg className="absolute left-2 block h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" className=""></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65" className=""></line>
+        </svg>
+        <input type="name"
+        
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+
+        name="search" className="h-12 w-full cursor-text rounded-md border border-gray-100 bg-gray-100 py-4 pr-40 pl-12 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Search by Name etc" />
+      </div>
+     <div className=" flex justify-end w-full"> {filter == true ?  <TiArrowSortedUp onClick={() => setFilter(false)} ></TiArrowSortedUp> :<  TiArrowSortedDown onClick={() => setFilter(true)} />}</div>
+       
+       
+
+
+     <div className={`${filter ? "block transition duration-300 ease-in-out" : "transition duration-500 ease-in-out hidden"}`}>
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="flex flex-col">
+          <label for="name" className="text-sm font-medium text-stone-600">Name</label>
+          <input type="text" id="name" placeholder="Raspberry juice" className="mt-2 block w-full rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+        </div>
+
+        <div className="flex flex-col">
+          <label for="manufacturer" className="text-sm font-medium text-stone-600">Industry</label>
+
+          <select id="status"
+              onChange={(e) => handleSelect("industry", e.target.value)}
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+               { optionsElement("industry")}
+              </select>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+        <div className="flex flex-col">
+          <label for="manufacturer" className="text-sm font-medium text-stone-600">Company Name</label>
+
+          <select id="status"
+              onChange={(e) => handleSelect("companyName", e.target.value)}
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+               { optionsElement("companyName")}
+              </select>
+        </div>
+
+
+        {/* <div className="flex flex-col">
+          <label for="manufacturer" className="text-sm font-medium text-stone-600">Industry 2</label>
+
+          <select id="status"
+              onChange={(e) => handleSelect("industry2", e.target.value)}
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+               { optionsElement("industry2")}
+              </select>
+        </div> */}
+
+     
+      
+      
+        <div className="flex flex-col">
+          <label for="manufacturer" className="text-sm font-medium text-stone-600">Industry 2</label>
+
+          <select id="status"
+              onChange={(e) => handleSelect("industry2", e.target.value)}
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+               { optionsElement("industry2")}
+              </select>
+        </div>
+
+
+        <div className="flex flex-col">
+          <label for="manufacturer" className="text-sm font-medium text-stone-600">Country</label>
+
+          <select id="status"
+              onChange={(e) => handleSelect("country", e.target.value)}
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+               { optionsElement("country")}
+              </select>
+        </div>
+
+
+        {/* <div className="flex flex-col">
+          <label for="manufacturer" className="text-sm font-medium text-stone-600">Region</label>
+
+          <select id="status"
+              onChange={(e) => handleSelect("region", e.target.value)}
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+               { optionsElement("region")}
+              </select>
+        </div> */}
+
+
+
+        <div className="flex flex-col">
+          <label for="status" className="text-sm font-medium text-stone-600">Website</label>
+
+              <select id="status"
+              onChange={(e) => handleSelect("website", e.target.value)}
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+               { optionsElement("website")}
+              </select>
+
+
+{/* 
+
+          <Select
+                isSearchable={true}
+                options={optionsElement("website")}
+                placeholder="Select Website" // Set the placeholder text
+         
+                isMulti={false}
+                onChange={(selected) => handleSelect("website", selected)}
+                className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+         
+              > 
+              
+              </Select> */}
+
+              
+        </div>
+      </div>
+
+      <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex">
+        <button className="rounded-lg bg-gray-200 px-8 py-2 font-medium text-gray-700 outline-none hover:opacity-80 focus:ring">Reset</button>
+        
+      </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+</div>
+
+
+          {/* <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
             <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4"></div>
                 <Dropzone onDrop={handleUpload} accept=".xls, .xlsx, .csv">
                 {({ getRootProps, getInputProps }) => (
@@ -630,9 +982,9 @@ const DashBoard = () => {
               </div>
 
             </div>
-          </div>
+          </div> */}
 
-          <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
+          {/* <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
             <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
               <div className="md:w-56 ml-0  mt-2   md:mt-0 md:ml-4">
                 <Select
@@ -705,7 +1057,7 @@ const DashBoard = () => {
               </div>
 
               </div>
-              </div>
+              </div> */}
           <div className="mt-0 bg-white grid grid-cols-1 sm:grid-cols-5 gap-2 sm:px-2 md:px-16 lg:px-28 xl:px-28 2xl:px-28 px-2">
             <div
               className={`w-full col-span-4 ${

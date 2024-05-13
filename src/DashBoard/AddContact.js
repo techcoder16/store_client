@@ -56,38 +56,43 @@ const AddContact = () => {
       <Header></Header>
 
       <ToasterGen></ToasterGen>
-      <div className="grid grid-cols-1 lg:grid-cols-10 gap-0 bg-white">
+      <div className="bg-white z-10">
         <div
           className={` ${
-            sideMenuShow == true ? "lg:col-span-2 w-full" : "lg:col-span-0 "
-          }   lg:flex bg-white `}
+            sideMenuShow == true ? "lg:col-span-1 w-full" : "lg:col-span-0 w-full "
+          }   lg:flex bg-transparent `}
         >
-          <SideMenu />
+          <SideMenu setSideMenuShow={setSideMenuShow} className="z-10" />
         </div>
 
         <div
           className={` ${
-            sideMenuShow == true ? "lg:col-span-8" : "lg:col-span-10"
-          } bg-background-main w-full`}
+            sideMenuShow == true ? "lg:col-span-9" : "lg:col-span-10"
+          } bg-background-main`}
         >
-          <div className="relative w-full  bg-white">
-            <div className="flex flex-col h-auto p-4 md:p-8 text-center">
-              <p className="font-bold  text-2xl  md:text-lg text-maincolor font-dmsans mb-2">
-                Add Contact Data
-              </p>
-              <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-dmsans"></p>
-            </div>
-          </div>
+       
 
-          <div className="bg-white h-max flex    justify-center w-full   ">
-            <div className="  flex flex-col md:flex-row  gap-4">
-              <div className="col-span-3 ">
-                <div className="bg-white p-6 md:p-8">
-                  <div className="space-y-4">
+          <div className="   h-screen z-0  bg-white mt-20 mb-20">
+<div className="col-span-3 lg:col-span-3 w-full bg-white ">
+   <div>
+                    <span className=" font-semibold  text-center flex justify-center mb-20   font-Poppins text-3xl   text-black ">
+                     Create Contacts
+                    </span>
+                  </div>
+                  
+          <div className=" flex items-center justify-center text-center z-0">
+            <div className="flex items-center lg:w-1/2 bg-transparent">
+              <div className="relative bg-white shadow-2xl rounded-2xl w-full">
+                <div className="flex flex-col justify-center p-8 md:p-14 ">
+                  <div className="flex justify-center self-center items-center">
+                 
+
+
                     <form className="py-2" onSubmit={formik.handleSubmit}>
-                      <div className="flex  md:w-11/12 gap-10">
-                      <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                      <div className="flex  w-full gap-10">
+                      <div className="py-4 flex-1 ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             
                             Name
                           </span>
@@ -95,12 +100,13 @@ const AddContact = () => {
                             {...formik.getFieldProps("name")}
                             id="name"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder="Enter your Name"
                           />
                         </div>
                         <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             
                             Email
                           </span>
@@ -109,14 +115,15 @@ const AddContact = () => {
                             {...formik.getFieldProps("email")}
                             id="email"
                             type="email"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder="Enter your Email Address"
                           />
                         </div>
                       </div>
                       <div className="flex  md:w-11/12 gap-10">
                       <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Website
                           </span>
 
@@ -124,13 +131,14 @@ const AddContact = () => {
                             {...formik.getFieldProps("website")}
                             id="website"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder="Enter your Website"
                           />
                         </div>
 
                         <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Industry 1
                           </span>
 
@@ -138,7 +146,7 @@ const AddContact = () => {
                             {...formik.getFieldProps("industry1")}
                             id="industry1"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
@@ -146,7 +154,8 @@ const AddContact = () => {
 
                       <div className="flex  md:w-11/12 gap-10">
                       <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Industry 2
                           </span>
 
@@ -154,13 +163,14 @@ const AddContact = () => {
                             {...formik.getFieldProps("industry2")}
                             id="industry2"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
 
                         <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Company LinkedIn
                           </span>
 
@@ -168,7 +178,7 @@ const AddContact = () => {
                             {...formik.getFieldProps("companyLinkedin")}
                             id="companyLinkedin"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
@@ -176,7 +186,8 @@ const AddContact = () => {
 
                       <div className="flex md:w-11/12 gap-10">
                       <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Emp Count
                           </span>
 
@@ -186,13 +197,14 @@ const AddContact = () => {
                             type="number"
                             min={0}
                             max={100000}
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
 
                         <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Phone Number
                           </span>
 
@@ -202,7 +214,7 @@ const AddContact = () => {
                             type="text"
                             min={0}
                             
-                            className="w-full h-12 px-4 py-2  border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
@@ -211,7 +223,8 @@ const AddContact = () => {
 
                       <div className="flex  md:w-11/12 gap-10">
                       <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             City
                           </span>
 
@@ -219,13 +232,14 @@ const AddContact = () => {
                             {...formik.getFieldProps("city")}
                             id="city"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
 
                         <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Region
                           </span>
 
@@ -233,7 +247,7 @@ const AddContact = () => {
                             {...formik.getFieldProps("region")}
                             id="region"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
@@ -241,7 +255,8 @@ const AddContact = () => {
 
                       <div className="flex  md:w-11/12 gap-10">
                       <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Country
                           </span>
 
@@ -249,13 +264,14 @@ const AddContact = () => {
                             {...formik.getFieldProps("country")}
                             id="region"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
 
                         <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             First Name
                           </span>
 
@@ -263,14 +279,15 @@ const AddContact = () => {
                             {...formik.getFieldProps("firstName")}
                             id="firstName"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
                       </div>
                       <div className="flex  md:w-11/12 gap-10">
                       <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Last Name
                           </span>
 
@@ -278,13 +295,14 @@ const AddContact = () => {
                             {...formik.getFieldProps("lastName")}
                             id="lastName"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
 
                         <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Job Role
                           </span>
 
@@ -292,7 +310,7 @@ const AddContact = () => {
                             {...formik.getFieldProps("jobRole")}
                             id="jobRole"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
@@ -301,7 +319,8 @@ const AddContact = () => {
                       <div className="flex  md:w-11/12 gap-10">
 
                       <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Quality
                           </span>
 
@@ -309,13 +328,14 @@ const AddContact = () => {
                             {...formik.getFieldProps("quality")}
                             id="quality"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
                       
                         <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Role
                           </span>
 
@@ -323,7 +343,7 @@ const AddContact = () => {
                             {...formik.getFieldProps("role")}
                             id="role"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
@@ -332,7 +352,8 @@ const AddContact = () => {
 
                         
                       <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Free
                           </span>
 
@@ -340,7 +361,7 @@ const AddContact = () => {
                             {...formik.getFieldProps("free")}
                             id="free"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
@@ -348,7 +369,8 @@ const AddContact = () => {
 
                       
                         <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Result
                           </span>
 
@@ -356,7 +378,7 @@ const AddContact = () => {
                             {...formik.getFieldProps("result")}
                             id="result"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
@@ -365,7 +387,8 @@ const AddContact = () => {
                       
                       
                       <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Remarks
                           </span>
 
@@ -373,7 +396,7 @@ const AddContact = () => {
                             {...formik.getFieldProps("remarks")}
                             id="remarks"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
@@ -381,7 +404,8 @@ const AddContact = () => {
 
                       
                         <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                           Record Marksheet
                           </span>
 
@@ -389,7 +413,7 @@ const AddContact = () => {
                             {...formik.getFieldProps("recordMarksheet")}
                             id="recordMarksheet"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
@@ -400,7 +424,8 @@ const AddContact = () => {
 
 
                         <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                             Phone Number 2
                           </span>
 
@@ -410,7 +435,7 @@ const AddContact = () => {
                             type="text"
                             min={0}
                             
-                            className="w-full h-12 px-4 py-2  border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
@@ -418,7 +443,8 @@ const AddContact = () => {
 
 
                         <div className="py-4 flex-1">
-                          <span className="font-dmsans font-normal text-lg text-maincolor ">
+                          <span className="mb-2 text-md font-Poppins font-normal text-xs text-gray-600  font-Poppins leading-5 ">
+
                              LinkedIn
                           </span>
 
@@ -426,7 +452,7 @@ const AddContact = () => {
                             {...formik.getFieldProps("linkedin")}
                             id="linkedin"
                             type="text"
-                            className="w-full h-12 px-4 py-2 border rounded-lg bg-white text-maincolor placeholder-[#8e8e93] focus:outline-none"
+                            className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-200 font-Poppins placeholder:font-Poppins text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Poppins text-xs focus:outline-none"
                             placeholder=""
                           />
                         </div>
@@ -437,7 +463,8 @@ const AddContact = () => {
 </div>
 
                       <div className="py-5 w-full flex justify-center">
-                        <button className="w-36 h-16 rounded-xl border-1 font-bold  text-xl  bg-textColor justify-center items-center">
+                        <button
+                      className="font-Poppins text-base w-40  font-semibold h-12 bg-[#1BA955] text-white  p-2 rounded-lg ">
                           Submit
                         </button>
                       </div>
@@ -449,7 +476,10 @@ const AddContact = () => {
           </div>
         </div>
       </div>
-      <Footer></Footer>
+      </div>
+      </div>
+      
+
     </div>
   );
 };

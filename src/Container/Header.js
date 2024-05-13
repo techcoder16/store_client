@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 import bell from "../assets/SVG.png";
-import { socket } from "../utils/global";
+// import { socket } from "../utils/global";
+
 import getApiData from "../helpers/getApiData";
 const Header = () => {
   const navigate = useNavigate();
@@ -34,13 +35,13 @@ const Header = () => {
   const [ContentType, setContentType] = useState("");
 
   useEffect(() => {
-    socket.emit("initial_data");
-    socket.on("get_data", getData);
-    socket.on("change_data", changeData);
-    return () => {
-      socket.off("get_data");
-      socket.off("change_data");
-    };
+    // socket.emit("initial_data");
+    // socket.on("get_data", getData);
+    // socket.on("change_data", changeData);
+    // return () => {
+    //   socket.off("get_data");
+    //   socket.off("change_data");
+    // };
   }, []);
 
   const getData = (feeds) => {
@@ -52,7 +53,6 @@ const Header = () => {
     setFeeds(feeds);
   };
 
-  const changeData = () => socket.emit("initial_data");
 
   const handleOption = (menu) => {
     if (menu === "Logout") {

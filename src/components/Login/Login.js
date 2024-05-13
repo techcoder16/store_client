@@ -87,83 +87,81 @@ const Login = () => {
   return (
     <React.Fragment>
       <ToasterGen></ToasterGen>
-<div className=" bg-background-main  h-scree ">
-      <div className="bg-background-main  h-full text-white flex items-center    margin ">
-        <div className="container mx-auto  justify-center items-center ">
-          <div className="flex   min-h-screen  bg-transparent ">
-            <div className="relative  m-6 space-y-8 bg-white   md:space-y-0 w-full">
-              <div className="flex bg-background grid-flow-col grid-cols-2 gap-2">
-                <div className=" bg-background w-full  p-8 md:p-14  top-12 h-max">
-                  <div>
-                    <span className=" font-bold    font-dmsans text-3xl   text-line ">
-                      Welcome to Marketing Data
+<div className=" bg-background-main  h-screen ">
+<div className="col-span-3 lg:col-span-3 w-full bg-[#F9F9F9] ">
+   <div>
+                    <span className=" font-bold  text-center flex justify-center   font-Poppins text-3xl   text-black ">
+                      Get Marketing Data Login 
+                    </span>
+
+                    <span className=" font-bold  text-center flex justify-center   font-Poppins text-md  text-gray-500 ">
+                      Shape your work
                     </span>
                   </div>
+                  
+          <div className="min-h-screen flex items-center justify-center text-center">
+            <div className="flex items-center lg:w-1/2   justify-center bg-transparent">
+              <div className="relative bg-white shadow-2xl rounded-2xl">
+                <div className="flex flex-col justify-center p-8 md:p-14">
+                  <div className="flex justify-center self-center items-center">
+                 
 
                   <form
-                    className=" relative     top-20 py-1 "
+                    className=" relative     py-1 "
                     onSubmit={formik.handleSubmit}
                   >
                     <div className="py-1 h-28">
-                      <span className="mb-2 text-md font-dmsans  font-normal text-base  leading-5 text-line">
-                        Your email
+                          <span className="mb-2 text-md font-Overpass font-normal text-xs text-gray-600  font-Overpass leading-5 ">
+                         Email
                       </span>
 
                       <input
                         {...formik.getFieldProps("emailnew")}
                         id="emailnew"
                         type="email"
-                        className=" gap-1 w-full  h-14 border bg-background  rounded-xl  text-white text-center placeholder:font-light"
+                        className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-400 font-Overpass placeholder:font-Overpass text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Overpass text-xs focus:outline-none"
                         placeholder=""
                       ></input>
                     </div>
 
-                    <div className="py-1 h-44  ">
-                      <div className="    rounded-xl relative">
-                        <span className="mb-2 text-md font-dmsans font-noraml text-line">
-                          Your Password
-                        </span>
+                    <div className="py-1 h-32  ">
+                    <div className="relative rounded-xl">
+    <span className="mb-2 text-md font-Overpass font-normal text-xs text-gray-600 font-Overpass leading-5">
+        Password
+    </span>
+    <input
+         {...formik.getFieldProps("password")}
+         id="password"
+         value={formik.values.password}
+         type={
+           isPasswordHideShow === false ? "password" : "text"
+         }
+         className="w-full h-12 bg-transparent border-b-2 border-b-solid text-black border-b-gray-400 font-Overpass placeholder:font-Overpass text-center placeholder:font-light focus:border-b-[#35724e] focus:border-b-2 focus:border-b-solid placeholder:font-Overpass text-xs focus:outline-none"
+           
+         // Add your other input properties here
+    />
+    <i className="absolute top-2/3 left-4/5 transform -translate-y-1/2">
+        {isPasswordHideShow === true ? (
+            <div className="flex items-center">
+                <VscEye
+                    className="w-6"
+                    onClick={ChangePasswordHideShow}
+                ></VscEye>
+                <span className="ml-2 font-normal text-sm leading-7 font-Poppins"></span>
+            </div>
+        ) : (
+            <div className="flex items-center">
+                <VscEyeClosed
+                    className="w-6"
+                    onClick={ChangePasswordHideShow}
+                />
+                <span className="ml-2 font-normal text-sm leading-7 font-Poppins"></span>
+            </div>
+        )}
+    </i>
+</div>
 
-                        <i className="absolute font-normal top-1/2 right-2  -translate-y-1/2 text-line">
-                          {isPasswordHideShow === true ? (
-                            <div className="flex items-center ">
-                              <VscEye
-                                className=" w-6   "
-                                onClick={ChangePasswordHideShow}
-                              ></VscEye>
-                              <span
-                                className="ml-2 font-normal text-lg leading-7     font-dmsans"
-                                style={{ font: "icon" }}
-                              >
-                                Hide
-                              </span>
-                            </div>
-                          ) : (
-                            <div className="flex items-center font-normal">
-                              <VscEyeClosed
-                                className="w-6"
-                                onClick={ChangePasswordHideShow}
-                              />
-                              <span
-                                className="ml-2 font-normal text-lg leading-7 font-dmsans  "
-                                style={{ font: "icon" }}
-                              >
-                                Show
-                              </span>
-                            </div>
-                          )}
-                        </i>
-                      </div>
 
-                      <input
-                        {...formik.getFieldProps("password")}
-                        id="password"
-                        value={formik.values.password}
-                        type={
-                          isPasswordHideShow === false ? "password" : "text"
-                        }
-                        className="gap-1 w-full  h-14 border bg-background  rounded-xl  text-white  text-center placeholder:font-light"
-                      />
                     </div>
 
 
@@ -173,23 +171,15 @@ const Login = () => {
 
                     <button
                       type="submit"
-                      className="    relative  w-1/2  my-6  rounded-full border   h-16 bg-[#006400]  text-white border-extra-color  text-md p-2  mb-6 hover:bg-[#006400] hover-text-white"
-                    >
+                      className="font-Poppins text-base w-40  font-semibold h-12 bg-[#1BA955] text-white  p-2 rounded-lg "
+                      >
                       Login
                     </button>
                    
                   </form>
                 </div>
 
-                <div className=" bg-background hidden md:flex flex-col w-full">
-                  <div className="flex-grow">
-                    <img
-                      src={image}
-                      alt="Image"
-                      className="w-full h-full object-cover min-h-screen"
-                    />
-                  </div>
-                </div>
+          
               </div>
             </div>
           </div>

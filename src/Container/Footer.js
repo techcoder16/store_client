@@ -28,18 +28,18 @@ const Footer = () => {
 
       <div className="  bg-background py-6 md:py-12">
       <div className="flex flex-col md:flex-row justify-center items-center">
-        <div className="mb-4 md:mb-0 md:mr-6 text-gray-400">
-          <Link to="/terms" className="text-gray-400 font-dmsans text-sm">
+        <div className="mb-4 md:mb-0 md:mr-6 text-white">
+          <Link to="/terms" className="text-white font-Poppins text-sm">
             Terms of Use
           </Link>
         </div>
-        <div className="mb-4 md:mb-0 md:mr-6 text-gray-400">
-          <Link to="/privacy" className="text-gray-400 font-dmsans text-sm">
+        <div className="mb-4 md:mb-0 md:mr-6 text-white">
+          <Link to="/privacy" className="text-white font-Poppins text-sm">
             Privacy Policy
           </Link>
         </div>
-        <div className="text-gray-400">
-          <span className="font-dmsans text-sm">&copy; 2023 Marketing</span>
+        <div className="text-white">
+          <span className="font-Poppins text-sm">&copy; 2023 Marketing</span>
         </div>
       </div>
 

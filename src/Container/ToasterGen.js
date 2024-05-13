@@ -14,8 +14,8 @@ const ToasterGen = () => {
         style: {
           border: "2px solid #F5F5F5",
           padding: "16px",
-          backgroundColor: "#140D1E", // Add your desired background color
-          color: "#B28EFB",
+          backgroundColor: "#efeeef ", // Add your desired background color
+          color: "#5ae31b ",
          fontFamily:"sans-serif"
         },
       },
@@ -23,10 +23,10 @@ const ToasterGen = () => {
         style: {
           border: "2px solid #F5F5F5",
           padding: "16px",
-          color: "#B28EFB",
-          color: "#B28EFB",
+          color: "#0F5132",
+          color: "#0F5132",
           fontFamily:"sans-serif",
-          backgroundColor: "#140D1E", // Add your desired background color
+          backgroundColor: "#efeeef ", // Add your desired background color
 
         },
       },

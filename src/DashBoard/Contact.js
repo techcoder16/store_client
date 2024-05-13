@@ -13,14 +13,19 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
 import GetApiData from "../helpers/getApiData";
 import axios from "axios";
+
 import ContactDetails from "./ContactDetails";
-// import "./Dashboard.css";
+// import "./Dashboard.css";3
+
+import { TiArrowSortedDown } from "react-icons/ti";
+import { TiArrowSortedUp } from "react-icons/ti";
+
 import { CircularLoader } from "./CircularLoader";
 import Dropzone from "react-dropzone";
 import postApiData from '../helpers/postApiData';
 import { AiOutlineUpload } from "react-icons/ai";
-
 import * as XLSX from "xlsx";
+
 
 import { useNavigate } from "react-router-dom";
 
@@ -42,8 +47,12 @@ const Contact = () => {
   const location = useLocation();
   const [showFilters, setShowFilters] = useState(true);
   const [type, setType] = useState("buyer");
-  const [deletedState,setDeletedState] = useState();
-const [sideMenuShow,setSideMenuShow] = useState(true);
+  const [deletedState,setDeletedState] = useState(0);
+  const [filter,setFilter] = useState(true);
+
+  const [file, setFile] = useState(null);
+
+const [sideMenuShow,setSideMenuShow] = useState(false);
   function handleScroll() {
     window.scroll({
       top: document.body.offsetTop,
@@ -52,37 +61,41 @@ const [sideMenuShow,setSideMenuShow] = useState(true);
     });
   }
 
+  useEffect(() => {
+    dispatch(contactData());
+  }, [deletedState]);
 
 
-
-  const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
+    console.log(e.target.files)
+
     setFile(e.target.files[0]);
   };
 
-  const handleUpload = async () => {
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
+//   const handleUpload = async () => {
+//     try {
+//       const formData = new FormData();
+//       formData.append('file', file);
 
 
 
-setCircularProgress(true);
+// setCircularProgress(true);
+// console.log('Uploading');
+
+//       const response = await axios.post('http://localhost:5001/contact/upload', formData);
+//       setCircularProgress(false);
 
 
-      const response = await axios.post('http://localhost:5001/contact/upload', formData);
-      setCircularProgress(false);
-
-
-      console.log('File uploaded successfully:', response.data);
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      setCircularProgress(false);
+//       console.log('File uploaded successfully:', response.data);
+//     } catch (error) {
+//       console.error('Error uploading file:', error);
+//       setCircularProgress(false);
       
 
-    }
-  };
+//     }
+//   };
+
   useEffect(() => {
     const user = localStorage.getItem("user_data");
     if (user) {
@@ -94,18 +107,43 @@ setCircularProgress(true);
 
 
 
-  
-  // const handleUpload = (acceptedFiles) => {
-  //   const fileReader = new FileReader();
-  //   fileReader.onload = function (e) {
-  //     const arrayBuffer = e.target.result;
-  //     const workbook = XLSX.read(arrayBuffer, { type: "buffer" });
-  //     const sheetName = workbook.SheetNames[0];
-  //     const sheet = workbook.Sheets[sheetName];
-  //     const result = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-  //     setData(result);
-  //   };
 
+  
+  const handleUpload =async(acceptedFiles) => {
+    console.log(acceptedFiles);
+    const fileReader = new FileReader();
+    try {
+      setCircularProgress(true);
+console.log('Uploading');
+const formData = new FormData();
+formData.append('file', acceptedFiles[0]);
+
+      const response = await axios.post('http://localhost:5001/contact/upload', formData);
+      
+      setCircularProgress(false);
+
+
+      console.log('File uploaded successfully:', response.data);
+      toast.success("File uploaded successfully");
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      setCircularProgress(false);
+      
+
+
+      
+    };
+
+    fileReader.onload = function (e) {
+      const arrayBuffer = e.target.result;
+      const workbook = XLSX.read(arrayBuffer, { type: "buffer" });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const result = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+      setData(result);
+      
+  }
+}
 
   //   fileReader.readAsArrayBuffer(acceptedFiles[0]);
 
@@ -299,7 +337,7 @@ setCircularProgress(true);
       data.Country.map((value, index) => {
         results6.push({ value: index, label: value });
       });
-      setOptions((prev) => ({ ...prev, Country: results6 }));
+      setOptions((prev) => ({ ...prev, country: results6 }));
 
       let results7 = [];
       results7.push({ key: 0, value: "" });
@@ -368,7 +406,7 @@ setCircularProgress(true);
     pages.push(
       <button
         onClick={() => handlePageChange(1)}
-        className={`px-3 py-1 font-bold rounded font-dmsans mx-1 italic  ${
+        className={`px-3  py-1 font-bold rounded font-dmsans mx-1 italic  ${
           currentPage === 1
           ? " bg-textColor text-white"
           : " bg-textColor text-white"
@@ -392,7 +430,7 @@ setCircularProgress(true);
         <button
           key={page}
           onClick={() => handlePageChange(page)}
-          className={` px-3 py-1 font-bold rounded font-dmsans     ${
+          className={` px-3  mx-1 py-1 font-bold rounded font-dmsans     ${
             currentPage === page
             ? " bg-textColor text-white"
             : " bg-textColor text-white"
@@ -441,32 +479,177 @@ setCircularProgress(true);
   const optionsElement = (value) => {
     switch (value) {
       case "name":
-        return options.name;
+        return (
+          options.name &&
+          options.name.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins"
+              value={option.value}
+            >
+              {option.value}
+            </option>
+          ))
+        );
+        
       case "website":
-        return options.website;
+        return  (
+          options.website &&
+          options.website.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
       case "industry":
-        return options.industry;
+        return  (
+          options.industry &&
+          options.industry.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
       case "industry2":
-        return options.industry2;
+        return (
+          options.industry2 &&
+          options.industry2.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
+
       case "Region":
-        return options.Region;
-      case "Country":
-        return options.Country;
+        return (
+          options.Region &&
+          options.Region.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
+      case "country":
+        return (
+          options.country &&
+          options.country.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
       case "companyName":
-        return options.companyName;
+        return (
+          options.companyName &&
+          options.companyName.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
       case "companyLinkedIn":
-        return options.companyLinkedIn;
+        return (
+          options.companyLinkedIn &&
+          options.companyLinkedIn.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
         case "role":
-        return options.role;
+        return (
+          options.role &&
+          options.role.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
         case "quality":
-        return options.quality;
+        return (
+          options.quality &&
+          options.quality.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
         case "result":
-        return options.result;
+        return (
+          options.result &&
+          options.result.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
         case "free":
-        return options.free;
+        return (
+          options.free &&
+          options.free.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
 
         case "date":
-        return options.date;
+        return (
+          options.date &&
+          options.date.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
         
 
         
@@ -493,7 +676,7 @@ setCircularProgress(true);
           industry: value,
         }));
         break;
-      case "industry1":
+      case "industry2":
         setSelectedFilters((prevFilters) => ({
           ...prevFilters,
           industry2: value,
@@ -505,10 +688,10 @@ setCircularProgress(true);
           Region: value,
         }));
         break;
-      case "Country":
+      case "country":
         setSelectedFilters((prevFilters) => ({
           ...prevFilters,
-          Country: value,
+          country: value,
         }));
         break;
       case "companyName":
@@ -523,13 +706,40 @@ setCircularProgress(true);
           companyLinkedIn: value,
         }));
         break;
+        case "date":
+          setSelectedFilters((prevFilters) => ({
+            ...prevFilters,
+            date: value,
+          }));
+          break;
+          case "free":
+          setSelectedFilters((prevFilters) => ({
+            ...prevFilters,
+            date: value,
+          }));
+          break;
+          case "result":
+          setSelectedFilters((prevFilters) => ({
+            ...prevFilters,
+            result: value,
+          }));
+          break;
+          case "quality":
+          setSelectedFilters((prevFilters) => ({
+            ...prevFilters,
+            quality: value,
+          }));
+          break;
+          
+
     }
   };
 
   function handleSelect(option, selected) {
  
+    console.log(selected)
 
-    handleFilter(option, selected.label);
+    handleFilter(option, selected);
 
     setSelectedOptions(selected);
   }
@@ -594,14 +804,14 @@ setCircularProgress(true);
     }
   }, []);
 
-  useEffect(() => {
-    dispatch(contactData());
-  }, [circularProgress]);
+  // useEffect(() => {
+  //   dispatch(contactData());
+  // }, [circularProgress]);
 
-  useEffect(() => {
-    dispatch(contactData());
-    console.log("asdasdasd");
-  }, [deletedState]);
+  // useEffect(() => {
+  //   dispatch(contactData());
+  //   console.log("asdasdasd");
+  // }, [deletedState]);
 
 
   useEffect(() => {
@@ -614,15 +824,23 @@ setCircularProgress(true);
   const isLoading = !contact.contacts;
 
   useEffect(() => {
-    dispatch(
-      contactData ({
-        page: currentPage,
-        searchQuery: searchQuery,
-        selectedFilters: selectedFilters,
-        sortColumn: sortColumn,
-        sortDirection: sortDirection,
-      })
-    );
+    let timer = setTimeout(() =>{
+      dispatch(
+        contactData ({
+          page: currentPage,
+          searchQuery: searchQuery,
+          selectedFilters: selectedFilters,
+          sortColumn: sortColumn,
+          sortDirection: sortDirection,
+        })
+      );
+      console.log("dispatch")
+    },500);
+    return (()=>{
+        clearTimeout(timer);  
+    });
+
+    
   }, [
     dispatch,
     currentPage,
@@ -655,9 +873,9 @@ setCircularProgress(true);
       <div className="grid grid-cols-1 lg:grid-cols-10 gap-0 bg-white">
 
       
-        <div className={` ${sideMenuShow == true ? 'lg:col-span-2 w-full' :  'lg:col-span-0 '}   lg:flex bg-white `}>
+        <div className={` ${sideMenuShow == true ? 'col-span-1 w-full' :  'lg:col-span-0 '}   lg:flex bg-white `}>
 
-          <SideMenu  />
+          <SideMenu setSideMenuShow={setSideMenuShow}  />
         </div>
 
         
@@ -666,13 +884,13 @@ setCircularProgress(true);
 
 
 
-        <div className={` ${sideMenuShow == true ? 'lg:col-span-8' :  'lg:col-span-10' } bg-background-main w-full`}>
+        <div className={` ${sideMenuShow == true ? 'lg:col-span-9' :  'lg:col-span-10' } bg-transparent w-full`}>
 
 
 
       <div className="relative w-full  bg-white">
         <div className="flex flex-col h-auto p-4 md:p-8 text-center">
-          <p className="font-bold  text-4xl  md:text-lg text-maincolor font-dmsans mb-2">
+          <p className="font-bold   text-4xl  md:text-lg text-green-600  font-Poppins font-dmsans mb-2">
           Contact Data
             
           </p>
@@ -698,40 +916,225 @@ setCircularProgress(true);
                 )}
               </Dropzone>
               </div> */}
-<div 
- className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4"
->
-    </div>
 
 
 
-    <div className="flex items-center justify-center w-full">
-    <label for="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-        <div className="flex flex-col items-center justify-center pt-5 pb-6">
 
 
+
+
+<div className="m-auto w-4/5 font-Poppins">
+
+  <div className="flex flex-col">
+    <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg">
+
+    <div class="relative w-full">
             
-      <button 
-      
-         onClick={handleUpload}>
 
-<svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-            </svg>
+            <div class="items-center justify-center max-w-xl mx-auto">
+        
+              <Dropzone onDrop={handleUpload} accept=".xls, .xlsx, .csv">
+                        {({ getRootProps, getInputProps }) => (
+                          <div
+                            {...getRootProps()}
+                            className="  "
+                            >
+                              
+                            {/* <input {...getInputProps()} />
+                             */}
+                            {/* <AiOutlineUpload></AiOutlineUpload>  */}
+                            <label class="flex justify-center w-full h-32 px-4   bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-300 ease-in-out" id="drop">
+                              <span class="flex items-center space-x-2">
+                              
+                              <span class="font-medium text-gray-600">Drop files to Attach, or<span class="text-green-600 underline ml-[4px]">browse</span></span></span>
+                             </label>
+        
+        
+                              
+                          </div>
+                        )}
+                      </Dropzone>
+        
+            </div>
+          </div>
 
 
-         </button>
 
+      Filters
+      <form className="">
+        <div className="relative mb-10 w-full flex  items-center justify-between rounded-md">
+          <svg className="absolute left-2 block h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8" className=""></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65" className=""></line>
+          </svg>
+          <input type="name"
+          
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
 
-
-            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> </p>
-            
-            <p className="text-xs text-gray-500 dark:text-gray-400">XLSX</p>
+          name="search" className="h-12 w-full cursor-text rounded-md border border-gray-100 bg-gray-100 py-4 pr-40 pl-12 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Search by Name etc" />
         </div>
-        <input type="file" onChange={handleFileChange}  />
-    </label>
-</div> 
+       <div className=" flex justify-end w-full"> {filter == true ?  <TiArrowSortedUp onClick={() => setFilter(false)} ></TiArrowSortedUp> :<  TiArrowSortedDown onClick={() => setFilter(true)} />}</div>
+         
+         
 
+
+       <div className={`${filter ? "block transition duration-300 ease-in-out" : "transition duration-500 ease-in-out hidden"}`}>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="flex flex-col">
+            <label for="name" className="text-sm font-medium text-stone-600">Name</label>
+            <input type="text" id="name" placeholder="Raspberry juice" className="mt-2 block w-full rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+          </div>
+
+          <div className="flex flex-col">
+            <label for="manufacturer" className="text-sm font-medium text-stone-600">Industry</label>
+
+            <select id="status"
+                onChange={(e) => handleSelect("industry", e.target.value)}
+                className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                 { optionsElement("industry")}
+                </select>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+          <div className="flex flex-col">
+            <label for="manufacturer" className="text-sm font-medium text-stone-600">Company Name</label>
+
+            <select id="status"
+                onChange={(e) => handleSelect("companyName", e.target.value)}
+                className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                 { optionsElement("companyName")}
+                </select>
+          </div>
+
+
+          {/* <div className="flex flex-col">
+            <label for="manufacturer" className="text-sm font-medium text-stone-600">Industry 2</label>
+
+            <select id="status"
+                onChange={(e) => handleSelect("industry2", e.target.value)}
+                className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                 { optionsElement("industry2")}
+                </select>
+          </div> */}
+
+          <div className="flex flex-col">
+            <label for="manufacturer" className="text-sm font-medium text-stone-600">Date</label>
+
+            <select id="status"
+                onChange={(e) => handleSelect("date", e.target.value)}
+                className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                 { optionsElement("date")}
+                </select>
+          </div>
+          <div className="flex flex-col">
+            <label for="manufacturer" className="text-sm font-medium text-stone-600">Quality</label>
+
+            <select id="status"
+                onChange={(e) => handleSelect("quality", e.target.value)}
+                className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                 { optionsElement("quality")}
+                </select>
+          </div>
+
+          <div className="flex flex-col">
+            <label for="manufacturer" className="text-sm font-medium text-stone-600">Role</label>
+
+            <select id="status"
+                onChange={(e) => handleSelect("role", e.target.value)}
+                className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                 { optionsElement("role")}
+                </select>
+          </div>
+
+          <div className="flex flex-col">
+            <label for="manufacturer" className="text-sm font-medium text-stone-600">Industry 2</label>
+
+            <select id="status"
+                onChange={(e) => handleSelect("industry2", e.target.value)}
+                className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                 { optionsElement("industry2")}
+                </select>
+          </div>
+
+
+          <div className="flex flex-col">
+            <label for="manufacturer" className="text-sm font-medium text-stone-600">Country</label>
+
+            <select id="status"
+                onChange={(e) => handleSelect("country", e.target.value)}
+                className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                 { optionsElement("country")}
+                </select>
+          </div>
+
+
+          {/* <div className="flex flex-col">
+            <label for="manufacturer" className="text-sm font-medium text-stone-600">Region</label>
+
+            <select id="status"
+                onChange={(e) => handleSelect("region", e.target.value)}
+                className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                 { optionsElement("region")}
+                </select>
+          </div> */}
+
+
+
+          <div className="flex flex-col">
+            <label for="status" className="text-sm font-medium text-stone-600">Website</label>
+
+                <select id="status"
+                onChange={(e) => handleSelect("website", e.target.value)}
+                className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                 { optionsElement("website")}
+                </select>
+
+
+{/* 
+
+            <Select
+                  isSearchable={true}
+                  options={optionsElement("website")}
+                  placeholder="Select Website" // Set the placeholder text
+           
+                  isMulti={false}
+                  onChange={(selected) => handleSelect("website", selected)}
+                  className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+           
+                > 
+                
+                </Select> */}
+
+                
+          </div>
+        </div>
+
+        <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex">
+          <button className="rounded-lg bg-gray-200 px-8 py-2 font-medium text-gray-700 outline-none hover:opacity-80 focus:ring">Reset</button>
+          
+        </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+  
+</div>
 
 
   
@@ -742,7 +1145,7 @@ setCircularProgress(true);
 
       <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
             <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
-              <div className="relative mb-4 sm:mb-0 sm:w-full md:w-64 mt-6">
+              {/* <div className="relative mb-4 sm:mb-0 sm:w-full md:w-64 mt-6">
                 <label htmlFor="simple-search" className="sr-only">
                   Search
                 </label>
@@ -758,11 +1161,11 @@ setCircularProgress(true);
                     <AiOutlineSearch className="w-5 h-5 text-maincolor dark:text-maincolor" />
                   </div>
                 </div>
-              </div>
+              </div> */}
 
 
 
-
+{/* 
               <div className="md:w-56 ml-0 mt-2  md:mt-0 md:ml-4">
                 <Select
                   isSearchable={true}
@@ -787,14 +1190,14 @@ setCircularProgress(true);
                   onChange={(selected) => handleSelect("industry2", selected)}
                   className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
                 ></Select>
-              </div>
+              </div> */}
             </div>
           </div>
 
 
           <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
             <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
-          <div className="md:w-56 ml-0  mt-2 md:mt-0 md:ml-4">
+          {/* <div className="md:w-56 ml-0  mt-2 md:mt-0 md:ml-4">
                 <Select
                   isSearchable={true}
                   options={optionsElement("name")}
@@ -828,23 +1231,23 @@ setCircularProgress(true);
                   onChange={(selected) => handleSelect("industry", selected)}
                   className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
                 ></Select>
-              </div>
+              </div> */}
               </div>
 
               </div>
               
 
-
+{/* 
           <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
             <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
               <div className="md:w-56 ml-0  mt-2   md:mt-0 md:ml-4">
                 <Select
                   isSearchable={true}
-                  options={optionsElement("Country")}
-                  placeholder="Select Country" // Set the placeholder text
+                  options={optionsElement("country")}
+                  placeholder="Select country" // Set the placeholder text
                   styles={customStyles}
                   isMulti={false}
-                  onChange={(selected) => handleSelect("Country", selected)}
+                  onChange={(selected) => handleSelect("country", selected)}
                   className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
                 ></Select>
               </div>
@@ -883,12 +1286,12 @@ setCircularProgress(true);
 
 
 
-          </div>
+          </div> */}
 
 
 
           
-
+{/* 
           <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
             <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
               <div className="md:w-56 ml-0  mt-2   md:mt-0 md:ml-4">
@@ -913,9 +1316,9 @@ setCircularProgress(true);
 
 
           </div>
+ */}
 
-
-          <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
+          {/* <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
             <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
               <div className="md:w-56 ml-0  mt-2   md:mt-0 md:ml-4">
                 <Select
@@ -965,14 +1368,14 @@ setCircularProgress(true);
 
 
           </div>
-          
+           */}
 
 
 
 
-      <div className="mt-0 bg-white grid grid-cols-1 sm:grid-cols-5 gap-2 sm:px-2 md:px-16 lg:px-28 xl:px-28 2xl:px-28 px-2">
+      <div className="mt-0 bg-white  grid-cols-1 sm:grid-cols-5 gap-2  left-0 px-7  ">
         <div
-          className={`w-full col-span-4 ${
+          className={` col-span-4 ${
             showFilters ? "col-span-5" : "col-span-5"
           }`}
         >
@@ -983,6 +1386,7 @@ setCircularProgress(true);
             currentItems={contact.contacts.contact}
             deletedState={setDeletedState}
             typeNew={type}
+            dispatch={dispatch}
           ></ContactDetails   >
         </div>
       </div>
@@ -996,7 +1400,7 @@ setCircularProgress(true);
             >
               <FaAngleLeft />
             </button>
-            <div className="italic ">{getPages()}</div>
+            <div className="italic  ">{getPages()}</div>
 
             <button
               onClick={handleNextPage}

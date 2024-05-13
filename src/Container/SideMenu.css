@@ -1,0 +1,67 @@
+.side-menu {
+    width: 300px;
+    height: 100vh;
+    background-color: #1BA955		;
+    position: fixed;
+
+    top: 0;
+    color:white;
+    left: 0;
+    transition: transform 0.3s ease;
+  }
+  
+  .side-menu.closed {
+    transform: translateX(-100%);
+  }
+  
+  .toggle-button {
+    border: 0;
+    background-color: transparent;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+  
+  
+  
+  .menu-item {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu-item img {
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .menu-item a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .menu-item.logout button {
+    border: 0;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .menu-item.logout button:hover {
+    text-decoration: underline;
+  }
+  
+
+  .menu-item {
+    position: relative; /* Ensure the menu item is a positioned parent */
+    display: flex;
+    align-items: center;
+
+    
+    margin-bottom: 10px;
+  }
+  
+  .menu-item span {
+    margin-right: 5px;
+  }
+  
+ 
