@@ -90,7 +90,7 @@ const UserSetting = () => {
       <MenuHeader></MenuHeader>
       <div className=" flex items-center  justify-center min-h-auto  bg-transparent">
         <div className="flex flex-col justify-center  ">
-          <span className="mb-3 text-2xl font-bold font-dmsans text-subheading-400  text-maincolor">
+          <span className="mb-3 text-2xl font-bold font-novasans text-subheading-400  text-maincolor">
             Change Profile Settings
           </span>
 
@@ -102,7 +102,7 @@ const UserSetting = () => {
                     
 
                     <div className="py-4 ">
-                      <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                      <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                         Name
                       </span>
                       <input
@@ -110,14 +110,14 @@ const UserSetting = () => {
                         id="name"
                         type="text"
                         value={formik.values.name}
-                        className=" w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                        className=" w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                         placeholder="Name"
                       ></input>
                       <label className="relative left-0 top-1 cursor-text"></label>
                     </div>
 
                     <div className="py-4 ">
-                      <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                      <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                         Password
                       </span>
                       <input
@@ -125,14 +125,14 @@ const UserSetting = () => {
                         id="password"
                         type="password"
                         value={formik.values.password}
-                        className=" w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                        className=" w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                         placeholder="password"
                       ></input>
                       <label className="relative left-0 top-1 cursor-text"></label>
                     </div>
 
                     <div className="py-4 ">
-                      <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                      <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                         Email
                       </span>
                       <input
@@ -140,14 +140,14 @@ const UserSetting = () => {
                         id="email"
                         type="email"
                         value={formik.values.email}
-                        className=" w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                        className=" w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                         placeholder="Email"
                       ></input>
                       <label className="relative left-0 top-1 cursor-text"></label>
                     </div>
 
                     <div className="py-4 ">
-                      <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                      <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                         Company
                       </span>
                       <input
@@ -155,14 +155,14 @@ const UserSetting = () => {
                         id="company"
                         type="company"
                         value={formik.values.company}
-                        className=" w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                        className=" w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                         placeholder="Company"
                       ></input>
                       <label className="relative left-0 top-1 cursor-text"></label>
                     </div>
 
                     <div className="py-4 ">
-                      <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                      <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                         Website
                       </span>
                       <input
@@ -170,14 +170,14 @@ const UserSetting = () => {
                         id="website"
                         type="website"
                         value={formik.values.website}
-                        className=" w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                        className=" w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                         placeholder="Website"
                       ></input>
                       <label className="relative left-0 top-1 cursor-text"></label>
                     </div>
 
                     <div className="py-4 ">
-                      <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                      <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                         User Name   {user.username}
                       </span>
                     
@@ -186,7 +186,7 @@ const UserSetting = () => {
                         id="username"
                         type="username"
                         value={user.username}
-                        className=" w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                        className=" w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                         placeholder="User Name"
                       ></input>
                       <label className="relative left-0 top-1 cursor-text"></label>

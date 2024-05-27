@@ -6,18 +6,20 @@ import userSlice from './UserStore/userSlice';
 
 import contactSlice from './AuthStore/contactSlice';
 import companySlice from './AuthStore/companySlice';
+import authUserSlice from './UserStore/authUserSlice';
 const authStore  = configureStore({
     
     reducer:{
         auth:authSlice,
         menu:menuSlice,
         screen:screenSlice,
-        userdata:userSlice,
+        users:userSlice,
    
         company:companySlice,
-    
+        
      
         contact:contactSlice,
+        authuser:authUserSlice,
     }
 
 });

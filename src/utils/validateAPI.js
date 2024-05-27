@@ -190,7 +190,8 @@ async function verify_user_create(error = {}, values) {
   const Values = {
     username: values.username,
     password: values.password,
-    role: values.role,
+    name:values.name,
+    email: values.email,
   };
 
   await PostApiData("auth/create_user", Values);
@@ -322,6 +323,7 @@ export async function ValidateContactCreate(values) {
   return errors;
 }
 async function verify_ContactPlatform(error = {}, values) {
+  
   const Values = {
     date: values.date,
     name: values.name,
@@ -373,6 +375,7 @@ export async function ValidateContactUpdate(values) {
 }
 
 async function verify_ContactPlatformEdit(error = {}, values) {
+
   const Values = {
     date: values.date,
     name: values.name,
@@ -431,6 +434,10 @@ async function verify_ContactPlatformEdit(error = {}, values) {
 }
 
 export async function ValidateCompanyCreate(values) {
+
+
+
+
   const errors = verify_CompanyCreate({}, values);
 
   return errors;

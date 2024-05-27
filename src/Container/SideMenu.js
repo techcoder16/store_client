@@ -14,13 +14,14 @@ import { RiContactsBook2Fill } from "react-icons/ri";
 import { MdDashboard } from "react-icons/md";
 import { CiLogout } from "react-icons/ci";
 
+import { MdOutlineMenuOpen } from "react-icons/md";
 
 const SideMenu = ({setSideMenuShow}) => {
   const navigate = useNavigate();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const dashboard_menu = [
-    { name: "DashBoard", image: dashboard, link: "/dashboard", role: "user" ,icon:<MdDashboard />  },
+    { name: "Companies", image: dashboard, link: "/dashboard", role: "user" ,icon:<MdDashboard />  },
     { name: "Contacts", image: information, link: "/contact_list", role: "admin" ,icon:<RiContactsBook2Fill ></RiContactsBook2Fill> },
     { name: "Create Contacts ", image: information, link: "/create_contact", role: "admin" ,icon:<MdContacts></MdContacts>},
     { name: "Create Company", image: information, link: "/add_company", role: "admin" ,icon:<FaIndustry></FaIndustry> },
@@ -38,13 +39,16 @@ const SideMenu = ({setSideMenuShow}) => {
     <>
       {!isMenuVisible && (
         <button
-          className="toggle-button relative top-1 flex text-green-600 bg-red-800" 
+          className="toggle-button relative top-1 flex text-gray-500 bg-red-800" 
           onClick={() => {
             setIsMenuVisible(true);
             setSideMenuShow(true);
           }}
         >
-          <CiMenuBurger className="text-4xl text-green-600" />
+      
+          <MdOutlineMenuOpen />
+
+
         </button>
       )}
 
@@ -61,7 +65,7 @@ const SideMenu = ({setSideMenuShow}) => {
           </button>
         )}
 
-<div class="menu-items items-center lg:translate-y-1/2 translate-y-1/8 top-0   justify-center lg:overflow-hidden ">
+<div className="menu-items items-center lg:translate-y-1/2 translate-y-1/8 top-0   justify-center lg:overflow-hidden ">
         {dashboard_menu.map((element, index) => (
            <div className="menu-item  flex  text-white w-full   left-1/4" key={index}>
            <Link to={element.link} className="flex items-center ">

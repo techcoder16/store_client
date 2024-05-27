@@ -52,11 +52,11 @@ const SignUp = () => {
                 <div className="flex bg-background grid-flow-col grid-cols-2 gap-2">
                   <div className=" bg-background w-full  p-8 md:p-14  top-12">
                     <div>
-                      <span className=" font-bold    font-dmsans text-3xl   text-line ">
+                      <span className=" font-bold    font-novasans text-3xl   text-line ">
                        Welcome to Marketing Data
                       </span>
                     </div>
-                    <span className=" font-normal   font-dmsans  leading-6  text-base   text-line ">
+                    <span className=" font-normal   font-novasans  leading-6  text-base   text-line ">
                       Already have an account?
                       <a className="font-bold text-base underline space-x-3 mx-2    leading-6 ">
                        Log in
@@ -78,7 +78,7 @@ const SignUp = () => {
                         className="border text-line border-gray-200 rounded-[40px] w-full h-20 flex items-center text-center justify-center"
                       >
                         <TiSocialFacebookCircular className="mr-2 h-6 w-6" />
-                        <span className="text-base font-normal leading-6 font-dmsans text-line">
+                        <span className="text-base font-normal leading-6 font-novasans text-line">
                         Sign up with Facebook
                         </span>
                       </button>
@@ -117,7 +117,7 @@ const SignUp = () => {
                         className="border text-line border-gray-200 rounded-full w-full h-20 flex items-center justify-center text-center"
                       >
                         <FcGoogle className="mr-2 h-6 w-6" />
-                        <span className="text-base font-normal leading-6 font-dmsans">
+                        <span className="text-base font-normal leading-6 font-novasans">
                         Sign up with Google
                         </span>
                       </button>
@@ -134,7 +134,7 @@ const SignUp = () => {
                         className="border text-line border-gray-200 rounded-full w-full h-20 flex items-center justify-center text-center"
                       >
                         <AiTwotoneMail className="mr-2 h-6 w-6" />
-                        <span className="text-base font-normal leading-6 font-dmsans">
+                        <span className="text-base font-normal leading-6 font-novasans">
                           Sign up with Email
                         </span>
                       </button>

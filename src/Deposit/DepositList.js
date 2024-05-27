@@ -131,7 +131,7 @@ const DepositList = () => {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search Deposits"
-                      className="bg-background border border-gray-600 text-maincolor font-dmsans text-sm rounded-lg focus:ring-maincolor focus:border-maincolor block w-full pl-10 p-2.5 focus:outline-none focus:ring-0"
+                      className="bg-background border border-gray-600 text-maincolor font-Poppins text-sm rounded-lg focus:ring-maincolor focus:border-maincolor block w-full pl-10 p-2.5 focus:outline-none focus:ring-0"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                       <AiOutlineSearch className="w-5 h-5 text-maincolor dark:text-maincolor" />
@@ -142,7 +142,7 @@ const DepositList = () => {
 
               <div className="relative flex flex-col m-6 space-y-8 bg-background shadow-2xl rounded-2xl">
                 <div className="p-8 md:p-14">
-                  <span className="mb-3 font-dmsans text-subheading-400 text-textColor">
+                  <span className="mb-3 font-Poppins text-subheading-400 text-textColor">
                     Deposist List
                   </span>
 
@@ -167,18 +167,18 @@ const DepositList = () => {
                         {currentItems.map((item) => (
                           <tr key={item.id}>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-maincolor font-dmsans">
+                              <div className="text-sm font-medium text-maincolor font-Poppins">
                                 {item.network}
                               </div>
                             </td>
 
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-maincolor font-dmsans">
+                              <div className="text-sm font-medium text-maincolor font-Poppins">
                                 {item.currency}
                               </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-maincolor font-dmsans">
+                              <div className="text-sm font-medium text-maincolor font-Poppins">
                                 {item.address}
                               </div>
                             </td>

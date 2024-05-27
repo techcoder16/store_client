@@ -191,7 +191,7 @@ useEffect(() => {
 
           <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl">
             <div className="p-8 md:p-14">
-              <span className="mb-3 font-dmsans text-subheading-400 text-maincolor">
+              <span className="mb-3 font-Poppins text-subheading-400 text-maincolor">
                 Screen Authorization List
               </span>
 

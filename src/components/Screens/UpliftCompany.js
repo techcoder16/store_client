@@ -1,11 +1,11 @@
 import React from 'react'
 
 import Dropzone from "react-dropzone";
-import postApiData from '../helpers/postApiData';
+import postApiData from '../../helpers/postApiData';
 import { AiOutlineUpload } from "react-icons/ai";
-import Header from '../Container/Header';
-import SideMenu from '../Container/SideMenu';
-import ToasterGen from '../Container/ToasterGen';
+import Header from '../../Container/Header';
+import SideMenu from '../../Container/SideMenu';
+import ToasterGen from '../../Container/ToasterGen';
 import { useState } from 'react';
 import * as XLSX from "xlsx";
 const UpliftCompany = () => {
@@ -67,11 +67,11 @@ const UpliftCompany = () => {
 
   <div className="relative w-full  bg-white">
         <div className="flex flex-col h-auto p-4 md:p-8 text-center">
-          <p className="font-bold  text-2xl  md:text-lg text-maincolor font-dmsans mb-2">
+          <p className="font-bold  text-2xl  md:text-lg text-maincolor font-Poppins mb-2">
           Uplift Company Data
             
           </p>
-          <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-dmsans">
+          <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-Poppins">
          
           </p>
         </div>

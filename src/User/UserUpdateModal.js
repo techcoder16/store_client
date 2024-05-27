@@ -71,7 +71,7 @@ const UserUpdateModal = ({ userState, props, menudata }) => {
           <div className="flex items-center  justify-center min-h-screen  bg-transparent">
             <div className="relative flex flex-col m-6 space-y-8 bg-background shadow-2xl rounded-2xl md:flex-row md:space-y-0">
               <div className="flex flex-col justify-center p-8 md:p-14 ">
-              <span className="mb-3 text-2xl font-bold font-dmsans text-subheading-400  text-maincolor">
+              <span className="mb-3 text-2xl font-bold font-Poppins text-subheading-400  text-maincolor">
                       Update User 
                     </span>
 
@@ -86,7 +86,7 @@ const UserUpdateModal = ({ userState, props, menudata }) => {
 
                 <form className="py-1" onSubmit={formik.handleSubmit}>
                   <div className="py-4 ">
-                    <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
                         User Name 
                     </span>
                     <input
@@ -94,7 +94,7 @@ const UserUpdateModal = ({ userState, props, menudata }) => {
                       id="username"
                       type="text"
                       value={formik.values.username}
-                      className=" w-full placeholder:font-dmsans bg-background text-maincolor  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className=" w-full placeholder:font-Poppins bg-background text-maincolor  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder="menu title"
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -102,7 +102,7 @@ const UserUpdateModal = ({ userState, props, menudata }) => {
 
                   
                   <div className="py-4 ">
-                    <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
                         User Balance
                     </span>
                     <input
@@ -110,7 +110,7 @@ const UserUpdateModal = ({ userState, props, menudata }) => {
                       id="balance"
                       type="text"
                       value={formik.values.balance}
-                      className=" w-full placeholder:font-dmsans text-maincolor bg-background  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className=" w-full placeholder:font-Poppins text-maincolor bg-background  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder="menu title"
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -119,14 +119,14 @@ const UserUpdateModal = ({ userState, props, menudata }) => {
 
 
                   <div className="py-4 ">
-                    <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
                       Select Role
                     </span>
                     <select
                       {...formik.getFieldProps("role")}
                       value={formik.values.role}  
                       id="role"
-                      className=" border bg-background text-maincolor text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-dmsans tra-color block w-full p-2.5 dark:bg-background-main dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-0   dark:focus:border-blue-500"
+                      className=" border bg-background text-maincolor text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-Poppins tra-color block w-full p-2.5 dark:bg-background-main dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-0   dark:focus:border-blue-500"
                     >
                       {optionElements}
                     </select>
@@ -138,7 +138,7 @@ const UserUpdateModal = ({ userState, props, menudata }) => {
                     type="text"
                     value={userState._id}
                     
-                    className=" w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                    className=" w-full placeholder:font-Poppins  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                   ></input>
 
                   <div className="py-4 ">

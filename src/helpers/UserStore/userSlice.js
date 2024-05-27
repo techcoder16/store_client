@@ -3,11 +3,16 @@ import axios from "axios";
 import env from "react-dotenv";
 
 export const userData = createAsyncThunk(
-  "userdata",
+  "users",
 
   async (payload, { rejectWithValue }) => {
     try {
-      const request = await axios.get(env.API_URL + "auth/get_user");
+      
+      
+      let queryString = encodeURIComponent(JSON.stringify(payload));
+      queryString =  queryString == undefined ? null : queryString
+
+      const request = await axios.get(env.API_URL + `auth/get_user/${queryString}`);
       const response = await request.data;
   
 
@@ -30,7 +35,8 @@ export const userData = createAsyncThunk(
 const userSlice = createSlice({
   name: "userdata",
   initialState: {
-    userdatas : [],
+    users : [],
+    userCount : 0,
     loading: false,
     error: null,
   },
@@ -50,7 +56,7 @@ const userSlice = createSlice({
       })
       .addCase(userData.fulfilled, (state, action) => {
           state.loading = false;
-          state.userdatas = action.payload;
+          state.users = action.payload;
         
         }
       );

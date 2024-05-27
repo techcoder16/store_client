@@ -180,7 +180,7 @@ const handlePageChange = (pageNumber) => {
 
           <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl">
             <div className="p-8 md:p-14">
-              <span className="mb-3 font-dmsans text-subheading-400 text-maincolor">
+              <span className="mb-3 font-Poppins text-subheading-400 text-maincolor">
                 Screen List
               </span>
 
@@ -233,7 +233,7 @@ const handlePageChange = (pageNumber) => {
                             >
                               <AiOutlineEdit />
                             </button>
-                          </td>
+                          </td> 
 
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button

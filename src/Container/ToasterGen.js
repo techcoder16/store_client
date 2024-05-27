@@ -15,7 +15,7 @@ const ToasterGen = () => {
           border: "2px solid #F5F5F5",
           padding: "16px",
           backgroundColor: "#efeeef ", // Add your desired background color
-          color: "#5ae31b ",
+          color: "#0F5132 ",
          fontFamily:"sans-serif"
         },
       },

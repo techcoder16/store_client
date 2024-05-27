@@ -71,14 +71,14 @@ const CreateMenu = ({ props,menuState }) => {
                     <span className="bg-transparent text-maincolor ">×</span>
                   </button>
                 </div>
-                <span className="mb-3 text-2xl font-bold font-dmsans text-subheading-400  text-maincolor">
+                <span className="mb-3 text-2xl font-bold font-Poppins text-subheading-400  text-maincolor">
                   Create Menu Item
                 </span>
 
 
                 <form className="py-1" onSubmit={formik.handleSubmit}>
                   <div className="py-4 ">
-                    <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
                       Menu name
                     </span>
                     <input
@@ -86,14 +86,14 @@ const CreateMenu = ({ props,menuState }) => {
                       id="menu_name"
                       type="text"
                       value={formik.values.menu_name}
-                      className=" w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className=" w-full placeholder:font-Poppins  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder="menu title"
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
                   </div>
 
                   <div className="py-4 ">
-                    <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
                       Menu Level
                     </span>
                     <input
@@ -101,19 +101,19 @@ const CreateMenu = ({ props,menuState }) => {
                       id="level"
                       type="text"
                       value={formik.values.level}
-                      className=" w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className=" w-full placeholder:font-Poppins  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
                   </div>
 
                   <div className="py-4">
-                    <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
                       Select Parent
                     </span>
                     <select
                       {...formik.getFieldProps("parent")}
                       value={formik.values.parent}
-                      className="bg-gray-50 border focus:outline-none focus:ring-0 border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-dmsans tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="bg-gray-50 border focus:outline-none focus:ring-0 border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-Poppins tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
                       {optionElements}
                     </select>
@@ -124,7 +124,7 @@ const CreateMenu = ({ props,menuState }) => {
                     id="id" 
                     type="text"
                     value={formik.values.id}
-                    className=" w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                    className=" w-full placeholder:font-Poppins  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                   ></input>
 
                   <div className="py-4 ">

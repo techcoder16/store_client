@@ -108,7 +108,7 @@ address:"",
                     <span className="bg-transparent text-textColor ">×</span>
                   </button>
                 </div>
-                <span className="mb-3 text-2xl font-bold font-dmsans text-subheading-400  text-textColor">
+                <span className="mb-3 text-2xl font-bold font-Poppins text-subheading-400  text-textColor">
                   Create  Deposit 
                 </span>
 
@@ -116,7 +116,7 @@ address:"",
                 <form className="py-1" onSubmit={formik.handleSubmit}>
 
                   <div className="py-4 ">
-                    <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
                        Network
                     </span>
                     <input
@@ -124,14 +124,14 @@ address:"",
                       id="network"
                       type="text"
                       value={formik.values.network}
-                      className=" bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className=" bg-background text-maincolor w-full placeholder:font-Poppins  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
                   </div>
 
                   <div className="py-4">
-  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+  <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
      Currency
   </span>
   <input
@@ -140,7 +140,7 @@ address:"",
     id="currency"
 
 
-    className=" w-full bg-background text-maincolor placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+    className=" w-full bg-background text-maincolor placeholder:font-Poppins  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
   >
   </input>
 
@@ -150,7 +150,7 @@ address:"",
                   
 
                   <div className="py-4 ">
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
                        Address
                     </span>
                     <input
@@ -158,7 +158,7 @@ address:"",
                       id="address"
                       type="text"
                       value={formik.values.email}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-Poppins  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>

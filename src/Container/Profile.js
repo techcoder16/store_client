@@ -175,7 +175,7 @@
 
           <div className=" bg-background">
             <div className="bg-background relative px-3 py-5">
-              <h1 className="text-maincolor font-dmsans font-bold text-2xl leading-8">
+              <h1 className="text-maincolor font-novasans font-bold text-2xl leading-8">
                 Profile Information
               </h1>
             </div>
@@ -196,7 +196,7 @@
                         </div>
 
                         <div className="py-4 flex justify-center items-center space-x-2">
-                          <label className="cursor-pointer bg-transparent  text-base  leading-5 font-normal  font-dmsans  text-textColor  py-2 px-4 rounded-lg">
+                          <label className="cursor-pointer bg-transparent  text-base  leading-5 font-normal  font-novasans  text-textColor  py-2 px-4 rounded-lg">
                             Edit
                             <input
                               type="file"
@@ -221,7 +221,7 @@
 
 
                         <div className="py-4">
-                          <span className="mb-2 text-md font-dmsans  font-normal text-base  leading-5 text-line">
+                          <span className="mb-2 text-md font-novasans  font-normal text-base  leading-5 text-line">
                             First Name*
                           </span>
 
@@ -244,7 +244,7 @@
 
 
                         <div className="py-4">
-                          <span className="mb-2 text-md font-dmsans  font-normal text-base   leading-5 text-line">
+                          <span className="mb-2 text-md font-novasans  font-normal text-base   leading-5 text-line">
                             Last Name*
                           </span>
 
@@ -272,7 +272,7 @@
 
                         <div className="py-4">
                           <div className="flex grid-col-2 gap-2">
-                            <span className="mb-2 text-md font-dmsans  font-normal text-base  leading-5 text-line">
+                            <span className="mb-2 text-md font-novasans  font-normal text-base  leading-5 text-line">
                               Phone
                             </span>
                         
@@ -294,7 +294,7 @@
 
                         <div className="py-4">
                           <div className="flex grid-col-2 gap-2">
-                            <span className="mb-2 text-md font-dmsans  font-normal text-base  leading-5 text-line">
+                            <span className="mb-2 text-md font-novasans  font-normal text-base  leading-5 text-line">
                               Account Number
                             </span>
                           
@@ -315,7 +315,7 @@
 
 
                         <div className="py-4">
-                          <span className="mb-2 text-md font-dmsans  font-normal text-base  leading-5 text-line">
+                          <span className="mb-2 text-md font-novasans  font-normal text-base  leading-5 text-line">
                             Payment Method {method}
                           </span>
                           <div className="">
@@ -340,7 +340,7 @@
 
                         <div className="py-4">
                           <div className="flex grid-col-2 gap-2">
-                            <span className="mb-2 text-md font-dmsans  font-normal text-base  leading-5 text-line">
+                            <span className="mb-2 text-md font-novasans  font-normal text-base  leading-5 text-line">
                               Bank Name
                             </span>
                         

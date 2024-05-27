@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useMemo } from "react";
 import { useState, useRef, useEffect } from "react";
-import logo from "../../src/assets/logo2.png";
+import logo from "../../src/assets/logo.png";
 import env from "react-dotenv";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 
 import bell from "../assets/SVG.png";
 // import { socket } from "../utils/global";
+import { MdOutlineMenuOpen } from "react-icons/md";
 
 import getApiData from "../helpers/getApiData";
 const Header = () => {
@@ -17,7 +18,7 @@ const Header = () => {
 
   const [user, setuserData] = useLoginValid(null);
   const location = useLocation();
-  const Menu = ["Profile Update", "Funding"];
+  const Menu = ["User","Auth Screen","Screens"];
 
   const [open, setOpen] = useState(false);
   const menuRef = useRef();
@@ -33,7 +34,7 @@ const Header = () => {
   const displayedFeeds = showAllFeeds ? feeds : feeds.slice(0, numberOfFeeds);
   const [filename, setFileName] = useState("");
   const [ContentType, setContentType] = useState("");
-
+  
   useEffect(() => {
     // socket.emit("initial_data");
     // socket.on("get_data", getData);
@@ -44,17 +45,24 @@ const Header = () => {
     // };
   }, []);
 
-  const getData = (feeds) => {
-    if (feeds.length && feeds.some((feed) => feed.read === false)) {
-      setIsNewFeed(true);
-    } else {
-      setIsNewFeed(false);
-    }
-    setFeeds(feeds);
-  };
-
+ 
 
   const handleOption = (menu) => {
+    const  role = JSON.parse (localStorage.getItem("user_data")).role;
+      console.log(menu)
+    if (menu === "User" && role == 'admin') {
+      
+      navigate("/users");
+    }
+
+    if (menu === "Auth Screen" && role == 'admin') {
+      
+      navigate("/auth_screens" );
+    }
+    if (menu === "Screens"  && role == 'admin') {
+      navigate("/screens");
+    }
+
     if (menu === "Logout") {
       let user = localStorage.getItem("user_data");
 
@@ -71,19 +79,16 @@ const Header = () => {
             }
           })
 
+
           .catch((err) => {});
 
     }
-    if (menu === "Profile Update") {
-      navigate("/profile");
-    }
+   
 
     if (menu === "Menu") {
       navigate("/menu_list");
     }
-    if (menu === "Screens") {
-      navigate("/screen_list");
-    }
+ 
     if (menu === "Authenticate Screens") {
       navigate("/auth_list");
     }
@@ -150,14 +155,14 @@ const Header = () => {
 
   return (
     <>
-      <nav className="bg-background">
+      <nav className="bg-[#FFFFFF] ">
         <div className="mx-5  max-w-8xl ">
           <div className="relative flex h-16 items-center justify-start">
             <div className="flex flex-1 items-center justify-start sm:items-stretch sm:justify-start">
               <div className="flex  items-center rounded-full">
                 <Link to="/dashboard">
                   <img
-                    className=" h-8   2xl:w-auto xl:w-auto sm:w-auto lg:w-auto md:w-auto    w-min  lg:block mx-2"
+                    className=" h-16    2xl:w-auto xl:w-auto sm:w-auto lg:w-auto md:w-auto    w-min  lg:block mx-2"
                     src={logo}
                     alt="sTORE"
                   />
@@ -169,10 +174,10 @@ const Header = () => {
 
             <div className=" absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto  ">
               <div className="relative ml-44">
-                <div className="flex bg-background grid-flow-col grid-cols-2 gap-2">
+                <div className="flex bg-transparent grid-flow-col grid-cols-2 gap-2">
                 
 
-                  <div className="h-auto   bg-background  border-solid border-white flex justify-center pt-0 mt-1">
+                  <div className="h-auto   bg-transparent  border-solid border-white flex justify-center pt-0 mt-1">
                     <button
                       type="button"
                       className=" flex rounded-full w-6 h-6 bg-maincolor text-sm focus:outline-none ring-2 ring-white focus:ring-white focus:ring-offset-2 focus:ring-offset-white "
@@ -196,13 +201,13 @@ const Header = () => {
                       >
                         <ul>
                           {Menu.map((menu,index) =>
-                            user.role == "user" || user.role == "admin  " ? (
+                            user.role == "user" || user.role == "admin" ? (
                               <li
                                 onClick={() => {
                                   setOpen(false);
                                   handleOption(menu);
                                 }}
-                                className="font-dmsans w-full  p-2 text-lg cursor-pointer rounded hover:bg-softColor hover:text-white"
+                                className="font-Poppins w-full  p-2 text-lg cursor-pointer rounded hover:bg-line hover:text-white"
                                 key={index}
                               >
                                 {menu}
@@ -216,7 +221,7 @@ const Header = () => {
                               setOpen(false);
                               handleOption("Logout");
                             }}
-                            className="font-dmsans w-full  p-2 text-lg cursor-pointer rounded hover:bg-softColor hover:text-white"
+                            className="font-Poppins w-full  p-2 text-lg cursor-pointer rounded hover:bg-line hover:text-white"
                             key={"Logout"}
                           >
                             Logout

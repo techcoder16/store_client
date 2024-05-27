@@ -1,17 +1,22 @@
-  import DashBoard from "../DashBoard/DashBoard";
+  import DashBoard from "../components/Screens/DashBoard";
   
   import Login from "../components/Login/Login";
   import { createBrowserRouter } from 'react-router-dom';
 
 import SideMenu from "../Container/SideMenu";
 import NotFound from "./NotFound";
-import Contact  from "../DashBoard/Contact";
+import Contact  from "../components/Screens/Contact";
 
-import AddCompany from "../DashBoard/AddCompany";
-import EditCompany from "../DashBoard/EditCompany";
-import AddContact from "../DashBoard/AddContact";
-import EditContact from "../DashBoard/EditContact";
-import UpliftCompany from "../DashBoard/UpliftCompany";
+import AddCompany from "../components/Screens/AddCompany";
+import EditCompany from "../components/Screens/EditCompany";
+import AddContact from "../components/Screens/AddContact";
+import EditContact from "../components/Screens/EditContact";
+import UpliftCompany from "../components/Screens/UpliftCompany";
+import User from "../User/UserList"
+import ScreenRights from "./ScreenRights";
+import ScreenList from "../Screen/ScreenList";
+import AuthScreenList from "../Screen/AuthScreenList";
+
 export const router = createBrowserRouter([
   {
     path:  "/",
@@ -68,7 +73,26 @@ export const router = createBrowserRouter([
     element: <UpliftCompany />,
   },
   
+  {
+    path:  "/users",
+    element: <User />,
+  },
+  
+  {
+    path: "/screen_rights",
 
+    element: <ScreenRights />,
+  },
+  {
+    path: "/screens",
+
+    element: <ScreenList />,
+  },
+  {
+    path: "/auth_screens",
+
+    element: <AuthScreenList />,
+  },
  ]);
 
 export default router;

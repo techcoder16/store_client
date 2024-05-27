@@ -34,11 +34,11 @@ const CreateAuthScreen = ({ props, UserState }) => {
 
   useEffect(() => {
     async function fetchData() {
-      const  data =  await GetApiData("auth/get_user", "");
+      const  data =  await GetApiData("auth/get_user", '""');
       let results = [];
 
-      
-      data.user.map((value) => {
+      console.log("asd",data);
+      data && data.users.map((value) => {
         results.push({
           key: value._id,
           value: value.username,
@@ -125,7 +125,7 @@ const CreateAuthScreen = ({ props, UserState }) => {
                   </button>
                 </div>
 
-                <span className="mb-3 text-2xl font-bold font-dmsans text-subheading-400  text-maincolor">
+                <span className="mb-3 text-2xl font-bold font-Poppins text-subheading-400  text-maincolor">
                   Authorize Screens to Users
                 </span>
 
@@ -134,7 +134,7 @@ const CreateAuthScreen = ({ props, UserState }) => {
              
 
                   <div className="py-4">
-                    <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
                       Select User
                     </span>
                     <select
@@ -143,7 +143,7 @@ const CreateAuthScreen = ({ props, UserState }) => {
                       id="username"
      
      
-                      className="bg-gray-50 border focus:outline-none focus:ring-0 border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-dmsans tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="bg-gray-50 border focus:outline-none focus:ring-0 border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-Poppins tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
                       {optionElements}
                     </select>
@@ -152,7 +152,7 @@ const CreateAuthScreen = ({ props, UserState }) => {
 
                   
                 <div className="py-4">
-                    <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
                       Select Screen
                     </span>
                     <select
@@ -161,7 +161,7 @@ const CreateAuthScreen = ({ props, UserState }) => {
                       id="screen_name"
      
      
-                      className="bg-gray-50 border focus:outline-none focus:ring-0 border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-dmsans tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="bg-gray-50 border focus:outline-none focus:ring-0 border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-Poppins tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
                       {optionElementScreen}
                     </select>

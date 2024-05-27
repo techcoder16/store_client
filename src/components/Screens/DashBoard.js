@@ -1,16 +1,16 @@
 import { useFormik } from "formik";
 
-import Header from "../Container/Header";
+import Header from "../../Container/Header";
 import React from "react";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
-import { companyData } from "../helpers/AuthStore/companySlice";
+import { companyData } from "../../helpers/AuthStore/companySlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useLayoutEffect, useEffect, useState, useMemo } from "react";
 import Select from "react-select";
 import axios from "axios";
-
+import { CircularLoader } from "../../utils/CircularLoader";
 import Dropzone from "react-dropzone";
-import postApiData from '../helpers/postApiData';
+import postApiData from '../../helpers/postApiData';
 import { AiOutlineUpload } from "react-icons/ai";
 
 import * as XLSX from "xlsx";
@@ -18,18 +18,18 @@ import * as XLSX from "xlsx";
 import { toast} from "react-hot-toast";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
-import GetApiData from "../helpers/getApiData";
+import GetApiData from "../../helpers/getApiData";
 import CompanyDetails from "./CompanyDetails";
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
 
 import { TiArrowSortedDown } from "react-icons/ti";
 import { TiArrowSortedUp } from "react-icons/ti";
-import SideMenu from "../Container/SideMenu";
+import SideMenu from "../../Container/SideMenu";
 
 
-import Footer from "../Container/Footer";
-import ToasterGen from "../Container/ToasterGen";
+import Footer from "../../Container/Footer";
+import ToasterGen from "../../Container/ToasterGen";
 
 const DashBoard = () => {
   const navigate = useNavigate();
@@ -145,7 +145,7 @@ const DashBoard = () => {
   };
 
 
-  const itemsPerPage = 100;
+  const itemsPerPage = 10;
   const filteredcompany = company.companys.company
     ? company.companys.company.filter((item) => {
         const isNameMatch = item.name
@@ -164,33 +164,28 @@ const DashBoard = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredcompany.slice(indexOfFirstItem, indexOfLastItem);
-
-  
-  const handleUpload =async(acceptedFiles) => {
+  const handleUpload = async (acceptedFiles) => {
     console.log(acceptedFiles);
     const fileReader = new FileReader();
     try {
       setCircularProgress(true);
-console.log('Uploading');
-const formData = new FormData();
-formData.append('file', acceptedFiles[0]);
+      console.log("Uploading");
+      const formData = new FormData();
+      formData.append("file", acceptedFiles[0]);
+      console.log(formData);
+      const response = await axios.post(
+        "http://localhost:5001/company/upload",
+        formData
+      );  
 
-
-      const response = await axios.post('http://localhost:5001/company/uplift_data', formData);
-      
       setCircularProgress(false);
 
-
-      console.log('File uploaded successfully:', response.data);
+      console.log("File uploaded successfully:", response.data);
       toast.success("File uploaded successfully");
     } catch (error) {
-      console.error('Error uploading file:', error);
+      console.error("Error uploading file:", error);
       setCircularProgress(false);
-      
-
-
-      
-    };
+    }
 
     fileReader.onload = function (e) {
       const arrayBuffer = e.target.result;
@@ -199,9 +194,48 @@ formData.append('file', acceptedFiles[0]);
       const sheet = workbook.Sheets[sheetName];
       const result = XLSX.utils.sheet_to_json(sheet, { header: 1 });
       setData(result);
+    };
+  };
+
+
+
+  
+//   const handleUpload =async(acceptedFiles) => {
+//     console.log(acceptedFiles);
+//     const fileReader = new FileReader();
+//     try {
+//       setCircularProgress(true);
+// console.log('Uploading');
+// const formData = new FormData();
+// formData.append('file', acceptedFiles[0]);
+
+// console.log(formData);
+//       const response = await axios.post('http://localhost:5001/company/uplift_data', formData);
       
-  }
-}
+//       setCircularProgress(false);
+
+
+//       console.log('File uploaded successfully:', response.data);
+//       toast.success("File uploaded successfully");
+//     } catch (error) {
+//       console.error('Error uploading file:', error);
+//       setCircularProgress(false);
+      
+
+
+      
+//     };
+
+//     fileReader.onload = function (e) {
+//       const arrayBuffer = e.target.result;
+//       const workbook = XLSX.read(arrayBuffer, { type: "buffer" });
+//       const sheetName = workbook.SheetNames[0];
+//       const sheet = workbook.Sheets[sheetName];
+//       const result = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+//       setData(result);
+      
+//   }
+// }
 
   let totalPages = Math.ceil(company.companys.companyCount / itemsPerPage);
   const [options, setOptions] = useState({});
@@ -394,8 +428,9 @@ formData.append('file', acceptedFiles[0]);
           ...prevFilters,
           industry: value,
         }));
+        console.log("yahan aaya");
         break;
-      case "industry1":
+      case "industry2":
         setSelectedFilters((prevFilters) => ({
           ...prevFilters,
           industry2: value,
@@ -430,14 +465,15 @@ formData.append('file', acceptedFiles[0]);
 
   function handleSelect(option, selected) {
  
-
-    handleFilter(option, selected.label);
+    console.log(selected);
+    handleFilter(option, selected);
 
     setSelectedOptions(selected);
   }
 
   useEffect(() => {
     async function fetchData() {
+
       const data = await GetApiData("company/get_filters", "");
 
       let results = [];
@@ -510,13 +546,13 @@ formData.append('file', acceptedFiles[0]);
     pages.push(
       <button
         onClick={() => handlePageChange(1)}
-        className={`px-3 py-1 font-bold rounded font-dmsans mx-1 italic  ${
+        className={`px-3  py-1 font-bold rounded font-novasans mx-1    ${
           currentPage === 1
-            ? " bg-textColor text-white"
-            : "bg-textColor text-white"
+            ? " bg-transparent text-[#7E7E7E]"
+            : " bg-transparent text-[#7E7E7E]"
         }`}
       >
-        1
+        1  
       </button>
     );
 
@@ -534,21 +570,21 @@ formData.append('file', acceptedFiles[0]);
         <button
           key={page}
           onClick={() => handlePageChange(page)}
-          className={` px-3 py-1 font-bold rounded font-dmsans     ${
+          className={` px-3  mx-1 py-1 font-semibold rounded font-novasans     ${
             currentPage === page
-              ? " bg-textColor text-white"
-              : " bg-textColor text-white"
+            ? " bg-transparent text-[#7E7E7E]"
+            : " bg-transparent text-[#7E7E7E]"
           }`}
         >
-          {page}
+          {page}  
         </button>
       );
     }
 
     if (addEndDots) {
       pages.push(
-        <span key="end-dots" className="px-0 py-1  text-gray-600">
-          ...
+        <span key="end-dots" className="px-0 py-1 font-novasans  text-gray-600">
+          of
         </span>
       );
     }
@@ -557,10 +593,10 @@ formData.append('file', acceptedFiles[0]);
       <button
         key={totalPages}
         onClick={() => handlePageChange(totalPages)}
-        className={`px-3 py-1 font-bold rounded font-dmsans mx-1 italic ${
+        className={`px-3 py-1 font-bold rounded font-novasans mx-1  ${
           currentPage === totalPages
-            ? " bg-textColor text-white"
-            : " bg-textColor text-white"
+          ? " bg-transparent text-[#7E7E7E]"
+          : " bg-transparent text-[#7E7E7E]"
         }`}
       >
         {totalPages}
@@ -658,7 +694,12 @@ formData.append('file', acceptedFiles[0]);
   const isLoading = !company.companys;
 
   useEffect(() => {
-    let timer = setTimeout(() =>{
+    console.log("Loading company")
+    console.log({     page: currentPage,
+      searchQuery: searchQuery,
+      selectedFilters: selectedFilters,
+      sortColumn: sortColumn,
+      sortDirection: sortDirection,})
     dispatch(
       companyData({
         page: currentPage,
@@ -668,10 +709,8 @@ formData.append('file', acceptedFiles[0]);
         sortDirection: sortDirection,
       })
     );
-  },500);
-  return (()=>{
-    clearTimeout(timer);  
-});
+ 
+ 
 
   }, [
     dispatch,
@@ -686,9 +725,10 @@ formData.append('file', acceptedFiles[0]);
     <React.Fragment>
       <Header></Header>
 
+      {circularProgress == true ? <CircularLoader></CircularLoader> : <></>}
       <ToasterGen></ToasterGen>
 
-      <div className="grid grid-cols-1 lg:grid-cols-10 gap-0 bg-white">
+      <div className="grid grid-cols-1 lg:grid-cols-10 gap-0  bg-[#F7FAFC] ">
         <div
           className={` ${
             sideMenuShow == true ? "lg:col-span-1 w-full" : "lg:col-span-0 "
@@ -702,17 +742,17 @@ formData.append('file', acceptedFiles[0]);
         <div
           className={` ${
             sideMenuShow == true ? "lg:col-span-9" : "lg:col-span-10"
-          } bg-white w-full`}
+          }  bg-[#F7FAFC]  w-full`}
         >
          
 
-      <div className="relative w-full  bg-white">
+      <div className="relative w-full   bg-[#F7FAFC] ">
         <div className="flex flex-col h-auto p-4 md:p-8 text-center">
-          <p className="font-bold   text-4xl  md:text-lg text-green-600  font-Poppins font-dmsans mb-2">
+          <p className="font-bold   text-4xl  md:text-lg text-[#20253F]  font-novasans  mb-2">
           Company Data
             
           </p>
-          <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-dmsans">
+          <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-novasans">
          
           </p>
         </div>
@@ -721,34 +761,36 @@ formData.append('file', acceptedFiles[0]);
 
 
 
-          <div className="m-auto w-4/5 font-Poppins">
+      <div className="grid grid-cols-9 gap-2 items-start ">
+            
+      <div className=" col-span-2  w-full font-novasans px-2">
 
-<div className="flex flex-col">
   <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg">
 
-  <div class="relative w-full">
+  <div className="relative w-full">
           
 
-          <div class="items-center justify-center max-w-xl mx-auto">
+          <div className="items-center justify-center max-w-xl mx-auto">
       
-            <Dropzone onDrop={handleUpload} accept=".xls, .xlsx, .csv">
+          <Dropzone onDrop={handleUpload} accept=".xls, .xlsx, .csv">
                       {({ getRootProps, getInputProps }) => (
-                        <div
-                          {...getRootProps()}
-                          className="  "
-                          >
-                            
+                        <div {...getRootProps()} className="  ">
                           {/* <input {...getInputProps()} />
                            */}
                           {/* <AiOutlineUpload></AiOutlineUpload>  */}
-                          <label class="flex justify-center w-full h-32 px-4   bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-300 ease-in-out" id="drop">
-                            <span class="flex items-center space-x-2">
-                            
-                            <span class="font-medium text-gray-600">Drop files to Attach, or<span class="text-green-600 underline ml-[4px]">browse</span></span></span>
-                           </label>
-      
-      
-                            
+                          <label
+                            className="flex justify-center w-full h-32 px-4   bg-[#F7FAFC] border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-300 ease-in-out"
+                            id="drop"
+                          >
+                            <span className="flex items-center space-x-2">
+                              <span className="font-medium text-gray-600">
+                                Drop files to Attach, or
+                                <span className="text-[#20253F] underline ml-[4px]">
+                                  browse
+                                </span>
+                              </span>
+                            </span>
+                          </label>
                         </div>
                       )}
                     </Dropzone>
@@ -770,7 +812,7 @@ formData.append('file', acceptedFiles[0]);
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
 
-        name="search" className="h-12 w-full cursor-text rounded-md border border-gray-100 bg-gray-100 py-4 pr-40 pl-12 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Search by Name etc" />
+        name="search" className="h-12 w-full cursor-text rounded-md border border-gray-100 bg-gray-100 py-4 pr-40 pl-12 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Search by Name etc" />
       </div>
      <div className=" flex justify-end w-full"> {filter == true ?  <TiArrowSortedUp onClick={() => setFilter(false)} ></TiArrowSortedUp> :<  TiArrowSortedDown onClick={() => setFilter(true)} />}</div>
        
@@ -779,18 +821,14 @@ formData.append('file', acceptedFiles[0]);
 
      <div className={`${filter ? "block transition duration-300 ease-in-out" : "transition duration-500 ease-in-out hidden"}`}>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <div className="flex flex-col">
-          <label for="name" className="text-sm font-medium text-stone-600">Name</label>
-          <input type="text" id="name" placeholder="Raspberry juice" className="mt-2 block w-full rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-        </div>
+       
 
         <div className="flex flex-col">
           <label for="manufacturer" className="text-sm font-medium text-stone-600">Industry</label>
 
           <select id="status"
               onChange={(e) => handleSelect("industry", e.target.value)}
-              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                { optionsElement("industry")}
               </select>
         </div>
@@ -809,50 +847,45 @@ formData.append('file', acceptedFiles[0]);
 
 
      
-        <div className="flex flex-col">
           <label for="manufacturer" className="text-sm font-medium text-stone-600">Company Name</label>
 
           <select id="status"
               onChange={(e) => handleSelect("companyName", e.target.value)}
-              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                { optionsElement("companyName")}
               </select>
-        </div>
-
+      
 
         {/* <div className="flex flex-col">
           <label for="manufacturer" className="text-sm font-medium text-stone-600">Industry 2</label>
 
           <select id="status"
               onChange={(e) => handleSelect("industry2", e.target.value)}
-              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                { optionsElement("industry2")}
               </select>
         </div> */}
 
      
       
-      
-        <div className="flex flex-col">
+
           <label for="manufacturer" className="text-sm font-medium text-stone-600">Industry 2</label>
 
           <select id="status"
               onChange={(e) => handleSelect("industry2", e.target.value)}
-              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                { optionsElement("industry2")}
               </select>
-        </div>
+     
 
-
-        <div className="flex flex-col">
           <label for="manufacturer" className="text-sm font-medium text-stone-600">Country</label>
 
           <select id="status"
               onChange={(e) => handleSelect("country", e.target.value)}
-              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                { optionsElement("country")}
               </select>
-        </div>
+    
 
 
         {/* <div className="flex flex-col">
@@ -860,19 +893,18 @@ formData.append('file', acceptedFiles[0]);
 
           <select id="status"
               onChange={(e) => handleSelect("region", e.target.value)}
-              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                { optionsElement("region")}
               </select>
         </div> */}
 
 
 
-        <div className="flex flex-col">
           <label for="status" className="text-sm font-medium text-stone-600">Website</label>
 
               <select id="status"
               onChange={(e) => handleSelect("website", e.target.value)}
-              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                { optionsElement("website")}
               </select>
 
@@ -886,19 +918,17 @@ formData.append('file', acceptedFiles[0]);
          
                 isMulti={false}
                 onChange={(selected) => handleSelect("website", selected)}
-                className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
          
               > 
               
               </Select> */}
 
-              
-        </div>
-      </div>
+    
+     
 
       <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex">
-        <button className="rounded-lg bg-gray-200 px-8 py-2 font-medium text-gray-700 outline-none hover:opacity-80 focus:ring">Reset</button>
-        
+    
       </div>
 
       </div>
@@ -906,159 +936,12 @@ formData.append('file', acceptedFiles[0]);
   </div>
 </div>
 
-</div>
 
 
-          {/* <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
-            <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4"></div>
-                <Dropzone onDrop={handleUpload} accept=".xls, .xlsx, .csv">
-                {({ getRootProps, getInputProps }) => (
-                  <div
-                    {...getRootProps()}
-                    className=" flex items-center  justify-center  font-semibold  lg:w-32 md:w-32 w-full sm:w-32 xl:w-32 2xl:w-32  border h-12 bg-[#0ECB81] text-maincolor border-[#0ECB81] text-md p-2 rounded-lg mb-6 hover:bg-[#0ECB81] hover-text-white"
-                    >
-                    <input {...getInputProps()} />
-                    <AiOutlineUpload></AiOutlineUpload> <p>Uplift</p>
-                  </div>
-                )}
-              </Dropzone>
-              </div>
 
 
-          <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
-            <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
-              <div className="relative mb-4 sm:mb-0 sm:w-full md:w-64 mt-6">
-                <label htmlFor="simple-search" className="sr-only">
-                  Search
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search Company"
-                    className="bg-white text-maincolor     h-14 border border-gray-600  text-base rounded-lg focus:ring-maincolor focus:border-maincolor block w-full pl-10 pr-10 p-2.5 focus:outline-none focus:ring-0"
-                  />
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                    <AiOutlineSearch className="w-5 h-5 text-maincolor dark:text-maincolor" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="md:w-56 ml-0 mt-2  md:mt-0 md:ml-4">
-                <Select
-                  isSearchable={true}
-                  options={optionsElement("companyName")}
-                  placeholder="Select Company" // Set the placeholder text
-                  styles={customStyles}
-                  isMulti={false}
-                  onChange={(selected) => handleSelect("companyName", selected)}
-                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
-                ></Select>
-              </div>
-
-              <div className="md:w-56 ml-0  mt-2 md:mt-0 md:ml-4">
-                <Select
-                  isSearchable={true}
-                  options={optionsElement("name")}
-                  placeholder="Select Name" // Set the placeholder text
-                  styles={customStyles}
-                  isMulti={false}
-                  onChange={(selected) => handleSelect("name", selected)}
-                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
-                ></Select>
-              </div>
-
-              <div className="md:w-56 ml-0  mt-2  md:mt-0 md:ml-4">
-                <Select
-                  isSearchable={true}
-                  options={optionsElement("website")}
-                  placeholder="Select Website" // Set the placeholder text
-                  styles={customStyles}
-                  isMulti={false}
-                  onChange={(selected) => handleSelect("website", selected)}
-                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
-                ></Select>
-              </div>
-
-            </div>
-          </div> */}
-
-          {/* <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
-            <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
-              <div className="md:w-56 ml-0  mt-2   md:mt-0 md:ml-4">
-                <Select
-                  isSearchable={true}
-                  options={optionsElement("Country")}
-                  placeholder="Select Country" // Set the placeholder text
-                  styles={customStyles}
-                  isMulti={false}
-                  onChange={(selected) => handleSelect("Country", selected)}
-                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
-                ></Select>
-              </div>
-
-              <div className="md:w-56 ml-0  mt-2   md:mt-0 md:ml-4">
-                <Select
-                  isSearchable={true}
-                  selectedOptions={selectedOptions}
-                  options={optionsElement("Region")}
-                  placeholder="Select Region" // Set the placeholder text
-                  styles={customStyles}
-                  isMulti={false}
-                  onChange={(selected) => handleSelect("Region", selected)}
-                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
-                ></Select>
-              </div>
-
-              <div className="md:w-64 ml-0   mt-2  md:mt-0 md:ml-4">
-                <Select
-                  isSearchable={true}
-                  options={optionsElement("companyLinkedIn")}
-                  placeholder="Select  LinkedIn" // Set the placeholder text
-                  styles={customStyles}
-                  isMulti={false}
-                  onChange={(selected) =>
-                    handleSelect("companyLinkedIn", selected)
-                  }
-                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
-                ></Select>
-              </div>
-            </div>
-          </div>
-
-
-          <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
-            <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4">
-
-          
-          <div className="md:w-56 ml-0  mt-2  md:mt-0 md:ml-4">
-                <Select
-                  isSearchable={true}
-                  options={optionsElement("industry")}
-                  placeholder="Select Industry 1" // Set the placeholder text
-                  styles={customStyles}
-                  isMulti={false}
-                  onChange={(selected) => handleSelect("industry", selected)}
-                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
-                ></Select>
-              </div>
-
-              <div className="md:w-56 ml-0   mt-2  md:mt-0 md:ml-4">
-                <Select
-                  isSearchable={true}
-                  options={optionsElement("industry2")}
-                  placeholder="Select Industry 2" // Set the placeholder text
-                  styles={customStyles}
-                  isMulti={false}
-                  onChange={(selected) => handleSelect("industry2", selected)}
-                  className="text-textColor block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-maincolor focus:border-maincolor "
-                ></Select>
-              </div>
-
-              </div>
-              </div> */}
-          <div className="mt-0 bg-white grid grid-cols-1 sm:grid-cols-5 gap-2 sm:px-2 md:px-16 lg:px-28 xl:px-28 2xl:px-28 px-2">
+         
+<div className=" col-span-7 mt-0 bg-[#F7FAFC]   grid-cols-1 sm:grid-cols-5 gap-2  left-0 px-7  ">
             <div
               className={`w-full col-span-4 ${
                 showFilters ? "col-span-5" : "col-span-5"
@@ -1074,13 +957,16 @@ formData.append('file', acceptedFiles[0]);
               ></CompanyDetails>
             </div>
           </div>
+</div>
+
+
           <div className=" flex justify-end bg-white  gap-2 sm:px-2 md:px-16 lg:px-28 xl:px-28 2xl:px-28 px-2">
             <div className="flex flex-col ">
               <div className="flex flex-1 mb-4">
                 <button
                   onClick={handlePreviousPage}
                   disabled={currentPage === 1}
-                  className="font-dmsans  px-3 py-1 font-medium rounded bg-white  text-maincolor  md:mb-0 mr-2"
+                  className="font-novasans  px-3 py-1 font-medium rounded bg-white  text-maincolor  md:mb-0 mr-2"
                 >
                   <FaAngleLeft />
                 </button>
@@ -1089,7 +975,7 @@ formData.append('file', acceptedFiles[0]);
                 <button
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages}
-                  className="font-dmsans px-3 py-1 font-medium rounded bg-white text-maincolor"
+                  className="font-novasans px-3 py-1 font-medium rounded bg-white text-maincolor"
                 >
                   <FaAngleRight />
                 </button>

@@ -14,7 +14,7 @@ const HeaderHome = () => {
 
   const [user, setuserData] = useLoginValid(null);
 
-  const Menu = ["Profile", "Logout"];
+  const Menu = ["Profile","User", "Logout"];
 
   const [open, setOpen] = useState(false);
   const menuRef = useRef();
@@ -36,8 +36,17 @@ const HeaderHome = () => {
         })
         .catch((err) => {});
     }
-    if (menu === "Profile Update") {
-      navigate("/settings");
+
+
+
+
+
+
+
+
+    const  role = JSON.parse (localStorage.getItem("user")).role;
+    if (menu === "User" && role == 'admin') {
+      navigate("/user");
     }
     if (menu === "Menu") {
       navigate("/menu_list");

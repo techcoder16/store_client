@@ -1,0 +1,525 @@
+import React from "react";
+import Header from "../../Container/Header";
+import ToasterGen from "../../Container/ToasterGen";
+import Footer from "../../Container/Footer";
+import { useFormik } from "formik";
+import { useState, useEffect ,useCallback} from "react";
+import { ValidateContactUpdate } from "../../utils/validateAPI";
+import SideMenu from "../../Container/SideMenu";
+import { useLocation, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import countryCityData from '../../utils/countries.json';
+
+
+const EditContact = ({}) => {
+
+  const [stateList, setStateList] = useState([]);
+
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
+  
+  const [cities, setCities] = useState([]);
+
+  
+
+
+
+  const [sideMenuShow, setSideMenuShow] = useState(true);
+
+
+  const { state } = useLocation();
+  const { contactState } = state || { contactState: null };
+  const navigate = useNavigate();
+ 
+  useEffect(() => {
+   
+
+    if (contactState && contactState.country) {
+      const country = contactState.country;
+      setSelectedCountry(country);
+
+      console.log(country)
+  
+
+      setStateList(countryCityData[country] || []);
+
+    }
+  }, [ contactState,countryCityData]);
+
+  
+  const handleCityChange = (e) => {
+    
+    const country = e.target.value;
+    
+    setSelectedCity(country);
+  
+  };
+
+
+  const handleCountryChange = (e) => {
+    
+    const country = e.target.value;
+    
+    setSelectedCountry(country);
+    setStateList(countryCityData[country] || []);
+  };
+
+  useEffect(() => {
+
+
+    if (countryCityData)
+      {
+
+        setCities(countryCityData[selectedCountry])
+
+            }
+  
+  },[selectedCountry])
+  
+
+  const formik = useFormik({
+    initialValues: {
+      date: contactState && contactState && contactState.date,
+      name:  contactState && contactState && contactState.name,
+      website: contactState && contactState && contactState.website,
+      industry1: contactState && contactState && contactState.industry1,
+
+      industry2:contactState && contactState && contactState.industry2,
+
+      empcount:contactState && contactState && contactState.empcount,
+
+      phoneNumber:contactState && contactState && contactState.phoneNumber,
+      linkedin:contactState && contactState && contactState.linkedin,
+      city: contactState && contactState.city,
+      region: contactState && contactState.region || "",
+      country: contactState && contactState.country,
+      companyLinkedin: contactState && contactState.companyLinkedin,
+      firstName: contactState && contactState.firstName,
+      lastName: contactState && contactState.lastName,
+
+      jobRole: contactState && contactState.jobRole,
+      email: contactState && contactState.email,
+      remarks: contactState && contactState.remarks,
+      recordMarksheet: contactState && contactState.recordMarksheet,
+      phoneNumber2: contactState && contactState.phoneNumber2,
+
+      quality: contactState && contactState.quality,
+      free: contactState && contactState.free,
+      result: contactState && contactState.result,
+      role: contactState && contactState.role,
+
+      id: contactState && contactState._id,
+      navigate: navigate,
+    },
+    validate: ValidateContactUpdate,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: async (values) => {
+      values = await Object.assign(values);
+      formik.handleReset();
+
+      return false;
+    },
+  });
+
+  return (
+    <div>
+      <Header></Header>
+
+      <ToasterGen></ToasterGen>
+      <div className=" bg-[#F7FAFC]  h-screen ">
+        <div
+          className={` ${
+            sideMenuShow == true
+              ? "lg:col-span-1 w-full"
+              : "lg:col-span-0 w-full "
+          }   lg:flex bg-transparent `}
+        >
+          <SideMenu setSideMenuShow={setSideMenuShow} className="z-10" />
+        </div>
+
+        <div
+          className={` ${
+            sideMenuShow == true ? "lg:col-span-9" : "lg:col-span-10"
+          } bg-background-main`}
+        >
+          <div className=" z-0  bg-transparent mt-20 mb-20">
+            <div className=" bg-[#F7FAFC]">
+              <h2 className="font-novasans text-2xl   px-16 text-[#32407C] font-semibold flex">
+                Edit Details
+              </h2>
+            </div>
+
+            <div className="flex items-center justify-center min-h-screen bg-[#F7FAFC] px-16">
+              <div className="bg-[#FFFFFF]  shadow-sm shadow-[#32407C52] rounded-2xl w-full  m-auto my-auto">
+                <div className="flex flex-col justify-center p-8 md:p-14">
+                  <h2 className="font-novasans text-2xl    text-[#32407C] font-semibold flex">
+                    Information
+                  </h2>
+
+                  <form className="py-2" onSubmit={formik.handleSubmit}>
+                    <div className="flex  w-full gap-10">
+                      <div className="py-4 flex-1 ">
+                        <span className="mb-2  text-base font-normal  text-gray-600  font-novasans leading-5 ">
+                          Name
+                        </span>
+                        <input
+                          {...formik.getFieldProps("name")}
+                          id="name"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder="Enter your Name"
+                        />
+                      </div>
+
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md font-normal text-base text-gray-600  font-novasans leading-5 ">
+                          Email
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("email")}
+                          id="email"
+                          type="email"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder="Enter your Email Address"
+                        />
+                      </div>
+
+                      <div className="py-4 flex-1  w-full">
+                        <span className="mb-2 text-md  font-normal text-base text-gray-600  font-novasans leading-5 ">
+                          Website
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("website")}
+                          id="website"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder="Enter your Website"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex w-full  gap-10">
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md  font-normal text-base text-gray-600  font-novasans leading-5 ">
+                          Industry 1
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("industry1")}
+                          id="industry1"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md  font-normal text-base text-gray-600  font-novasans leading-5 ">
+                          Industry 2
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("industry2")}
+                          id="industry2"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md  font-normal text-base text-gray-600  font-novasans leading-5 ">
+                          Company LinkedIn
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("companyLinkedin")}
+                          id="companyLinkedin"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex w-full  gap-10">
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md  font-normal text-base text-gray-600  font-novasans leading-5 ">
+                          Emp Count
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("empcount")}
+                          id="empcount"
+                          type="number"
+                          min={0}
+                          max={100000}
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md  font-normal text-base text-gray-600  font-novasans leading-5 ">
+                          Phone Number
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("phoneNumber")}
+                          id="phoneNumber"
+                          type="text"
+                          min={0}
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md font-normal text-base text-gray-600  font-novasans leading-5 ">
+                          City
+                        </span>
+                        <select
+                      {...formik.getFieldProps("city")}
+                      id="city"
+                      value={selectedCity}
+                      onChange={handleCityChange}
+                      className="w-full h-12 bg-transparent border-2 rounded-md border-solid text-black border-[#FFFFFF] font-novasans text-center placeholder:font-light shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                    >
+                      {cities && cities.map((city, index) => (
+                        <option key={index} value={city}>
+                          {city}
+                        </option>
+                      ))}
+                    </select>
+
+                    
+
+</div>
+
+                    </div>
+                    <div className="flex w-full  gap-10">
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md font-novasans font-normal text-base text-gray-600   leading-5 ">
+                          Region
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("region")}
+                          id="region"
+                          type="text"
+                     
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                        {/* <select
+                                 {...formik.getFieldProps("region")}
+                        value={stateid}
+                        onChange={handleStateChange}
+                        className="w-full h-12 bg-transparent border-2 rounded-md border-solid text-black font-novasans text-center placeholder:font-light shadow-sm shadow-[#00487452] placeholder:font-novasans focus:outline-none"
+                      >
+                        <option value="">Select Region</option>
+                        {stateList.map((state, index) => (
+                          <option key={state.id} value={index}>
+                            {state.name}
+                          </option>
+                        ))}
+                      </select> */}
+
+
+                      </div>
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md font-novasans font-normal text-base text-gray-600   leading-5 ">
+                          Country
+                        </span>
+                        <select
+                      {...formik.getFieldProps("country")}
+                      id="country"
+                      value={selectedCountry}
+                      className="w-full h-12 bg-transparent border-2 rounded-md border-solid text-black border-[#FFFFFF] font-novasans text-center placeholder:font-light shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                      onChange={handleCountryChange}
+                    >
+                      {Object.keys(countryCityData).map((country, index) => (
+                        <option key={index} value={country}>
+                          {country}
+                        </option>
+                      ))}
+                    </select>
+               
+                      
+                      </div>
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md font-novasans font-normal text-base text-gray-600  leading-5 ">
+                          Job Role
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("jobRole")}
+                          id="jobRole"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+                    </div>
+                    <div className="flex w-full  gap-10">
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md font-novasans font-normal text-base text-gray-600  leading-5 ">
+                          First Name
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("firstName")}
+                          id="firstName"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md font-novasans font-normal text-base text-gray-600   leading-5 ">
+                          Last Name
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("lastName")}
+                          id="lastName"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md font-novasans font-normal text-base text-gray-600  leading-5 ">
+                          Role
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("role")}
+                          id="role"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+                    </div>
+                    <div className="flex w-full  gap-10"></div>
+                    <div className="flex w-full  gap-10">
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md font-novasans font-normal text-base text-gray-600  leading-5 ">
+                          Quality
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("quality")}
+                          id="quality"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md font-normal text-base text-gray-600  font-novasans leading-5 ">
+                          Free
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("free")}
+                          id="free"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md font-novasans font-normal text-base text-gray-600  leading-5 ">
+                          Result
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("result")}
+                          id="result"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex w-full  gap-10"></div>
+                    <div className="flex  w-full gap-10">
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md  font-normal text-base text-gray-600  font-novasans leading-5 ">
+                          LinkedIn
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("linkedin")}
+                          id="linkedin"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md  font-normal text-base text-gray-600  font-novasans leading-5 ">
+                          Record Marksheet
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("recordMarksheet")}
+                          id="recordMarksheet"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md  font-normal text-base text-gray-600  font-novasans leading-5 ">
+                          Phone Number 2
+                        </span>
+
+                        <input
+                          {...formik.getFieldProps("phoneNumber2")}
+                          id="phoneNumber2"
+                          type="text"
+                          min={0}
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+                    </div>
+                    <div className="flex  w-full gap-10">
+                      <div className="py-4 flex-1">
+                        <span className="mb-2 text-md font-normal text-base text-gray-600  font-novasans leading-5 ">
+                          Remarks
+                        </span>
+
+                        <textarea
+                          {...formik.getFieldProps("remarks")}
+                          id="remarks"
+                          type="text"
+                          className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                          placeholder=""
+                        />
+                      </div>
+                    </div>
+                    <div className="flex w-full  gap-10"></div>
+                    <div className="py-5 w-full flex justify-center">
+                      <button className="font-novasans text-base w-40   font-semibold h-10 bg-[#9E9E9E] text-white  p-2 rounded-md mx-auto justify-center flex ">
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default EditContact;

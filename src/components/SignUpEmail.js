@@ -88,7 +88,7 @@ const SignUpEmail = () => {
               <div className="flex bg-background grid-flow-col grid-cols-2 gap-2">
                 <div className=" bg-background w-full  p-8 md:p-14  top-12">
                   <div>
-                    <span className=" font-bold    font-dmsans text-3xl   text-line ">
+                    <span className=" font-bold    font-novasans text-3xl   text-line ">
                       Welcome to Marketing Data
                     </span>
                   </div>
@@ -98,7 +98,7 @@ const SignUpEmail = () => {
                     onSubmit={formik.handleSubmit}
                   >
                     <div className="py-1 ">
-                      <span className="mb-2 text-md font-dmsans  font-normal text-base  leading-5 text-line">
+                      <span className="mb-2 text-md font-novasans  font-normal text-base  leading-5 text-line">
                         Email
                       </span>
 
@@ -112,7 +112,7 @@ const SignUpEmail = () => {
                     </div>
 
                     <div className="py-1 ">
-                      <span className="mb-2 text-md font-dmsans  font-normal text-base  leading-5 text-line">
+                      <span className="mb-2 text-md font-novasans  font-normal text-base  leading-5 text-line">
                         Username
                       </span>
 
@@ -126,7 +126,7 @@ const SignUpEmail = () => {
                     </div>
 
                     <div className="py-1 ">
-                      <span className="mb-2 text-md font-dmsans  font-normal text-base  leading-5 text-line">
+                      <span className="mb-2 text-md font-novasans  font-normal text-base  leading-5 text-line">
                         Address
                       </span>
 
@@ -140,7 +140,7 @@ const SignUpEmail = () => {
                     </div>
 
                     <div className="py-1">
-                      <span className="mb-2 text-md font-dmsans font-normal text-base leading-5 text-line">
+                      <span className="mb-2 text-md font-novasans font-normal text-base leading-5 text-line">
                         Phone Number
                       </span>
                       <input
@@ -155,7 +155,7 @@ const SignUpEmail = () => {
 
                     <div className="py-1  ">
                       <div className="    rounded-xl relative">
-                        <span className="mb-2 text-md font-dmsans font-noraml text-line">
+                        <span className="mb-2 text-md font-novasans font-noraml text-line">
                           Your Password
                         </span>
 
@@ -167,7 +167,7 @@ const SignUpEmail = () => {
                                 onClick={ChangePasswordHideShow}
                               ></VscEye>
                               <span
-                                className="ml-2 font-normal text-lg leading-7     font-dmsans"
+                                className="ml-2 font-normal text-lg leading-7     font-novasans"
                                 style={{ font: "icon" }}
                               >
                                 Hide
@@ -180,7 +180,7 @@ const SignUpEmail = () => {
                                 onClick={ChangePasswordHideShow}
                               />
                               <span
-                                className="ml-2 font-normal text-lg leading-7 font-dmsans  "
+                                className="ml-2 font-normal text-lg leading-7 font-novasans  "
                                 style={{ font: "icon" }}
                               >
                                 Show

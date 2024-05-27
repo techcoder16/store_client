@@ -122,7 +122,7 @@ BankName:"",
                     <span className="bg-transparent text-textColor ">×</span>
                   </button>
                 </div>
-                <span className="mb-3 text-2xl font-bold font-dmsans text-subheading-400  text-textColor">
+                <span className="mb-3 text-2xl font-bold font-novasans text-subheading-400  text-textColor">
                   Create  Company 
                 </span>
 
@@ -133,7 +133,7 @@ BankName:"",
                 <div className="flex space-x-4">
                 <div className="w-3/5">
                   <div className="py-4 ">
-                    <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                    <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        name
                     </span>
                     <input
@@ -141,7 +141,7 @@ BankName:"",
                       id="name"
                       type="text"
                       value={formik.values.name}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -149,7 +149,7 @@ BankName:"",
 
 
                   <div className="py-4 ">
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        Rating
                     </span>
                     <input
@@ -158,7 +158,7 @@ BankName:"",
                       type="number"
                       
                       value={formik.values.rating}
-                      className=" bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className=" bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -167,7 +167,7 @@ BankName:"",
 <div className=" w-4/5">
                   <div className="py-4 ">
 
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        Orders
                     </span>
                     <input
@@ -176,7 +176,7 @@ BankName:"",
                     type="number"
                       
                       value={formik.values.orders}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -185,7 +185,7 @@ BankName:"",
                
                   <div className="py-4 ">
 
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        Order's Completion
                     </span>
                     <input
@@ -194,7 +194,7 @@ BankName:"",
                       type="number"
                       
                       value={formik.values.completion}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -203,7 +203,7 @@ BankName:"",
 
                   <div className="py-4 ">
                   
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                       Price
                     </span>
                     <input
@@ -212,14 +212,14 @@ BankName:"",
                      type="number"
                       
                       value={formik.values.Payment}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
                   </div>
 
                   <div className="py-4">
-                    <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                    <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                       Select Type
                     </span>
                     <select
@@ -228,7 +228,7 @@ BankName:"",
                       id="type"
      
      
-                      className="bg-background text-maincolor border focus:outline-none focus:ring-0 border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-dmsans tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="bg-background text-maincolor border focus:outline-none focus:ring-0 border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-novasans tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
                       {optionElements}
                     </select>
@@ -241,7 +241,7 @@ BankName:"",
                 
 
 <div className="py-4">
-                    <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                    <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                       Select Currency
                     </span>
                     <select
@@ -250,7 +250,7 @@ BankName:"",
                       id="Currency"
      
      
-                      className="bg-background text-maincolor border focus:outline-none focus:ring-0 border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-dmsans tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="bg-background text-maincolor border focus:outline-none focus:ring-0 border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-novasans tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
                       {optionElementsCurrency}
                     </select>
@@ -258,7 +258,7 @@ BankName:"",
                   
                   
                   <div className="py-4 ">
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        Limit High
                     </span>
                     <input
@@ -267,7 +267,7 @@ BankName:"",
                       type="number"
                       
                       value={formik.values.limitHigh}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -277,7 +277,7 @@ BankName:"",
                   <div className="w-3/5">
 
                   <div className="py-4 ">
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        Limit Low
                     </span>
                     <input
@@ -287,7 +287,7 @@ BankName:"",
                       
                       value={formik.values.limitLow}
                       pattern='[0-9]{0,5}'
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -295,7 +295,7 @@ BankName:"",
 
 
                   <div className="py-4 ">
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        Avaiable
                     </span>
                     <input
@@ -303,7 +303,7 @@ BankName:"",
                       id="Avaiable"
                       type="number"
                       value={formik.values.avaiable}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -313,7 +313,7 @@ BankName:"",
 <div className="w-3/5">
                   
                   <div className="py-2 ">
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        Payment Method
                     </span>
                     <input
@@ -321,14 +321,14 @@ BankName:"",
                       id="PaymentMethod"
                       type="text"
                       value={formik.values.PaymentMethod}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
                   </div>
 
                   <div className="py-4 ">
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                         Account Number
                     </span>
                     <input
@@ -337,7 +337,7 @@ BankName:"",
                       type="text"
                       
                       value={formik.values.BankAccountNumber}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -348,7 +348,7 @@ BankName:"",
 <div className="w-3/5">
 
                   <div className="py-4 ">
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        Bank Name
                     </span>
                     <input
@@ -356,7 +356,7 @@ BankName:"",
                       id="BankName"
                       type="text"
                       value={formik.values.BankName}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -364,7 +364,7 @@ BankName:"",
 
 
                   <div className="py-4 ">
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        Phone Number
                     </span>
                     <input
@@ -374,7 +374,7 @@ BankName:"",
                       pattern='[0-9]{7,}'
 
                       value={formik.values.phoneNumber}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -382,7 +382,7 @@ BankName:"",
 </div>
 <div className="w-3/5">
                   <div className="py-4 ">
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        Email
                     </span>
                     <input
@@ -390,7 +390,7 @@ BankName:"",
                       id="email"
                       type="email"
                       value={formik.values.email}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -398,7 +398,7 @@ BankName:"",
 
                   
                   <div className="py-4 ">
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        Average Time
                     </span>
                     <input
@@ -408,7 +408,7 @@ BankName:"",
                       
                       pattern='[0-9]{0,5}'
                       value={formik.values.avgtime}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -416,7 +416,7 @@ BankName:"",
                   </div>
 <div className="w-3/5">
                   <div className="py-4 ">
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        Release Time
                     </span>
                     <input
@@ -426,7 +426,7 @@ BankName:"",
                       
                       pattern='[0-9]{0,5}'
                       value={formik.values.Ttime}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -435,7 +435,7 @@ BankName:"",
 
 
                   <div className="py-4 ">
-                  <span className="mb-2 text-md font-dmsans font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
               Description
                     </span>
                     <input
@@ -445,7 +445,7 @@ BankName:"",
                       
                     
                       value={formik.values.desc}
-                      className="bg-background text-maincolor w-full placeholder:font-dmsans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="bg-background text-maincolor w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder=""
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>

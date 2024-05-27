@@ -19,7 +19,7 @@ export const companyData = createAsyncThunk(
       const request = await axios.get(`${env.API_URL}company/get_company/${queryString}`);
       
       const response = await request.data;
-    
+      console.log(response);
 
       return response;
     } catch (error) {

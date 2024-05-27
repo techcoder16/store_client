@@ -136,12 +136,12 @@ font-size: 0.9;
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #16ca4c; 
+  background: #20253F; 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #16ca4c; 
+  background: #20253F; 
   opacity: 0.4;
 }
 
