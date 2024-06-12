@@ -90,7 +90,7 @@ const CreateScreen = ({ props, screenState }) => {
                       id="screen_name"
                       type="text"
                       value={formik.values.screen_name}
-                      className=" w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
                       placeholder="Screen Name"
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
@@ -106,26 +106,26 @@ const CreateScreen = ({ props, screenState }) => {
                       type="text"
                       value={formik.values.screen_url}
                       placeholder="Screen Url (/menu)"
-                      className=" w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
-                    ></input>
+                      className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                      ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
                   </div>
 
-                  <div className="py-4">
-                    <span className="mb-2 text-md font-novasans font-bold text-gray-500">
-                      Select Parent Menu
-                    </span>
-                    <select
-                      {...formik.getFieldProps("menu_name")}
-                      value={formik.values.menu_name}
-                      id="menu_name"
-     
-     
-                      className="bg-gray-50 border focus:outline-none focus:ring-0 border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-novasans tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    >
-                      {optionElements}
-                    </select>
-                  </div>
+                    {/* <div className="py-4">
+                      <span className="mb-2 text-md font-novasans font-bold text-gray-500">
+                        Select Parent Menu
+                      </span>
+                      <select
+                        {...formik.getFieldProps("menu_name")}
+                        value={formik.values.menu_name}
+                        id="menu_name"
+      
+      
+                        className="bg-gray-50 border focus:outline-none focus:ring-0 border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-novasans tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      >
+                        {optionElements}
+                      </select>
+                    </div> */}
 
                   <div className="py-4 ">
                     <button

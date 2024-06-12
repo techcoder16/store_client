@@ -9,7 +9,7 @@ import { useLayoutEffect, useEffect, useState, useMemo } from "react";
 
 import { toast, Toaster, ToastBar } from "react-hot-toast";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
+
 
 import UserDetails from "./UserDetails";
 // import "./Dashboard.css";3
@@ -18,8 +18,6 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import { TiArrowSortedUp } from "react-icons/ti";
 
 import { CircularLoader } from "../utils/CircularLoader";
-
-import * as XLSX from "xlsx";
 
 import { useNavigate } from "react-router-dom";
 
@@ -36,7 +34,7 @@ const UserList = () => {
   const dispatch = useDispatch();
   let user = useSelector((state) => state.users);
   const [selectedOptions, setSelectedOptions] = useState();
-  
+  const [showModal, setShowModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const location = useLocation();
@@ -48,13 +46,9 @@ const UserList = () => {
   
   const [showModalCreate, setShowModalCreate] = useState(false);
   const [sideMenuShow, setSideMenuShow] = useState(false);
-  
+  const [userState, setuserState] = useState({});
 
-  useEffect(() => {
-    dispatch(userData());
-  }, [dispatch]);
-
-
+ 
 
   useEffect(() => {
     const user = localStorage.getItem("user_data");
@@ -87,7 +81,7 @@ const UserList = () => {
     pages.push(
       <button
         onClick={() => handlePageChange(1)}
-        className={`px-3  py-1 font-bold rounded font-Poppins mx-1 italic  ${
+        className={`px-3  py-1 font-bold rounded font-novasans mx-1 italic  ${
           currentPage === 1
             ? " bg-textColor text-white"
             : " bg-textColor text-white"
@@ -111,7 +105,7 @@ const UserList = () => {
         <button
           key={page}
           onClick={() => handlePageChange(page)}
-          className={` px-3  mx-1 py-1 font-bold rounded font-Poppins     ${
+          className={` px-3  mx-1 py-1 font-bold rounded font-novasans     ${
             currentPage === page
               ? " bg-textColor text-white"
               : " bg-textColor text-white"
@@ -135,7 +129,7 @@ const UserList = () => {
       <button
         key={totalPages}
         onClick={() => handlePageChange(totalPages)}
-        className={`px-3 py-1 font-bold rounded font-Poppins mx-1 italic ${
+        className={`px-3 py-1 font-bold rounded font-novasans mx-1 italic ${
           currentPage === totalPages
             ? "bg-textColor  text-white"
             : " bg-textColor text-white"
@@ -194,7 +188,7 @@ const UserList = () => {
   }, []);
 
   useEffect(() => {
-    console.log("ASdasd",user)
+    
     if (user.users.length > 0) {
       toast.success("User data loaded successfully!");
     }
@@ -213,20 +207,20 @@ const UserList = () => {
           sortDirection: sortDirection,
         })
       );
-      console.log("dispatch");
+      
     }, 500);
     return () => {
       clearTimeout(timer);
     };
   }, [
-    dispatch,
+    
     currentPage,
     searchQuery,
     selectedFilters,
     sortColumn,
     sortDirection,
     type,
-    showModalCreate
+  
   ]);
 
   return (
@@ -251,6 +245,9 @@ const UserList = () => {
 
                 ></CreateUser>:<></>
             }
+
+
+
         <div
           className={` ${
             sideMenuShow == true ? "lg:col-span-9" : "lg:col-span-10"
@@ -258,14 +255,14 @@ const UserList = () => {
         >
           <div className="relative w-full  bg-white">
             <div className="flex flex-col h-auto p-4 md:p-8 text-center">
-              <p className="font-bold   text-4xl  md:text-lg text-[#20253F]  font-Poppins font-Poppins mb-2">
+              <p className="font-bold   text-4xl  md:text-lg text-[#20253F]  font-novasans mb-2">
                 User Data
               </p>
-              <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-Poppins"></p>
+              <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-novasans"></p>
             </div>
           </div>
 
-          <div className="m-auto w-4/5 font-Poppins">
+          <div className="m-auto w-4/5 font-novasans">
             <div className="flex flex-col">
               <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg">
                 <div className="relative w-full"></div>
@@ -298,9 +295,9 @@ const UserList = () => {
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       >
                         <circle cx="11" cy="11" r="8" className=""></circle>
                         <line
@@ -332,13 +329,8 @@ const UserList = () => {
             </div>
           </div>
 
-          <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
-            <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4"></div>
-          </div>
 
-          <div className="relative w-full bg-white sm:h-28 items-center px-6 sm:px-12">
-            <div className="flex flex-col sm:flex-row items-end justify-start mx-2 sm:mx-4"></div>
-          </div>
+         
 
           <div className="mt-0 bg-white  grid-cols-1 sm:grid-cols-5 gap-2  left-0 px-7  ">
             <div className={` col-span-5 `}>
@@ -359,7 +351,7 @@ const UserList = () => {
                 <button
                   onClick={handlePreviousPage}
                   disabled={currentPage === 1}
-                  className="font-Poppins  px-3 py-1 font-medium rounded bg-white  text-maincolor  md:mb-0 mr-2"
+                  className="font-novasans  px-3 py-1 font-medium rounded bg-white  text-maincolor  md:mb-0 mr-2"
                 >
                   <FaAngleLeft />
                 </button>
@@ -368,7 +360,7 @@ const UserList = () => {
                 <button
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages}
-                  className="font-Poppins px-3 py-1 font-medium rounded bg-white text-maincolor"
+                  className="font-novasans px-3 py-1 font-medium rounded bg-white text-maincolor"
                 >
                   <FaAngleRight />
                 </button>

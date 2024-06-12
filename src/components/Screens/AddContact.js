@@ -9,7 +9,8 @@ import DatePicker from "react-datepicker";
 import SideMenu from "../../Container/SideMenu";
 import Select from 'react-select';
 import countryCityData from '../../utils/countries.json';
-
+import useAuthScreenCheck from "../../utils/useAuthScreenCheck";
+import ScreenRights from "../../utils/ScreenRights";
 
 const AddContact = () => {
   const [sideMenuShow, setSideMenuShow] = useState(true);
@@ -19,7 +20,10 @@ const AddContact = () => {
   const [selectedCity, setSelectedCity] = useState('');
   
   const [cities, setCities] = useState([]);
+  const user_id = JSON.parse(localStorage.getItem("user_data"))._id;
+  const screen_name = "/add_contacts";
 
+  const checkRights = useAuthScreenCheck(user_id, screen_name);
 
   const handleCityChange = (e) => {
     
@@ -99,11 +103,13 @@ const AddContact = () => {
   });
 
   return (
+    <>
     <div>
       <Header></Header>
-
       <ToasterGen></ToasterGen>
-      <div className=" bg-[#F7FAFC]  h-screen ">
+      {checkRights && checkRights == true ? (
+   
+      <div className=" bg-[#F7FAFC]  h-full ">
         <div
           className={` ${
             sideMenuShow == true
@@ -501,7 +507,15 @@ const AddContact = () => {
           </div>
         </div>
       </div>
+
+) : checkRights ? (
+  <ScreenRights></ScreenRights>
+) : (
+  <></>
+)}
+
     </div>
+       <Footer></Footer></>
   );
 };
 

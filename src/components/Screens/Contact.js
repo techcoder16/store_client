@@ -2,15 +2,14 @@ import { useFormik } from "formik";
 
 import Header from "../../Container/Header";
 import React from "react";
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { contactData } from "../../helpers/AuthStore/contactSlice";
 import { useSelector, useDispatch, useCallback } from "react-redux";
 import { useLayoutEffect, useEffect, useState, useMemo } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
-
+import useAuthScreenCheck from "../../utils/useAuthScreenCheck";
 import { toast, Toaster, ToastBar } from "react-hot-toast";
-
+import ScreenRights from "../../utils/ScreenRights";
 import { useLocation } from "react-router-dom";
 import GetApiData from "../../helpers/getApiData";
 import axios from "axios";
@@ -36,7 +35,6 @@ import Footer from "../../Container/Footer";
 import ToasterGen from "../../Container/ToasterGen";
 
 const Contact = () => {
-  
   const [circularProgress, setCircularProgress] = useState(false);
   const dispatch = useDispatch();
   let contact = useSelector((state) => state.contact);
@@ -51,6 +49,12 @@ const Contact = () => {
   const [filter, setFilter] = useState(true);
 
   const [file, setFile] = useState(null);
+  
+  const user_id = JSON.parse(localStorage.getItem("user_data"))._id;
+  const screen_name = "/contacts";
+
+  const checkRights = useAuthScreenCheck(user_id, screen_name);
+
 
   const [sideMenuShow, setSideMenuShow] = useState(false);
   function handleScroll() {
@@ -66,7 +70,6 @@ const Contact = () => {
   }, [deletedState]);
 
   const handleFileChange = (e) => {
-    console.log(e.target.files);
 
     setFile(e.target.files[0]);
   };
@@ -79,11 +82,11 @@ const Contact = () => {
   }, []);
 
   const handleUpload = async (acceptedFiles) => {
-    console.log(acceptedFiles);
+    
     const fileReader = new FileReader();
     try {
       setCircularProgress(true);
-      console.log("Uploading");
+      
       const formData = new FormData();
       formData.append("file", acceptedFiles[0]);
 
@@ -94,7 +97,6 @@ const Contact = () => {
 
       setCircularProgress(false);
 
-      console.log("File uploaded successfully:", response.data);
       toast.success("File uploaded successfully");
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -300,14 +302,14 @@ const Contact = () => {
       setOptions((prev) => ({ ...prev, companyName: results7 }));
 
       let results8 = [];
-    
+
       data.role.map((value, index) => {
         results8.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, role: results8 }));
 
       let results10 = [];
-  
+
       data.quality.map((value, index) => {
         results10.push({ value: index, label: value });
       });
@@ -333,7 +335,20 @@ const Contact = () => {
         results13.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, date: results13 }));
+     
+      let results14 = [];
+      
+
+      data.empcount.map((value, index) => {
+        results14.push({ value: index, label: value });
+      });
+
+      setOptions((prev) => ({ ...prev, empcount: results14 }));
+
+
+
     }
+
 
     fetchData();
   }, [contact.contacts]);
@@ -352,7 +367,7 @@ const Contact = () => {
             : " bg-transparent text-[#7E7E7E]"
         }`}
       >
-        1  
+        1
       </button>
     );
 
@@ -372,11 +387,11 @@ const Contact = () => {
           onClick={() => handlePageChange(page)}
           className={` px-3  mx-1 py-1 font-semibold rounded font-novasans     ${
             currentPage === page
-            ? " bg-transparent text-[#7E7E7E]"
-            : " bg-transparent text-[#7E7E7E]"
+              ? " bg-transparent text-[#7E7E7E]"
+              : " bg-transparent text-[#7E7E7E]"
           }`}
         >
-          {page}  
+          {page}
         </button>
       );
     }
@@ -395,8 +410,8 @@ const Contact = () => {
         onClick={() => handlePageChange(totalPages)}
         className={`px-3 py-1 font-bold rounded font-novasans mx-1  ${
           currentPage === totalPages
-          ? " bg-transparent text-[#7E7E7E]"
-          : " bg-transparent text-[#7E7E7E]"
+            ? " bg-transparent text-[#7E7E7E]"
+            : " bg-transparent text-[#7E7E7E]"
         }`}
       >
         {totalPages}
@@ -562,6 +577,20 @@ const Contact = () => {
             </option>
           ))
         );
+        case "empcount":
+        return (
+          options.empcount &&
+          options.empcount.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
+        
       case "free":
         return (
           options.free &&
@@ -651,6 +680,12 @@ const Contact = () => {
           date: value,
         }));
         break;
+        case "empcount":
+          setSelectedFilters((prevFilters) => ({
+            ...prevFilters,
+            empcount: value,
+          }));
+          break;
       case "result":
         setSelectedFilters((prevFilters) => ({
           ...prevFilters,
@@ -667,7 +702,6 @@ const Contact = () => {
   };
 
   function handleSelect(option, selected) {
-    console.log(selected);
 
     handleFilter(option, selected);
 
@@ -693,12 +727,10 @@ const Contact = () => {
   });
 
   const handleCheckboxChange = (option, selected) => {
-    console.log(selected);
+    
     handleFilter(option, selected);
     setSelectedOptions(selected);
   };
-
-
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -765,7 +797,9 @@ const Contact = () => {
           sortDirection: sortDirection,
         })
       );
-      console.log("dispatch");
+      
+
+      
     }, 500);
     return () => {
       clearTimeout(timer);
@@ -782,10 +816,11 @@ const Contact = () => {
   return (
     <React.Fragment>
       <Header></Header>
-
+    
       {circularProgress == true ? <CircularLoader></CircularLoader> : <></>}
       <ToasterGen></ToasterGen>
-
+   {checkRights && checkRights == true ? (
+         
       <div className="grid grid-cols-1 lg:grid-cols-10 gap-0 bg-[#F7FAFC] ">
         <div
           className={` ${
@@ -809,59 +844,61 @@ const Contact = () => {
             </div>
           </div>
 
-<div className="grid grid-cols-9 gap-2 items-start ">
-
-          <div className=" col-span-2  w-full font-novasans px-2">
-            <div className="flex flex-col">
-              <div className="rounded-xl border border-gray-200 bg-[#F7FAFC]  p-6 shadow-lg">
-                <div className="relative w-full">
-                  <div className="items-center justify-center max-w-xl mx-auto">
-                    <Dropzone onDrop={handleUpload} accept=".xls, .xlsx, .csv">
-                      {({ getRootProps, getInputProps }) => (
-                        <div {...getRootProps()} className="  ">
-                          {/* <input {...getInputProps()} />
-                           */}
-                          {/* <AiOutlineUpload></AiOutlineUpload>  */}
-                          <label
-                            className="flex justify-center w-full h-32 px-4   bg-[#F7FAFC] border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-300 ease-in-out"
-                            id="drop"
-                          >
-                            <span className="flex items-center space-x-2">
-                              <span className="font-medium text-gray-600">
-                                Drop files to Attach, or
-                                <span className="text-[#20253F] underline ml-[4px]">
-                                  browse
+          <div className="grid grid-cols-9 gap-2 items-start ">
+            <div className=" lg:col-span-2 col-span-9  w-full font-novasans px-2">
+              <div className="flex flex-col">
+                <div className="rounded-xl border border-gray-200 bg-[#F7FAFC]  p-6 shadow-lg">
+                  <div className="relative w-full">
+                    <div className="items-center justify-center max-w-xl mx-auto">
+                      <Dropzone
+                        onDrop={handleUpload}
+                        accept=".xls, .xlsx, .csv"
+                      >
+                        {({ getRootProps, getInputProps }) => (
+                          <div {...getRootProps()} className="  ">
+                            {/* <input {...getInputProps()} />
+                             */}
+                            {/* <AiOutlineUpload></AiOutlineUpload>  */}
+                            <label
+                              className="flex justify-center w-full h-32 px-4   bg-[#F7FAFC] border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-300 ease-in-out"
+                              id="drop"
+                            >
+                              <span className="flex items-center space-x-2">
+                                <span className="font-medium text-gray-600">
+                                  Drop files to Attach, or
+                                  <span className="text-[#20253F] underline ml-[4px]">
+                                    browse
+                                  </span>
                                 </span>
                               </span>
-                            </span>
-                          </label>
-                        </div>
+                            </label>
+                          </div>
+                        )}
+                      </Dropzone>
+                    </div>
+                  </div>
+                  Filters
+                  <form className="">
+                    <div className=" flex justify-end w-full">
+                      {" "}
+                      {filter == true ? (
+                        <TiArrowSortedUp
+                          onClick={() => setFilter(false)}
+                        ></TiArrowSortedUp>
+                      ) : (
+                        <TiArrowSortedDown onClick={() => setFilter(true)} />
                       )}
-                    </Dropzone>
-                  </div>
-                </div>
-                Filters
-                <form className="">
-                  <div className=" flex justify-end w-full">
-                    {" "}
-                    {filter == true ? (
-                      <TiArrowSortedUp
-                        onClick={() => setFilter(false)}
-                      ></TiArrowSortedUp>
-                    ) : (
-                      <TiArrowSortedDown onClick={() => setFilter(true)} />
-                    )}
-                  </div>
+                    </div>
 
-                  <div
-                    className={`${
-                      filter
-                        ? "block transition duration-300 ease-in-out"
-                        : "transition duration-500 ease-in-out hidden"
-                    }`}
-                  >
-                    <div className="relative mb-10 w-full flex  items-center justify-between rounded-md">
-                      <svg
+                    <div
+                      className={`${
+                        filter
+                          ? "block transition duration-300 ease-in-out"
+                          : "transition duration-500 ease-in-out hidden"
+                      }`}
+                    >
+                      <div className="relative mb-10 w-full flex  items-center justify-between rounded-md">
+                        {/* <svg
                         className="absolute left-2 block h-5 w-5 text-gray-400"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -887,223 +924,308 @@ const Contact = () => {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         name="search"
-                        className="h-12 md:w-full w-fit cursor-text rounded-md border border-gray-100 bg-gray-100 py-4 pr-40 pl-12 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        placeholder="Search by Name etc"
-                      />
+                        className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                        placeholder=""
+                      /> */}
+                        <label
+                          for="default-search"
+                          class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+                        >
+                          Search
+                        </label>
+                        <div class="relative">
+                          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg
+                              class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                              />
+                            </svg>
+                          </div>
+                          <input
+                            type="search"
+                            id="default-search"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="block w-full p-4 ps-10 font-novasans text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-900 focus:border-blue-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Search by Name..."
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div className="">
+                        <div className="flex flex-col">
+                          <label
+                            for="manufacturer"
+                            className="text-sm font-medium text-stone-600"
+                          >
+                            Industry
+                          </label>
+
+                          <select
+                            id="status"
+                            onChange={(e) =>
+                              handleSelect("industry", e.target.value)
+                            }
+                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                          >
+                            {optionsElement("industry")}
+                          </select>
+                        </div>
+
+                        <div className="flex flex-col">
+                          <label
+                            for="manufacturer"
+                            className="text-sm font-medium text-stone-600"
+                          >
+                            Company Name
+                          </label>
+
+                          <select
+                            id="status"
+                            onChange={(e) =>
+                              handleSelect("companyName", e.target.value)
+                            }
+                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                          >
+                            {optionsElement("companyName")}
+                          </select>
+                        </div>
+
+                        <div className="flex flex-col">
+                          <label
+                            for="manufacturer"
+                            className="text-sm font-medium text-stone-600"
+                          >
+                            Date
+                          </label>
+
+                          <select
+                            id="status"
+                            onChange={(e) =>
+                              handleSelect("date", e.target.value)
+                            }
+                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                          >
+                            {optionsElement("date")}
+                          </select>
+                        </div>
+
+                        <div className="flex flex-col mt-2">
+                          <label
+                            for="manufacturer"
+                            className="text-sm font-medium text-stone-600"
+                          >
+                            Industry 2
+                          </label>
+
+                          <select
+                            id="status"
+                            onChange={(e) =>
+                              handleSelect("industry2", e.target.value)
+                            }
+                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                          >
+                            {optionsElement("industry2")}
+                          </select>
+                        </div>
+
+                        <div className="flex flex-col">
+                          <label
+                            for="manufacturer"
+                            className="text-sm font-medium text-stone-600"
+                          >
+                            Country
+                          </label>
+
+                          <select
+                            id="status"
+                            onChange={(e) =>
+                              handleSelect("country", e.target.value)
+                            }
+                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                          >
+                            {optionsElement("country")}
+                          </select>
+                        </div>
+
+                        <div className="flex flex-col">
+                          <label
+                            for="status"
+                            className="text-sm font-medium text-stone-600"
+                          >
+                            Website
+                          </label>
+
+                          <select
+                            id="status"
+                            onChange={(e) =>
+                              handleSelect("website", e.target.value)
+                            }
+                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                          >
+                            {optionsElement("website")}
+                          </select>
+                        </div>
+
+                        <div className="flex flex-col mt-2">
+                          <label
+                            htmlFor="quality"
+                            className="text-sm font-medium text-stone-600"
+                          >
+                            Quality
+                          </label>
+                          <div id="quality" className="mt-2 block w-full">
+                            {options.quality &&
+                              options.quality.map((option) => (
+                                <div
+                                  key={option.value}
+                                  className="flex items-center"
+                                >
+                                  <input
+                                    type="radio"
+                                    id={`quality-${option.value}`}
+                                    name="quality"
+                                    value={option.label}
+                                    onChange={(e) =>
+                                      handleCheckboxChange(
+                                        "quality",
+                                        e.target.value
+                                      )
+                                    }
+                                    className="cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                  />
+                                  <label
+                                    htmlFor={`quality-${option.value}`}
+                                    className="ml-2 text-sm text-stone-600"
+                                  >
+                                    {option.label}
+                                  </label>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col mt-2">
+                          <label
+                            htmlFor="role"
+                            className="text-sm font-medium text-stone-600"
+                          >
+                            Role
+                          </label>
+                          <div id="role" className="mt-2 block w-full">
+                            {options.role &&
+                              options.role.map((option) => (
+                                <div
+                                  key={option.value}
+                                  className="flex items-center"
+                                >
+                                  <input
+                                    type="radio"
+                                    id={`role-${option.value}`}
+                                    name="role"
+                                    value={option.label}
+                                    onChange={(e) =>
+                                      handleCheckboxChange(
+                                        "role",
+                                        e.target.value
+                                      )
+                                    }
+                                    className="cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                  />
+                                  <label
+                                    htmlFor={`role-${option.value}`}
+                                    className="ml-2 text-sm text-stone-600"
+                                  >
+                                    {option.label}
+                                  </label>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+
+
+                        <div className="flex flex-col mt-2">
+                          <label
+                            htmlFor="role"
+                            className="text-sm font-medium text-stone-600"
+                          >
+                            Employee Count
+                          </label>
+                          <div id="empcount" className="mt-2 block w-full">
+                              
+                          <div id="empcount" className="mt-2 block w-full">
+                            {options.empcount &&
+                              options.empcount.map((option) => (
+                                <div
+                                  key={option.value}
+                                  className="flex items-center"
+                                >
+                                  <input
+                                    type="radio"
+                                    id={`empcount-${option.value}`}
+                                    name="empcount"
+                                    value={option.label}
+                                    onChange={(e) =>
+                                      handleCheckboxChange(
+                                        "empcount",
+                                        e.target.value
+                                      )
+                                    }
+                                    className="cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                  />
+                                  <label
+                                    htmlFor={`empcount-${option.value}`}
+                                    className="ml-2 text-sm text-stone-600"
+                                  >
+                                    {option.label}
+                                  </label>
+                                </div>
+                              ))}
+                          </div>
+                              
+                          </div>
+                        </div>
+
+
+                        
+                      </div>
+
+                      <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex"></div>
                     </div>
-                    <div className="">
-                      <div className="flex flex-col">
-                        <label
-                          for="manufacturer"
-                          className="text-sm font-medium text-stone-600"
-                        >
-                          Industry
-                        </label>
+                  </form>
+                </div>
+              </div>
+            </div>
 
-                        <select
-                          id="status"
-                          onChange={(e) =>
-                            handleSelect("industry", e.target.value)
-                          }
-                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        >
-                          {optionsElement("industry")}
-                        </select>
-                      </div>
-
-                      <div className="flex flex-col">
-                        <label
-                          for="manufacturer"
-                          className="text-sm font-medium text-stone-600"
-                        >
-                          Company Name
-                        </label>
-
-                        <select
-                          id="status"
-                          onChange={(e) =>
-                            handleSelect("companyName", e.target.value)
-                          }
-                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        >
-                          {optionsElement("companyName")}
-                        </select>
-                      </div>
-
-                      <div className="flex flex-col">
-                        <label
-                          for="manufacturer"
-                          className="text-sm font-medium text-stone-600"
-                        >
-                          Date
-                        </label>
-
-                        <select
-                          id="status"
-                          onChange={(e) => handleSelect("date", e.target.value)}
-                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        >
-                          {optionsElement("date")}
-                        </select>
-                      </div>
- 
-
-
-
-
-                      <div className="flex flex-col mt-2">
-                        <label
-                          for="manufacturer"
-                          className="text-sm font-medium text-stone-600"
-                        >
-                          Industry 2
-                        </label>
-
-                        <select
-                          id="status"
-                          onChange={(e) =>
-                            handleSelect("industry2", e.target.value)
-                          }
-                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        >
-                          {optionsElement("industry2")}
-                        </select>
-                      </div>
-
-                      <div className="flex flex-col">
-                        <label
-                          for="manufacturer"
-                          className="text-sm font-medium text-stone-600"
-                        >
-                          Country
-                        </label>
-
-                        <select
-                          id="status"
-                          onChange={(e) =>
-                            handleSelect("country", e.target.value)
-                          }
-                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        >
-                          {optionsElement("country")}
-                        </select>
-                      </div>
-
-                      <div className="flex flex-col">
-                        <label
-                          for="status"
-                          className="text-sm font-medium text-stone-600"
-                        >
-                          Website
-                        </label>
-
-                        <select
-                          id="status"
-                          onChange={(e) =>
-                            handleSelect("website", e.target.value)
-                          }
-                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        >
-                          {optionsElement("website")}
-                        </select>
-                      </div>
-
-                      
-<div className="flex flex-col mt-2">
-  <label
-    htmlFor="quality"
-    className="text-sm font-medium text-stone-600"
-  >
-    Quality
-  </label>
-  <div id="quality" className="mt-2 block w-full">
-    {options.quality &&
-      options.quality.map((option) => (
-        <div key={option.value} className="flex items-center">
-          <input
-            type="radio"
-            id={`quality-${option.value}`}
-            name="quality"
-            value={option.label}
-            onChange={(e) => handleCheckboxChange("quality", e.target.value)}
-            className="cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-          />
-          <label
-            htmlFor={`quality-${option.value}`}
-            className="ml-2 text-sm text-stone-600"
-          >
-            {option.label}
-          </label>
-        </div>
-      ))}
-  </div>
-</div>
-
-<div className="flex flex-col mt-2">
-  <label
-    htmlFor="role"
-    className="text-sm font-medium text-stone-600"
-  >
-    Role
-  </label>
-  <div id="role" className="mt-2 block w-full">
-    {options.role &&
-      options.role.map((option) => (
-        <div key={option.value} className="flex items-center">
-          <input
-            type="radio"
-            id={`role-${option.value}`}
-            name="role"
-            value={option.label}
-            onChange={(e) => handleCheckboxChange("role", e.target.value)}
-            className="cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-          />
-          <label
-            htmlFor={`role-${option.value}`}
-            className="ml-2 text-sm text-stone-600"
-          >
-            {option.label}
-          </label>
-        </div>
-      ))}
-  </div>
-</div>
-
-
-                    </div>
-
-
-                    <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex">
-                
-                    </div>
-                  </div>
-                </form>
+            <div className=" lg:col-span-7 col-span-9 mt-0 bg-[#F7FAFC]   grid-cols-1 sm:grid-cols-5 gap-2  left-0 px-7  ">
+              <div
+                className={` col-span-4 ${
+                  showFilters ? "col-span-5" : "col-span-5"
+                }`}
+              >
+                <ContactDetails
+                  handleColumnSort={handleColumnSort}
+                  sortColumn={sortColumn}
+                  sortDirection={sortDirection}
+                  currentItems={contact.contacts.contact}
+                  deletedState={setDeletedState}
+                  typeNew={type}
+                  dispatch={dispatch}
+                ></ContactDetails>
               </div>
             </div>
           </div>
-
-       
-
-          <div className=" col-span-7 mt-0 bg-[#F7FAFC]   grid-cols-1 sm:grid-cols-5 gap-2  left-0 px-7  ">
-            <div
-              className={` col-span-4 ${
-                showFilters ? "col-span-5" : "col-span-5"
-              }`}
-            >
-              <ContactDetails
-                handleColumnSort={handleColumnSort}
-                sortColumn={sortColumn}
-                sortDirection={sortDirection}
-                currentItems={contact.contacts.contact}
-                deletedState={setDeletedState}
-                typeNew={type}
-                dispatch={dispatch}
-              ></ContactDetails>
-            </div>
-          </div>
-          </div>
-
-
 
           <div className=" flex justify-end bg-[#F7FAFC]  gap-2 sm:px-2 md:px-16 lg:px-28 xl:px-28 2xl:px-28 px-2">
             <div className="flex flex-col ">
@@ -1123,14 +1245,20 @@ const Contact = () => {
                   className="font-novasans px-3 py-1 font-medium rounded bg-[#F7FAFC] text-maincolor"
                 >
                   <FaChevronRight />
-
-
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+    ) : checkRights ? (
+        <ScreenRights></ScreenRights>
+      ) : (
+        <></>
+      )}
+
+
       <Footer>+</Footer>
     </React.Fragment>
   );

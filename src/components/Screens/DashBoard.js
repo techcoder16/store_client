@@ -6,17 +6,15 @@ import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { companyData } from "../../helpers/AuthStore/companySlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useLayoutEffect, useEffect, useState, useMemo } from "react";
-import Select from "react-select";
+import ScreenRights from "../../utils/ScreenRights";
 import axios from "axios";
 import { CircularLoader } from "../../utils/CircularLoader";
 import Dropzone from "react-dropzone";
-import postApiData from '../../helpers/postApiData';
-import { AiOutlineUpload } from "react-icons/ai";
 
 import * as XLSX from "xlsx";
 
-import { toast} from "react-hot-toast";
-import { AiOutlineSearch } from "react-icons/ai";
+import { toast } from "react-hot-toast";
+import useAuthScreenCheck from "../../utils/useAuthScreenCheck";
 import { useLocation } from "react-router-dom";
 import GetApiData from "../../helpers/getApiData";
 import CompanyDetails from "./CompanyDetails";
@@ -26,7 +24,6 @@ import { useNavigate } from "react-router-dom";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { TiArrowSortedUp } from "react-icons/ti";
 import SideMenu from "../../Container/SideMenu";
-
 
 import Footer from "../../Container/Footer";
 import ToasterGen from "../../Container/ToasterGen";
@@ -45,8 +42,12 @@ const DashBoard = () => {
   const [type, setType] = useState("buyer");
   const [sideMenuShow, setSideMenuShow] = useState(true);
   const [data, setData] = useState([]);
-  const [filter,setFilter] = useState(true);
+  const [filter, setFilter] = useState(true);
   const [circularProgress, setCircularProgress] = useState(false);
+  const user_id = JSON.parse(localStorage.getItem("user_data"))._id;
+  const screen_name = "/company";
+
+  const checkRights = useAuthScreenCheck(user_id, screen_name);
 
   function handleScroll() {
     window.scroll({
@@ -55,10 +56,6 @@ const DashBoard = () => {
       behavior: "smooth",
     });
   }
-
-
-
-
 
   useEffect(() => {
     const user = localStorage.getItem("user_data");
@@ -69,81 +66,11 @@ const DashBoard = () => {
         navigate("/dashboard");
       } else if (userrole == "user") {
         navigate("/dashboard");
-      } // Redirect to dashboard if user is already authenticated
+      }
     }
   }, []);
 
   const [selectedFilters, setSelectedFilters] = useState({});
-
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      backgroundColor: state.isDark ? "#F5F5F5" : "#06040A",
-      borderColor: "#F5F5F5",
-      borderRadius: "3px",
-      fontSize: "14px",
-
-      backgroundColor: "#F5F5F5",
-      padding: "1px",
-      boxShadow: state.isFocused ? "0 0 0 0 #F5F5F5" : "none",
-      fontFamily: "Poppins, sans-serif",
-
-      color: "#F5F5F5",
-      "&:hover": {
-        borderColor: "#06040A",
-      },
-      "::-webkit-scrollbar-thumb": {
-        background: "#006400",
-        height: "20px",
-      },
-      input: {
-        color: "white",
-      },
-
-      height: "1px", // Set the height of the select box
-    }),
-    input: (provided) => ({
-      ...provided,
-      color: "#F5F5F5", // Set the input text color to white
-      fontFamily: "Poppins, sans-serif", // Set the font family to Poppins
-    }),
-
-    option: (provided, state) => ({
-      ...provided,
-      backgroundColor: state.isFocused ? "#F5F5F5" : "white",
-      color: state.isFocused ? "white" : "black",
-    }),
-    singleValue: (provided, state) => ({
-      ...provided,
-      color: "#000000",
-    }),
-    multiValue: (provided) => ({
-      ...provided,
-      backgroundColor: "#000000",
-      borderRadius: "4px",
-      color: "#000000",
-    }),
-    multiValueLabel: (provided) => ({
-      ...provided,
-      color: "#000000",
-      fontSize: "14px",
-      color: "#000000",
-    }),
-    multiValueRemove: (provided) => ({
-      ...provided,
-      color: "#F5F5F5",
-      "&:hover": {
-        backgroundColor: "#140D1E",
-        color: "#000000",
-        color: "#000000",
-      },
-    }),
-    placeholder: (provided) => ({
-      ...provided,
-      color: "#000000", // Set the placeholder color to white
-    }),
-  };
-
 
   const itemsPerPage = 10;
   const filteredcompany = company.companys.company
@@ -169,14 +96,14 @@ const DashBoard = () => {
     const fileReader = new FileReader();
     try {
       setCircularProgress(true);
-      console.log("Uploading");
+
       const formData = new FormData();
       formData.append("file", acceptedFiles[0]);
       console.log(formData);
       const response = await axios.post(
         "http://localhost:5001/company/upload",
         formData
-      );  
+      );
 
       setCircularProgress(false);
 
@@ -196,46 +123,6 @@ const DashBoard = () => {
       setData(result);
     };
   };
-
-
-
-  
-//   const handleUpload =async(acceptedFiles) => {
-//     console.log(acceptedFiles);
-//     const fileReader = new FileReader();
-//     try {
-//       setCircularProgress(true);
-// console.log('Uploading');
-// const formData = new FormData();
-// formData.append('file', acceptedFiles[0]);
-
-// console.log(formData);
-//       const response = await axios.post('http://localhost:5001/company/uplift_data', formData);
-      
-//       setCircularProgress(false);
-
-
-//       console.log('File uploaded successfully:', response.data);
-//       toast.success("File uploaded successfully");
-//     } catch (error) {
-//       console.error('Error uploading file:', error);
-//       setCircularProgress(false);
-      
-
-
-      
-//     };
-
-//     fileReader.onload = function (e) {
-//       const arrayBuffer = e.target.result;
-//       const workbook = XLSX.read(arrayBuffer, { type: "buffer" });
-//       const sheetName = workbook.SheetNames[0];
-//       const sheet = workbook.Sheets[sheetName];
-//       const result = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-//       setData(result);
-      
-//   }
-// }
 
   let totalPages = Math.ceil(company.companys.companyCount / itemsPerPage);
   const [options, setOptions] = useState({});
@@ -354,7 +241,7 @@ const DashBoard = () => {
           ))
         );
 
-        case "date":
+      case "date":
         return (
           options.date &&
           options.date.map((option) => (
@@ -381,38 +268,37 @@ const DashBoard = () => {
           ))
         );
 
-        case "quality":
-          return (
-            options.quality &&
-            options.quality.map((option) => (
-              <option
-                key={option.value}
-                className="scrollbar-thumb-maincolor text-Poppins text-md"
-                value={option.label}
-              >
-                {option.label}
-              </option>
-            ))
-          );
-          
-        case "role":
-          return (
-            options.role &&
-            options.role.map((option) => (
-              <option
-                key={option.value}
-                className="scrollbar-thumb-maincolor text-Poppins text-md"
-                value={option.label}
-              >
-                {option.label}
-              </option>
-            ))
-          );
+      case "quality":
+        return (
+          options.quality &&
+          options.quality.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
+
+      case "role":
+        return (
+          options.role &&
+          options.role.map((option) => (
+            <option
+              key={option.value}
+              className="scrollbar-thumb-maincolor text-Poppins text-md"
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))
+        );
     }
   };
 
   const handleFilter = (option, value) => {
-   
     switch (option) {
       case "name":
         setSelectedFilters((prevFilters) => ({ ...prevFilters, name: value }));
@@ -428,7 +314,7 @@ const DashBoard = () => {
           ...prevFilters,
           industry: value,
         }));
-        console.log("yahan aaya");
+
         break;
       case "industry2":
         setSelectedFilters((prevFilters) => ({
@@ -464,7 +350,6 @@ const DashBoard = () => {
   };
 
   function handleSelect(option, selected) {
- 
     console.log(selected);
     handleFilter(option, selected);
 
@@ -473,7 +358,6 @@ const DashBoard = () => {
 
   useEffect(() => {
     async function fetchData() {
-
       const data = await GetApiData("company/get_filters", "");
 
       let results = [];
@@ -531,8 +415,6 @@ const DashBoard = () => {
         results7.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, companyName: results7 }));
-
-    
     }
 
     fetchData();
@@ -552,7 +434,7 @@ const DashBoard = () => {
             : " bg-transparent text-[#7E7E7E]"
         }`}
       >
-        1  
+        1
       </button>
     );
 
@@ -572,11 +454,11 @@ const DashBoard = () => {
           onClick={() => handlePageChange(page)}
           className={` px-3  mx-1 py-1 font-semibold rounded font-novasans     ${
             currentPage === page
-            ? " bg-transparent text-[#7E7E7E]"
-            : " bg-transparent text-[#7E7E7E]"
+              ? " bg-transparent text-[#7E7E7E]"
+              : " bg-transparent text-[#7E7E7E]"
           }`}
         >
-          {page}  
+          {page}
         </button>
       );
     }
@@ -595,8 +477,8 @@ const DashBoard = () => {
         onClick={() => handlePageChange(totalPages)}
         className={`px-3 py-1 font-bold rounded font-novasans mx-1  ${
           currentPage === totalPages
-          ? " bg-transparent text-[#7E7E7E]"
-          : " bg-transparent text-[#7E7E7E]"
+            ? " bg-transparent text-[#7E7E7E]"
+            : " bg-transparent text-[#7E7E7E]"
         }`}
       >
         {totalPages}
@@ -694,12 +576,14 @@ const DashBoard = () => {
   const isLoading = !company.companys;
 
   useEffect(() => {
-    console.log("Loading company")
-    console.log({     page: currentPage,
+    console.log("Loading company");
+    console.log({
+      page: currentPage,
       searchQuery: searchQuery,
       selectedFilters: selectedFilters,
       sortColumn: sortColumn,
-      sortDirection: sortDirection,})
+      sortDirection: sortDirection,
+    });
     dispatch(
       companyData({
         page: currentPage,
@@ -709,9 +593,6 @@ const DashBoard = () => {
         sortDirection: sortDirection,
       })
     );
- 
- 
-
   }, [
     dispatch,
     currentPage,
@@ -727,168 +608,187 @@ const DashBoard = () => {
 
       {circularProgress == true ? <CircularLoader></CircularLoader> : <></>}
       <ToasterGen></ToasterGen>
-
-      <div className="grid grid-cols-1 lg:grid-cols-10 gap-0  bg-[#F7FAFC] ">
-        <div
-          className={` ${
-            sideMenuShow == true ? "lg:col-span-1 w-full" : "lg:col-span-0 "
-          }   lg:flex bg-white `}
-        >
-          <SideMenu setSideMenuShow={setSideMenuShow} />
-        </div>
-
-      
-
-        <div
-          className={` ${
-            sideMenuShow == true ? "lg:col-span-9" : "lg:col-span-10"
-          }  bg-[#F7FAFC]  w-full`}
-        >
-         
-
-      <div className="relative w-full   bg-[#F7FAFC] ">
-        <div className="flex flex-col h-auto p-4 md:p-8 text-center">
-          <p className="font-bold   text-4xl  md:text-lg text-[#20253F]  font-novasans  mb-2">
-          Company Data
-            
-          </p>
-          <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-novasans">
-         
-          </p>
-        </div>
-      </div>
-
-
-
-
-      <div className="grid grid-cols-9 gap-2 items-start ">
-            
-      <div className=" col-span-2  w-full font-novasans px-2">
-
-  <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg">
-
-  <div className="relative w-full">
-          
-
-          <div className="items-center justify-center max-w-xl mx-auto">
-      
-          <Dropzone onDrop={handleUpload} accept=".xls, .xlsx, .csv">
-                      {({ getRootProps, getInputProps }) => (
-                        <div {...getRootProps()} className="  ">
-                          {/* <input {...getInputProps()} />
-                           */}
-                          {/* <AiOutlineUpload></AiOutlineUpload>  */}
-                          <label
-                            className="flex justify-center w-full h-32 px-4   bg-[#F7FAFC] border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-300 ease-in-out"
-                            id="drop"
-                          >
-                            <span className="flex items-center space-x-2">
-                              <span className="font-medium text-gray-600">
-                                Drop files to Attach, or
-                                <span className="text-[#20253F] underline ml-[4px]">
-                                  browse
-                                </span>
-                              </span>
-                            </span>
-                          </label>
-                        </div>
-                      )}
-                    </Dropzone>
-      
+      {checkRights && checkRights == true ? (
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-0  bg-[#F7FAFC] ">
+          <div
+            className={` ${
+              sideMenuShow == true ? "lg:col-span-1 w-full" : "lg:col-span-0 "
+            }   lg:flex bg-white `}
+          >
+            <SideMenu setSideMenuShow={setSideMenuShow} />
           </div>
-        </div>
 
+          <div
+            className={` ${
+              sideMenuShow == true ? "lg:col-span-10" : "lg:col-span-10"
+            }  bg-[#F7FAFC]  w-full`}
+          >
+            <div className="relative w-full   bg-[#F7FAFC] ">
+              <div className="flex flex-col h-auto p-4 md:p-8 text-center">
+                <p className="font-bold   text-4xl  md:text-lg text-[#20253F]  font-novasans  mb-2">
+                  Company Data
+                </p>
+                <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-novasans"></p>
+              </div>
+            </div>
 
+            <div className="grid grid-cols-9 gap-2 items-start ">
+              <div className=" lg:col-span-2 col-span-9  w-full font-novasans px-2">
+                <div className="flex flex-col">
+                  <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg">
+                    <div className="relative w-full">
+                      <div className="items-center justify-center max-w-xl mx-auto">
+                        <Dropzone
+                          onDrop={handleUpload}
+                          accept=".xls, .xlsx, .csv"
+                        >
+                          {({ getRootProps, getInputProps }) => (
+                            <div {...getRootProps()} className="  ">
+                              <label
+                                className="flex justify-center w-full h-32 px-4   bg-[#F7FAFC] border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-300 ease-in-out"
+                                id="drop"
+                              >
+                                <span className="flex items-center space-x-2">
+                                  <span className="font-medium text-gray-600">
+                                    Drop files to Attach, or
+                                    <span className="text-[#20253F] underline ml-[4px]">
+                                      browse
+                                    </span>
+                                  </span>
+                                </span>
+                              </label>
+                            </div>
+                          )}
+                        </Dropzone>
+                      </div>
+                    </div>
+                    Filters
+                    <form className="">
+                      <div className="relative mb-10 w-full flex  items-center justify-between rounded-md">
+                        <label
+                          for="default-search"
+                          class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+                        >
+                          Search
+                        </label>
+                        <div class="relative">
+                          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg
+                              class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                              />
+                            </svg>
+                          </div>
+                          <input
+                            type="search"
+                            id="default-search"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="block w-full p-4 ps-10 font-novasans text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-900 focus:border-blue-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Search by Name..."
+                            required
+                          />
+                        </div>
+                      </div>
 
-    Filters
-    <form className="">
-      <div className="relative mb-10 w-full flex  items-center justify-between rounded-md">
-        <svg className="absolute left-2 block h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8" className=""></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65" className=""></line>
-        </svg>
-        <input type="name"
-        
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+                      <div className=" flex justify-end w-full">
+                        {filter == true ? (
+                          <TiArrowSortedUp
+                            onClick={() => setFilter(false)}
+                          ></TiArrowSortedUp>
+                        ) : (
+                          <TiArrowSortedDown onClick={() => setFilter(true)} />
+                        )}
+                      </div>
 
-        name="search" className="h-12 w-full cursor-text rounded-md border border-gray-100 bg-gray-100 py-4 pr-40 pl-12 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Search by Name etc" />
-      </div>
-     <div className=" flex justify-end w-full"> {filter == true ?  <TiArrowSortedUp onClick={() => setFilter(false)} ></TiArrowSortedUp> :<  TiArrowSortedDown onClick={() => setFilter(true)} />}</div>
-       
-       
+                      <div
+                        className={`${
+                          filter
+                            ? "block transition duration-300 ease-in-out"
+                            : "transition duration-500 ease-in-out hidden"
+                        }`}
+                      >
+                        <div className="flex flex-col">
+                          <label
+                            for="manufacturer"
+                            className="text-sm font-medium text-stone-600"
+                          >
+                            Industry
+                          </label>
 
+                          <select
+                            id="status"
+                            onChange={(e) =>
+                              handleSelect("industry", e.target.value)
+                            }
+                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                          >
+                            {optionsElement("industry")}
+                          </select>
+                        </div>
 
-     <div className={`${filter ? "block transition duration-300 ease-in-out" : "transition duration-500 ease-in-out hidden"}`}>
+                        <label
+                          for="manufacturer"
+                          className="text-sm font-medium text-stone-600"
+                        >
+                          Company Name
+                        </label>
 
-       
+                        <select
+                          id="status"
+                          onChange={(e) =>
+                            handleSelect("companyName", e.target.value)
+                          }
+                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                        >
+                          {optionsElement("companyName")}
+                        </select>
 
-        <div className="flex flex-col">
-          <label for="manufacturer" className="text-sm font-medium text-stone-600">Industry</label>
+                        <label
+                          for="manufacturer"
+                          className="text-sm font-medium text-stone-600"
+                        >
+                          Industry 2
+                        </label>
 
-          <select id="status"
-              onChange={(e) => handleSelect("industry", e.target.value)}
-              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-               { optionsElement("industry")}
-              </select>
-        </div>
+                        <select
+                          id="status"
+                          onChange={(e) =>
+                            handleSelect("industry2", e.target.value)
+                          }
+                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                        >
+                          {optionsElement("industry2")}
+                        </select>
 
+                        <label
+                          for="manufacturer"
+                          className="text-sm font-medium text-stone-600"
+                        >
+                          Country
+                        </label>
 
+                        <select
+                          id="status"
+                          onChange={(e) =>
+                            handleSelect("country", e.target.value)
+                          }
+                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                        >
+                          {optionsElement("country")}
+                        </select>
 
-
-
-
-
-
-
-
-
-
-
-
-     
-          <label for="manufacturer" className="text-sm font-medium text-stone-600">Company Name</label>
-
-          <select id="status"
-              onChange={(e) => handleSelect("companyName", e.target.value)}
-              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-               { optionsElement("companyName")}
-              </select>
-      
-
-        {/* <div className="flex flex-col">
-          <label for="manufacturer" className="text-sm font-medium text-stone-600">Industry 2</label>
-
-          <select id="status"
-              onChange={(e) => handleSelect("industry2", e.target.value)}
-              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-               { optionsElement("industry2")}
-              </select>
-        </div> */}
-
-     
-      
-
-          <label for="manufacturer" className="text-sm font-medium text-stone-600">Industry 2</label>
-
-          <select id="status"
-              onChange={(e) => handleSelect("industry2", e.target.value)}
-              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-               { optionsElement("industry2")}
-              </select>
-     
-
-          <label for="manufacturer" className="text-sm font-medium text-stone-600">Country</label>
-
-          <select id="status"
-              onChange={(e) => handleSelect("country", e.target.value)}
-              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-               { optionsElement("country")}
-              </select>
-    
-
-
-        {/* <div className="flex flex-col">
+                        {/* <div className="flex flex-col">
           <label for="manufacturer" className="text-sm font-medium text-stone-600">Region</label>
 
           <select id="status"
@@ -898,18 +798,24 @@ const DashBoard = () => {
               </select>
         </div> */}
 
+                        <label
+                          for="status"
+                          className="text-sm font-medium text-stone-600"
+                        >
+                          Website
+                        </label>
 
+                        <select
+                          id="status"
+                          onChange={(e) =>
+                            handleSelect("website", e.target.value)
+                          }
+                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                        >
+                          {optionsElement("website")}
+                        </select>
 
-          <label for="status" className="text-sm font-medium text-stone-600">Website</label>
-
-              <select id="status"
-              onChange={(e) => handleSelect("website", e.target.value)}
-              className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-               { optionsElement("website")}
-              </select>
-
-
-{/* 
+                        {/* 
 
           <Select
                 isSearchable={true}
@@ -924,67 +830,61 @@ const DashBoard = () => {
               
               </Select> */}
 
-    
-     
+                        <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex"></div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
 
-      <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex">
-    
-      </div>
-
-      </div>
-    </form>
-  </div>
-</div>
-
-
-
-
-
-         
-<div className=" col-span-7 mt-0 bg-[#F7FAFC]   grid-cols-1 sm:grid-cols-5 gap-2  left-0 px-7  ">
-            <div
-              className={`w-full col-span-4 ${
-                showFilters ? "col-span-5" : "col-span-5"
-              }`}
-            >
-              <CompanyDetails
-                handleColumnSort={handleColumnSort}
-                sortColumn={sortColumn}
-                sortDirection={sortDirection}
-                currentItems={company.companys.company}
-                deletedState={setDeletedState}
-                typeNew={type}
-              ></CompanyDetails>
+              <div className=" lg:col-span-7 col-span-9 mt-0 bg-[#F7FAFC]   grid-cols-1 sm:grid-cols-5 gap-2  left-0 px-7  ">
+                <div
+                  className={`w-full col-span-4 ${
+                    showFilters ? "col-span-5" : "col-span-5"
+                  }`}
+                >
+                  <CompanyDetails
+                    handleColumnSort={handleColumnSort}
+                    sortColumn={sortColumn}
+                    sortDirection={sortDirection}
+                    currentItems={company.companys.company}
+                    deletedState={setDeletedState}
+                    typeNew={type}
+                  ></CompanyDetails>
+                </div>
+              </div>
             </div>
-          </div>
-</div>
 
+            <div className=" flex justify-end bg-white  gap-2 sm:px-2 md:px-16 lg:px-28 xl:px-28 2xl:px-28 px-2">
+              <div className="flex flex-col ">
+                <div className="flex flex-1 mb-4">
+                  <button
+                    onClick={handlePreviousPage}
+                    disabled={currentPage === 1}
+                    className="font-novasans  px-3 py-1 font-medium rounded bg-white  text-maincolor  md:mb-0 mr-2"
+                  >
+                    <FaAngleLeft />
+                  </button>
+                  <div className="italic ">{getPages()}</div>
 
-          <div className=" flex justify-end bg-white  gap-2 sm:px-2 md:px-16 lg:px-28 xl:px-28 2xl:px-28 px-2">
-            <div className="flex flex-col ">
-              <div className="flex flex-1 mb-4">
-                <button
-                  onClick={handlePreviousPage}
-                  disabled={currentPage === 1}
-                  className="font-novasans  px-3 py-1 font-medium rounded bg-white  text-maincolor  md:mb-0 mr-2"
-                >
-                  <FaAngleLeft />
-                </button>
-                <div className="italic ">{getPages()}</div>
-
-                <button
-                  onClick={handleNextPage}
-                  disabled={currentPage === totalPages}
-                  className="font-novasans px-3 py-1 font-medium rounded bg-white text-maincolor"
-                >
-                  <FaAngleRight />
-                </button>
+                  <button
+                    onClick={handleNextPage}
+                    disabled={currentPage === totalPages}
+                    className="font-novasans px-3 py-1 font-medium rounded bg-white text-maincolor"
+                  >
+                    <FaAngleRight />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <Footer>+</Footer>
+      ) : checkRights ? (
+        <ScreenRights></ScreenRights>
+      ) : (
+        <></>
+      )}
+      <Footer></Footer>
     </React.Fragment>
   );
 };

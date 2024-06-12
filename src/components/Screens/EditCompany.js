@@ -8,26 +8,41 @@ import { ValidateCompanyUpdate } from "../../utils/validateAPI";
 import SideMenu from "../../Container/SideMenu";
 import { useLocation, useNavigation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-const EditCompany = ({   }) => {
+import useAuthScreenCheck from "../../utils/useAuthScreenCheck";
+import ScreenRights from "../../utils/ScreenRights";
+
+const EditCompany = ({}) => {
   const [sideMenuShow, setSideMenuShow] = useState(true);
 
   const { state } = useLocation();
-  const { companyState } = state || { companyState:null };
-const navigate =useNavigate();
+  const { companyState } = state || { companyState: null };
+
+
+
+
+
+  const user_id = JSON.parse(localStorage.getItem("user_data"))._id;
+  const screen_name = "/edit_company";
+
+  const checkRights = useAuthScreenCheck(user_id, screen_name);
+
+
+
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-        companyName: companyState.companyName,
-        website: companyState.website,
-        industry: companyState.industry,
-        industry2: companyState.industry2,
-        companyLinkedIn: companyState.companyLinkedIn,
-        Region: companyState.Region,
-        Country: companyState.Country,
-        name: companyState.name,
-        id:companyState._id,
-      navigate:navigate,
+      companyName: companyState.companyName,
+      website: companyState.website,
+      industry: companyState.industry,
+      industry2: companyState.industry2,
+      companyLinkedIn: companyState.companyLinkedIn,
+      Region: companyState.Region,
+      Country: companyState.Country,
+      name: companyState.name,
+      id: companyState._id,
+      navigate: navigate,
     },
-   validate: ValidateCompanyUpdate,
+    validate: ValidateCompanyUpdate,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
@@ -39,21 +54,27 @@ const navigate =useNavigate();
   });
 
   return (
+    <>
+    
     <div>
-    <Header></Header>
+      <Header></Header>
 
-    <ToasterGen></ToasterGen>
-    <div className="bg-[#F7FAFC] z-10 h-screen">
-      <div
-        className={` ${
-          sideMenuShow == true ? "lg:col-span-1 w-full" : "lg:col-span-0 w-full "
-        }   lg:flex bg-transparent `}
-      >
-        <SideMenu setSideMenuShow={setSideMenuShow} className="z-10" />
-      </div>
+      <ToasterGen></ToasterGen>
 
-                
-      <div className=" bg-[#F7FAFC] mb-2">
+      {checkRights && checkRights == true ? (
+
+      <div className="bg-[#F7FAFC] z-10 h-screen">
+        <div
+          className={` ${
+            sideMenuShow == true
+              ? "lg:col-span-1 w-full"
+              : "lg:col-span-0 w-full "
+          }   lg:flex bg-transparent `}
+        >
+          <SideMenu setSideMenuShow={setSideMenuShow} className="z-10" />
+        </div>
+
+        <div className=" bg-[#F7FAFC] mb-2">
           <h2 className="font-novasans text-2xl    text-[#32407C] font-semibold flex px-16">
             Edit Company Details
           </h2>
@@ -200,13 +221,16 @@ const navigate =useNavigate();
             </div>
           </div>
         </div>
+      </div>
+         ) : checkRights ? (
+          <ScreenRights></ScreenRights>
+        ) : (
+          <></>
+        )}
 
-        </div>
-      
-        
     </div>
+   <Footer></Footer></>
   );
 };
 
 export default EditCompany;
-

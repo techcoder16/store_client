@@ -10,6 +10,8 @@ import { useLocation, useNavigation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import countryCityData from '../../utils/countries.json';
 
+import useAuthScreenCheck from "../../utils/useAuthScreenCheck";
+import ScreenRights from "../../utils/ScreenRights";
 
 const EditContact = ({}) => {
 
@@ -21,6 +23,12 @@ const EditContact = ({}) => {
   const [cities, setCities] = useState([]);
 
   
+  const user_id = JSON.parse(localStorage.getItem("user_data"))._id;
+  const screen_name = "/edit_contacts";
+
+  const checkRights = useAuthScreenCheck(user_id, screen_name);
+
+
 
 
 
@@ -123,11 +131,14 @@ const EditContact = ({}) => {
   });
 
   return (
+    <>
     <div>
       <Header></Header>
 
       <ToasterGen></ToasterGen>
-      <div className=" bg-[#F7FAFC]  h-screen ">
+      
+      {checkRights && checkRights == true ? (
+      <div className=" bg-[#F7FAFC]  h-full ">
         <div
           className={` ${
             sideMenuShow == true
@@ -518,7 +529,15 @@ const EditContact = ({}) => {
           </div>
         </div>
       </div>
+
+) : checkRights ? (
+  <ScreenRights></ScreenRights>
+) : (
+  <></>
+)}
+
     </div>
+       <Footer></Footer></>
   );
 };
 

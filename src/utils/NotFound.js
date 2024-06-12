@@ -45,7 +45,7 @@ const NotFound = () => {
 
     <div className=" tracking-widest  ">
     <span className="text-background text-6xl block"><span>4  0  4</span></span>
-    <span className="text-background text-xl font-Poppins ">Sorry, We couldn't find what you are looking for!</span>
+    <span className="text-background text-xl font-novasans ">Sorry, We couldn't find what you are looking for!</span>
 
     </div>
     </center>

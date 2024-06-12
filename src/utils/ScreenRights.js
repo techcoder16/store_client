@@ -22,8 +22,8 @@ const ScreenRights = () => {
         <div></div>
       )}
 
-      <div className="bg-gray-100">
-        <div className="bg-line text-white py-4 px-8 flex items-center">
+      <div className="bg-gray-100 font-novasans">
+        <div className=" text-white py-4 px-8 flex items-center">
           <img
             src={logo}
             alt="logo"
@@ -40,7 +40,7 @@ const ScreenRights = () => {
 
                 <span className="text-gray-500 text-xl font-dmsans  font-normal  ">
                   You don't have permission to view this page. Please contact
-                  your Shop Admin.
+                  your Administrator.
                 </span>
               </div>
             </div>

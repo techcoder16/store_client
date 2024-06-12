@@ -74,13 +74,13 @@ const MenuUpdateModal = ({ menuState, props, menudata }) => {
                     <span className="bg-transparent text-maincolor ">×</span>
                   </button>
                 </div>
-                <span className="mb-3 text-2xl font-bold font-Poppins text-subheading-400  text-maincolor">
+                <span className="mb-3 text-2xl font-bold font-novasans text-subheading-400  text-maincolor">
                   Update Menu Item
                 </span>
 
                 <form className="py-1" onSubmit={formik.handleSubmit}>
                   <div className="py-4 ">
-                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
+                    <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                       Menu name
                     </span>
                     <input
@@ -88,14 +88,14 @@ const MenuUpdateModal = ({ menuState, props, menudata }) => {
                       id="menu_name"
                       type="text"
                       value={formik.values.menu_name}
-                      className=" w-full placeholder:font-Poppins  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className=" w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                       placeholder="menu title"
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
                   </div>
 
                   <div className="py-4 ">
-                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
+                    <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                       Menu Level
                     </span>
                     <input
@@ -103,19 +103,19 @@ const MenuUpdateModal = ({ menuState, props, menudata }) => {
                       id="level"
                       type="text"
                       value={formik.values.level}
-                      className=" w-full placeholder:font-Poppins  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className=" w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
                   </div>
 
                   <div className="py-4 ">
-                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
+                    <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                       Select Parent
                     </span>
                     <select
                       {...formik.getFieldProps("parent")}
                       value={formik.values.parent}
-                      className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-Poppins tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-0   dark:focus:border-blue-500"
+                      className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-maincolor focus:border-maincolor font-novasans tra-color block w-full p-2.5 dark:bg-maincolor dark:border-maincolor dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-0   dark:focus:border-blue-500"
                     >
                       {optionElements & optionElements}
                     </select>
@@ -127,7 +127,7 @@ const MenuUpdateModal = ({ menuState, props, menudata }) => {
                     id="id"
                     type="text"
                     value={menuState.id}
-                    className=" w-full placeholder:font-Poppins  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                    className=" w-full placeholder:font-novasans  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
                   ></input>
 
                   <div className="py-4 ">

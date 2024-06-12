@@ -66,7 +66,7 @@ const CreateUser = ({ props, UserState }) => {
           <div className="flex items-center  justify-center min-h-User  bg-transparent">
             <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
               <div className="flex flex-col justify-center p-8 md:p-14 ">
-                <span className="mb-3 text-2xl font-bold font-Poppins text-subheading-400  text-maincolor">
+                <span className="mb-3 text-2xl font-bold font-novasans text-subheading-400  text-maincolor">
                   Create Users
                 </span>
                 <div className="flex items-end  justify-end  p-0 ">
@@ -80,7 +80,7 @@ const CreateUser = ({ props, UserState }) => {
 
                 <form className="py-1" onSubmit={formik.handleSubmit}>
                 <div className="py-4 ">
-                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
+                    <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                        Name
                     </span>
                     <input
@@ -88,14 +88,14 @@ const CreateUser = ({ props, UserState }) => {
                       id="name"
                       type="text"
                       value={formik.values.name}
-                      className=" w-full placeholder:font-Poppins  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
                       placeholder=" Name"
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
                   </div>
 
                   <div className="py-4 ">
-                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
+                    <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                       User Name
                     </span>
                     <input
@@ -103,14 +103,14 @@ const CreateUser = ({ props, UserState }) => {
                       id="username"
                       type="text"
                       value={formik.values.username}
-                      className=" w-full placeholder:font-Poppins  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
                       placeholder="User Name"
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
                   </div>
 
                   <div className="py-4 ">
-                    <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
+                    <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                      Email
                     </span>
                     <input
@@ -119,22 +119,22 @@ const CreateUser = ({ props, UserState }) => {
                       type="email"
                       value={formik.values.email}
 
-                      className=" w-full placeholder:font-Poppins  border-b p-2 focus:outline-none text-center focus:border-maincolor  focus:border-b-2 transition-colors placeholder:font-light  "
+                      className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
                       placeholder="abc@gmail.com"
                     ></input>
                     <label className="relative left-0 top-1 cursor-text"></label>
                   </div>
 
                   <div className="my-6  rounded-xl relative">
-                  <span className="mb-2 text-md font-Poppins font-bold text-gray-500">
+                  <span className="mb-2 text-md font-novasans font-bold text-gray-500">
                       Password
                     </span>
                     <input
                       {...formik.getFieldProps("password")}
                       id="password"
                       type={isPasswordHideShow === false ? "password" : "text"}
-                      className="w-full pr-10 placeholder:font-Poppins border-b appearance-none bg-white focus:outline-none focus:ring-0 text-center focus:border-maincolor focus:border-b-2 transition-colors placeholder:font-light"
-                    />
+                      className="w-full h-12 bg-transparent border-2  rounded-md border-solid  text-black border-[##FFFFFF] font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
+                      />
 
                     <i className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-700 cursor-pointer">
                       {isPasswordHideShow === true ? (

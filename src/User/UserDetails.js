@@ -2,8 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import { redirect, useNavigate } from "react-router-dom";
+import UserUpdateModal from "./UserUpdateModal";
 
-import { useSelector, useDispatch } from "react-redux";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import userData from  '../helpers/UserStore/userSlice'
@@ -23,6 +23,20 @@ const UserDetails = ({
   useEffect(() => {
 
   }, []);
+  
+  const [userState, setuserState] = useState({});
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleUpdateClick = async (item) => {
+    setuserState(item);
+    console.log("asdkajdlkajsd")
+  
+  
+      setShowModal(true);
+      
+    };
+ 
 
   const navigate = useNavigate();
   const handleDeleteButton = async (ID) => {
@@ -34,10 +48,20 @@ const UserDetails = ({
   };
 
   return (
-    <div className="bg-white  rounded-lg border-transparent mt-2 w-full h-full  font-Poppins">
+    <>
+    {showModal ? (
+        <UserUpdateModal
+          props={setShowModal}
+          userState={userState}
+          userData = {userData}
+        ></UserUpdateModal>
+      ) : null}
+      
+
+    <div className="bg-white  rounded-lg border-transparent mt-2 w-full h-full  font-novasans">
       <div className="bg-white py-7 rounded-lg border-transparent mt-2 w-full h-full ">
         <div className="p-5 bg-gray-100">
-          <h1 className="text-xl mb-2">Contacts</h1>
+          <h1 className="text-xl mb-2">Users</h1>
 
           <div className="overflow-auto rounded-lg shadow hidden md:block">
             <table className="w-full">
@@ -69,21 +93,21 @@ const UserDetails = ({
                      
 
                        
-                      <td className="px-3 py-7 font-bold text-[#20253F]  font-Poppins break-words w-1/2">
+                      <td className="px-3 py-7 font-bold text-[#20253F]  font-novasans break-words w-1/2">
 
                         <span className="p-1.5 text-sm font-medium  w-full  rounded-lg bg-opacity-50">
                           {item.name}
                         </span>
                         </td>
 
-                        <td className="px-3 py-7 font-bold text-[#20253F]  font-Poppins break-words w-1/2">
+                        <td className="px-3 py-7 font-bold text-[#20253F]  font-novasans break-words w-1/2">
 
                         <span className="p-1.5 text-sm font-medium  w-full  rounded-lg bg-opacity-50">
                           {item.email}
                         </span>
 </td>
                         
-                        <td className="px-3 py-7 font-bold text-[#20253F]  font-Poppins break-words w-1/2">
+                        <td className="px-3 py-7 font-bold text-[#20253F]  font-novasans break-words w-1/2">
 
                         <span className="p-1.5 text-sm font-medium  w-full  rounded-lg bg-opacity-50">
                           {item.username}
@@ -94,7 +118,7 @@ const UserDetails = ({
                   
                      
                     
-                        <td className="px-3 py-7 font-bold text-[#20253F]  font-Poppins break-words w-1/2">
+                        <td className="px-3 py-7 font-bold text-[#20253F]  font-novasans break-words w-1/2">
                           {item.phoneNumber}
                         </td>
                    
@@ -107,9 +131,8 @@ const UserDetails = ({
                         <td className="flex items-center justify-end py-16">
                           <button
                             onClick={() => {
-                              navigate("", {
-                                state: { contactState: item },
-                              });
+                              handleUpdateClick(item);
+                             
                             }}
                             className="flex items-center justify-center text-[#20253F] font-semibold lg:w-32 md:w-32 text-lg"
                           >
@@ -180,7 +203,7 @@ const UserDetails = ({
                     <div className="">
                       <button
                         onClick={() => {
-                    
+                          handleUpdateClick(item);
                             
                         }}
                         className="flex items-center justify-center text-[#20253F] font-semibold lg:w-32 md:w-32 text-lg"
@@ -205,6 +228,7 @@ const UserDetails = ({
         </div>
       </div>
     </div>
+    </>
   );
 };
 

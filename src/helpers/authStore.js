@@ -14,10 +14,7 @@ const authStore  = configureStore({
         menu:menuSlice,
         screen:screenSlice,
         users:userSlice,
-   
         company:companySlice,
-        
-     
         contact:contactSlice,
         authuser:authUserSlice,
     }

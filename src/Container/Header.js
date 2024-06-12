@@ -201,13 +201,13 @@ const Header = () => {
                       >
                         <ul>
                           {Menu.map((menu,index) =>
-                            user.role == "user" || user.role == "admin" ? (
+                        user.role == "admin" ? (
                               <li
                                 onClick={() => {
                                   setOpen(false);
                                   handleOption(menu);
                                 }}
-                                className="font-Poppins w-full  p-2 text-lg cursor-pointer rounded hover:bg-line hover:text-white"
+                                className="font-novasans w-full  p-2 text-lg cursor-pointer rounded hover:bg-line hover:text-white"
                                 key={index}
                               >
                                 {menu}
@@ -221,7 +221,7 @@ const Header = () => {
                               setOpen(false);
                               handleOption("Logout");
                             }}
-                            className="font-Poppins w-full  p-2 text-lg cursor-pointer rounded hover:bg-line hover:text-white"
+                            className="font-novasans w-full  p-2 text-lg cursor-pointer rounded hover:bg-line hover:text-white"
                             key={"Logout"}
                           >
                             Logout

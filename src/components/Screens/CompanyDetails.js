@@ -119,7 +119,7 @@ const handleDeleteButton = async (ID) =>{
                 </td>
               ))}
               <td className="flex items-center justify-end py-16">
-                <button onClick={() => navigate("/edit_contact", { state: { contactState: item } })} className="flex items-center justify-center text-[#20253F] font-semibold lg:w-full md:w-full text-lg">
+                <button onClick={() => navigate("/edit_company", { state: { companyState: item } })} className="flex items-center justify-center text-[#20253F] font-semibold lg:w-full md:w-full text-lg">
                   <FaEdit />
                 </button>
                 <button onClick={() => handleDeleteButton(item._id)} className="flex items-center justify-center font-semibold text-[#20253F] lg:w-full md:w-full text-lg">
@@ -182,7 +182,7 @@ const handleDeleteButton = async (ID) =>{
         
 <div className=" font-bold text-[#20253F]  font-novasans break-words ">Duplicate: {item.duplicate ? "True" : "False"}</div>
         <div className=  "text-gray-500  font-novasans"><span
-              className="p-1.5 text-xs font-medium uppercase  text-yellow-800 bg-yellow-200 rounded-lg bg-opacity-50 w-full break-words">{item.name}</span></div>
+              className="p-1.5 text-xs font-medium uppercase   rounded-lg bg-opacity-50 w-full break-words">{item.name}</span></div>
 
          <div className=" font-bold text-[#20253F]  font-novasans break-words ">
 {item.phoneNumber}
@@ -197,8 +197,8 @@ const handleDeleteButton = async (ID) =>{
       <div className="">
     <button
       onClick={() => {
-        navigate("/edit_contact", {
-          state: { contactState: item },
+        navigate("/edit_company", {
+          state: { companyState: item },
         });
       }}
       className="flex items-center justify-center text-[#20253F] font-semibold lg:w-32 md:w-32 text-lg"

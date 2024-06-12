@@ -67,11 +67,11 @@ const UpliftCompany = () => {
 
   <div className="relative w-full  bg-white">
         <div className="flex flex-col h-auto p-4 md:p-8 text-center">
-          <p className="font-bold  text-2xl  md:text-lg text-maincolor font-Poppins mb-2">
+          <p className="font-bold  text-2xl  md:text-lg text-maincolor font-novasans mb-2">
           Uplift Company Data
             
           </p>
-          <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-Poppins">
+          <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-novasans">
          
           </p>
         </div>

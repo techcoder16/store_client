@@ -8,10 +8,16 @@ import { ValidateCompanyCreate } from "../../utils/validateAPI";
 
 import DatePicker from "react-datepicker";
 import SideMenu from "../../Container/SideMenu";
+import useAuthScreenCheck from "../../utils/useAuthScreenCheck";
+import ScreenRights from "../../utils/ScreenRights";
 
 const AddCompany = () => {
   const [sideMenuShow, setSideMenuShow] = useState(true);
   const [startDate, setStartDate] = useState(new Date());
+  const user_id = JSON.parse(localStorage.getItem("user_data"))._id;
+  const screen_name = "/add_company";
+
+  const checkRights = useAuthScreenCheck(user_id, screen_name);
 
   const formik = useFormik({
     initialValues: {
@@ -35,10 +41,14 @@ const AddCompany = () => {
   });
 
   return (
+    <>
     <div>
       <Header></Header>
 
       <ToasterGen></ToasterGen>
+      {checkRights && checkRights == true ? (
+
+
       <div className=" bg-[#F7FAFC]  h-screen ">
         <div
           className={` ${
@@ -199,7 +209,15 @@ const AddCompany = () => {
         </div>
         
       </div>
+   
+) : checkRights ? (
+  <ScreenRights></ScreenRights>
+) : (
+  <></>
+)}
+
     </div>
+       <Footer></Footer></>
   );
 };
 
