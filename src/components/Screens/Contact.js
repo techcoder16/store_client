@@ -13,26 +13,17 @@ import ScreenRights from "../../utils/ScreenRights";
 import { useLocation } from "react-router-dom";
 import GetApiData from "../../helpers/getApiData";
 import axios from "axios";
-
+import CustomSelect from "../../utils/CustomSelect";
 import ContactDetails from "./ContactDetails";
-// import "./Dashboard.css";3
-
 import { TiArrowSortedDown } from "react-icons/ti";
 import { TiArrowSortedUp } from "react-icons/ti";
-
 import { CircularLoader } from "../../utils/CircularLoader";
 import Dropzone from "react-dropzone";
-import postApiData from "../../helpers/postApiData";
-import { AiOutlineUpload } from "react-icons/ai";
 import * as XLSX from "xlsx";
-
-import { useNavigate } from "react-router-dom";
-
 import SideMenu from "../../Container/SideMenu";
-import EditContact from "./EditContact";
-
 import Footer from "../../Container/Footer";
 import ToasterGen from "../../Container/ToasterGen";
+import env from "react-dotenv";
 
 const Contact = () => {
   const [circularProgress, setCircularProgress] = useState(false);
@@ -49,12 +40,15 @@ const Contact = () => {
   const [filter, setFilter] = useState(true);
 
   const [file, setFile] = useState(null);
+  const [selectedSearch, setSelectedSearch] = useState();
   
+
   const user_id = JSON.parse(localStorage.getItem("user_data"))._id;
   const screen_name = "/contacts";
 
   const checkRights = useAuthScreenCheck(user_id, screen_name);
 
+  const [searchedFilters, setSearchedFilters] = useState({});
 
   const [sideMenuShow, setSideMenuShow] = useState(false);
   function handleScroll() {
@@ -91,7 +85,7 @@ const Contact = () => {
       formData.append("file", acceptedFiles[0]);
 
       const response = await axios.post(
-        "http://localhost:5001/contact/upload",
+        env.API_URL  +  "contact/upload",
         formData
       );
 
@@ -199,6 +193,15 @@ const Contact = () => {
       color: "#000000", // Set the placeholder color to white
     }),
   };
+  function handleSearch(option,selected){
+
+    
+    handleSearchFilter(option, selected);
+
+setSelectedSearch(selected);
+
+}
+
 
   const itemsPerPage = 10;
   const filteredcontact = contact.contacts.contact
@@ -229,7 +232,7 @@ const Contact = () => {
   const [sortColumn, setSortColumn] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
 
-  const NfilteredContact = useMemo(() => {
+  const NfilteredContact = useMemo(() => {  
     if (!contact.contacts) return [];
 
     return currentItems.filter((item) => {
@@ -243,67 +246,80 @@ const Contact = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await GetApiData("contact/get_filters", "");
+      const filteredFilters = Object.fromEntries(
+        Object.entries(searchedFilters).filter(([key, val]) => val != null && val.trim() !== "")
+      );
+      const queryString = encodeURIComponent(JSON.stringify(filteredFilters));
+ 
+      // const data = await axios.get(
+      //   `${env.API_URL}company/get_filters/${queryString}`
+      // ); 
+
+      console.log(searchedFilters)
+
+      console.log("ASdasd",queryString);
+      const data = await GetApiData(`contact/get_filters/${queryString}`, "");
+
 
       let results = [];
       results.push({ key: 0, value: "" });
-      data.name.map((value, index) => {
+      data && data.name.map((value, index) => {
         results.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, name: results }));
 
       let results1 = [];
       results1.push({ key: 0, value: "" });
-      data.website.map((value, index) => {
+      data &&   data.website.map((value, index) => {
         results1.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, website: results1 }));
 
       let results2 = [];
       results2.push({ key: 0, value: "" });
-      data.industry.map((value, index) => {
+      data &&    data.industry.map((value, index) => {
         results2.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, industry: results2 }));
 
       let results3 = [];
       results3.push({ key: 0, value: "" });
-      data.industry2.map((value, index) => {
+      data &&     data.industry2.map((value, index) => {
         results3.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, industry2: results3 }));
 
       let results4 = [];
       results4.push({ key: 0, value: "" });
-      data.companyLinkedIn.map((value, index) => {
+      data &&    data.companyLinkedIn.map((value, index) => {
         results4.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, companyLinkedIn: results4 }));
 
       let results5 = [];
       results5.push({ key: 0, value: "" });
-      data.Region.map((value, index) => {
+      data &&   data.Region.map((value, index) => {
         results5.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, Region: results5 }));
 
       let results6 = [];
       results6.push({ key: 0, value: "" });
-      data.Country.map((value, index) => {
+      data &&   data.Country.map((value, index) => {
         results6.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, country: results6 }));
 
       let results7 = [];
       results7.push({ key: 0, value: "" });
-      data.companyName.map((value, index) => {
+      data &&   data.companyName.map((value, index) => {
         results7.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, companyName: results7 }));
 
       let results8 = [];
 
-      data.role.map((value, index) => {
+      data &&    data.role.map((value, index) => {
         results8.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, role: results8 }));
@@ -351,9 +367,61 @@ const Contact = () => {
 
 
     fetchData();
-  }, [contact.contacts]);
+  }, [contact.contacts,searchedFilters]);
 
-  const getPages = () => {
+
+
+
+
+  const handleSearchFilter = (option, value) => {
+
+    switch (option) {
+      
+      case "name":
+        setSearchedFilters( {name: value });
+        break;
+
+      case "website":
+        setSearchedFilters( {website: value });
+        break;
+      case "industry":
+        setSearchedFilters( {industry: value });
+        break;
+      case "industry2":
+        setSearchedFilters( {industry2: value });
+        break;
+
+      case "Region":
+        setSearchedFilters( {Region: value });
+        break;
+      case "country":
+        setSearchedFilters( {country: value });
+        break;
+      case "companyName":
+        setSearchedFilters( {companyName: value });
+        break;
+      case "companyLinkedIn":
+        setSearchedFilters( {companyLinkedIn: value });
+        break;
+      case "role":
+        setSearchedFilters( {role: value });
+       
+      case "quality":
+        setSearchedFilters( {quality: value });
+      case "result":
+        setSearchedFilters( {result: value });
+        case "empcount":
+          setSearchedFilters( {empcount: value });
+      case "free":
+        setSearchedFilters( {free: value });
+      case "date":
+        setSearchedFilters( {date: value });
+    }
+
+
+      }
+      
+      const getPages = () => {
     const maxVisiblePages = 5;
     const sidePages = Math.floor((maxVisiblePages - 3) / 2);
     const pages = [];
@@ -434,129 +502,55 @@ const Contact = () => {
     switch (value) {
       case "name":
         return (
-          options.name &&
-          options.name.map((option) => (
-            <option
-              key={option.value}
-              className="scrollbar-thumb-maincolor text-Poppins"
-              value={option.value}
-            >
-              {option.value}
-            </option>
-          ))
+          options.name
         );
 
       case "website":
         return (
-          options.website &&
-          options.website.map((option) => (
-            <option
-              key={option.value}
-              className="scrollbar-thumb-maincolor text-Poppins text-md"
-              value={option.label}
-            >
-              {option.label}
-            </option>
-          ))
+          options.website 
         );
       case "industry":
         return (
-          options.industry &&
-          options.industry.map((option) => (
-            <option
-              key={option.value}
-              className="scrollbar-thumb-maincolor text-Poppins text-md"
-              value={option.label}
-            >
-              {option.label}
-            </option>
-          ))
+          options.industry 
         );
       case "industry2":
         return (
-          options.industry2 &&
-          options.industry2.map((option) => (
-            <option
-              key={option.value}
-              className="scrollbar-thumb-maincolor text-Poppins text-md"
-              value={option.label}
-            >
-              {option.label}
-            </option>
-          ))
+          options.industry2 
         );
 
       case "Region":
         return (
-          options.Region &&
-          options.Region.map((option) => (
-            <option
-              key={option.value}
-              className="scrollbar-thumb-maincolor text-Poppins text-md"
-              value={option.label}
-            >
-              {option.label}
-            </option>
-          ))
+          options.Region 
         );
       case "country":
         return (
-          options.country &&
-          options.country.map((option) => (
-            <option
-              key={option.value}
-              className="scrollbar-thumb-maincolor text-Poppins text-md"
-              value={option.label}
-            >
-              {option.label}
-            </option>
-          ))
+          options.country 
         );
       case "companyName":
         return (
-          options.companyName &&
-          options.companyName.map((option) => (
-            <option
-              key={option.value}
-              className="scrollbar-thumb-maincolor text-Poppins text-md"
-              value={option.label}
-            >
-              {option.label}
-            </option>
-          ))
+          options.companyName 
         );
       case "companyLinkedIn":
         return (
-          options.companyLinkedIn &&
-          options.companyLinkedIn.map((option) => (
-            <option
-              key={option.value}
-              className="scrollbar-thumb-maincolor text-Poppins text-md"
-              value={option.label}
-            >
-              {option.label}
-            </option>
-          ))
+          options.companyLinkedIn
         );
       case "role":
         return (
-          options.role &&
-          options.role.map((option) => (
-            <option
-              key={option.value}
-              className="scrollbar-thumb-maincolor text-Poppins text-md"
-              value={option.label}
-            >
-              {option.label}
-            </option>
-          ))
+          options.role  &&  options.role.map((option,index) => (
+              <option
+                key={index}
+                className="scrollbar-thumb-maincolor text-Poppins text-md"
+                value={option.label}
+              >
+                {option.label}
+              </option>
+            ))
         );
       case "quality":
         return (
-          options.quality &&
-          options.quality.map((option) => (
+          options.quality &&  options.quality.map((option,index) => (
             <option
-              key={option.value}
+              key={index}
               className="scrollbar-thumb-maincolor text-Poppins text-md"
               value={option.label}
             >
@@ -566,57 +560,21 @@ const Contact = () => {
         );
       case "result":
         return (
-          options.result &&
-          options.result.map((option) => (
-            <option
-              key={option.value}
-              className="scrollbar-thumb-maincolor text-Poppins text-md"
-              value={option.label}
-            >
-              {option.label}
-            </option>
-          ))
+          options.result 
         );
         case "empcount":
         return (
-          options.empcount &&
-          options.empcount.map((option) => (
-            <option
-              key={option.value}
-              className="scrollbar-thumb-maincolor text-Poppins text-md"
-              value={option.label}
-            >
-              {option.label}
-            </option>
-          ))
+          options.empcount
         );
         
       case "free":
         return (
-          options.free &&
-          options.free.map((option) => (
-            <option
-              key={option.value}
-              className="scrollbar-thumb-maincolor text-Poppins text-md"
-              value={option.label}
-            >
-              {option.label}
-            </option>
-          ))
+          options.free
         );
 
       case "date":
         return (
-          options.date &&
-          options.date.map((option) => (
-            <option
-              key={option.value}
-              className="scrollbar-thumb-maincolor text-Poppins text-md"
-              value={option.label}
-            >
-              {option.label}
-            </option>
-          ))
+          options.date 
         );
     }
   };
@@ -856,9 +814,7 @@ const Contact = () => {
                       >
                         {({ getRootProps, getInputProps }) => (
                           <div {...getRootProps()} className="  ">
-                            {/* <input {...getInputProps()} />
-                             */}
-                            {/* <AiOutlineUpload></AiOutlineUpload>  */}
+                           
                             <label
                               className="flex justify-center w-full h-32 px-4   bg-[#F7FAFC] border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-300 ease-in-out"
                               id="drop"
@@ -898,35 +854,7 @@ const Contact = () => {
                       }`}
                     >
                       <div className="relative mb-10 w-full flex  items-center justify-between rounded-md">
-                        {/* <svg
-                        className="absolute left-2 block h-5 w-5 text-gray-400"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <circle cx="11" cy="11" r="8" className=""></circle>
-                        <line
-                          x1="21"
-                          y1="21"
-                          x2="16.65"
-                          y2="16.65"
-                          className=""
-                        ></line>
-                      </svg>
-                      <input
-                        type="name"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        name="search"
-                        className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        placeholder=""
-                      /> */}
+                    
                         <label
                           for="default-search"
                           class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -972,15 +900,12 @@ const Contact = () => {
                             Industry
                           </label>
 
-                          <select
-                            id="status"
-                            onChange={(e) =>
-                              handleSelect("industry", e.target.value)
-                            }
-                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                          >
-                            {optionsElement("industry")}
-                          </select>
+                          <CustomSelect
+          options={optionsElement("industry")}
+          onChange={(value) => handleSelect("industry", value)}
+          onInputChange={(value) => handleSearch("industry", value)}
+          placeholder="Select Industry"
+        />
                         </div>
 
                         <div className="flex flex-col">
@@ -991,15 +916,12 @@ const Contact = () => {
                             Company Name
                           </label>
 
-                          <select
-                            id="status"
-                            onChange={(e) =>
-                              handleSelect("companyName", e.target.value)
-                            }
-                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                          >
-                            {optionsElement("companyName")}
-                          </select>
+                          <CustomSelect
+          options={optionsElement("companyName")}
+          onChange={(value) => handleSelect("companyName", value)}
+          onInputChange={(value) => handleSearch("companyName", value)}
+          placeholder="Select Company Name"
+        />
                         </div>
 
                         <div className="flex flex-col">
@@ -1010,15 +932,12 @@ const Contact = () => {
                             Date
                           </label>
 
-                          <select
-                            id="status"
-                            onChange={(e) =>
-                              handleSelect("date", e.target.value)
-                            }
-                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                          >
-                            {optionsElement("date")}
-                          </select>
+                          <CustomSelect
+          options={optionsElement("date")}
+          onChange={(value) => handleSelect("date", value)}
+          onInputChange={(value) => handleSearch("date", value)}
+          placeholder="Select Date"
+        />
                         </div>
 
                         <div className="flex flex-col mt-2">
@@ -1029,15 +948,13 @@ const Contact = () => {
                             Industry 2
                           </label>
 
-                          <select
-                            id="status"
-                            onChange={(e) =>
-                              handleSelect("industry2", e.target.value)
-                            }
-                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                          >
-                            {optionsElement("industry2")}
-                          </select>
+                          <CustomSelect
+          options={optionsElement("industry2")}
+          onChange={(value) => handleSelect("industry2", value)}
+          onInputChange={(value) => handleSearch("industry2", value)}
+          placeholder="Select Industry 2"
+                        />
+                        
                         </div>
 
                         <div className="flex flex-col">
@@ -1048,15 +965,13 @@ const Contact = () => {
                             Country
                           </label>
 
-                          <select
-                            id="status"
-                            onChange={(e) =>
-                              handleSelect("country", e.target.value)
-                            }
-                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                          >
-                            {optionsElement("country")}
-                          </select>
+                         
+                          <CustomSelect
+          options={optionsElement("country")}
+          onChange={(value) => handleSelect("country", value)}
+          onInputChange={(value) => handleSearch("country", value)}
+          placeholder="Select Country"
+                        />
                         </div>
 
                         <div className="flex flex-col">
@@ -1067,15 +982,12 @@ const Contact = () => {
                             Website
                           </label>
 
-                          <select
-                            id="status"
-                            onChange={(e) =>
-                              handleSelect("website", e.target.value)
-                            }
-                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                          >
-                            {optionsElement("website")}
-                          </select>
+                          <CustomSelect
+          options={optionsElement("website")}
+          onChange={(value) => handleSelect("website", value)}
+          onInputChange={(value) => handleSearch("website", value)}
+          placeholder="Select Website"
+                        />
                         </div>
 
                         <div className="flex flex-col mt-2">
@@ -1139,7 +1051,7 @@ const Contact = () => {
                                       handleCheckboxChange(
                                         "role",
                                         e.target.value
-                                      )
+                                      ) 
                                     }
                                     className="cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                   />

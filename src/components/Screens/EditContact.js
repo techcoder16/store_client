@@ -46,8 +46,6 @@ const EditContact = ({}) => {
       const country = contactState.country;
       setSelectedCountry(country);
 
-      console.log(country)
-  
 
       setStateList(countryCityData[country] || []);
 

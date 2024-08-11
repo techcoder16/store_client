@@ -32,11 +32,18 @@ const Login = () => {
     onSubmit: async (values) => {
       values = await Object.assign(values);
 
+
+        // const interval  = setInterval(() => {
+          
+
+        // }, 3000);
+
       try {
         dispatch(loginUser(values)).then((result) => {
           if (result.payload.message == "Successfully Login") {
+            
             const userrole = JSON.parse(localStorage.getItem("user_data")).role;
-
+              
             if (userrole == "admin") {
               navigate("/dashboard");
             } else if (userrole == "user") {
@@ -54,18 +61,6 @@ const Login = () => {
 
   const [isPasswordHideShow, setPasswordHideShow] = useToggle(false);
 
-  useEffect(() => {
-    const user = localStorage.getItem("user_data");
-    if (user) {
-      const userrole = JSON.parse(localStorage.getItem("user_data")).role;
-
-      if (userrole == "admin") {
-        navigate("/dashboard");
-      } else if (userrole == "user") {
-        navigate("/dashboard");
-      } // Redirect to dashboard if user is already authenticated
-    }
-  }, []);
 
   useToggle(false);
 

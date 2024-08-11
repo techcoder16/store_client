@@ -16,6 +16,7 @@ import User from "../User/UserList"
 import ScreenRights from "./ScreenRights";
 import ScreenList from "../Screen/ScreenList";
 import AuthScreenList from "../Screen/AuthScreenList";
+import Company from "../components/Screens/Company";
 
 export const router = createBrowserRouter([
   {
@@ -29,7 +30,13 @@ export const router = createBrowserRouter([
   },
   {
     path:  "/dashboard",
-    element: <DashBoard />,
+    element: < DashBoard/>,
+
+  },
+  {
+    path:  "/company",
+    element: <Company />,
+    
   },
   
   {

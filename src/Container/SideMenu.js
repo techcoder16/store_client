@@ -21,7 +21,10 @@ const SideMenu = ({setSideMenuShow}) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const dashboard_menu = [
-    { name: "Companies", image: dashboard, link: "/dashboard", role: "user" ,icon:<MdDashboard />  },
+    { name: "DashBoard", image: dashboard, link: "/dashboard", role: "user" ,icon:<MdDashboard />  },
+    
+    { name: "Companies", image: dashboard, link: "/company", role: "user" ,icon:<MdDashboard />  },
+
     { name: "Contacts", image: information, link: "/contact_list", role: "admin" ,icon:<RiContactsBook2Fill ></RiContactsBook2Fill> },
     { name: "Create Contacts ", image: information, link: "/create_contact", role: "admin" ,icon:<MdContacts></MdContacts>},
     { name: "Create Company", image: information, link: "/add_company", role: "admin" ,icon:<FaIndustry></FaIndustry> },

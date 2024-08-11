@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import env from "react-dotenv";
+import { DEFAULT_COOKIE_SETTER } from "../../utils/Cookie";
 
 export const loginUser = createAsyncThunk(
   "user",
@@ -10,9 +11,12 @@ export const loginUser = createAsyncThunk(
   
       const request = await axios.post(env.API_URL + "auth/login", payload);
       const response = await request.data;
-      console.log(response);
+
       localStorage.setItem("user_data", JSON.stringify(response));
-   
+      const expirationTime = new Date(new Date().getTime() + 50 *60 * 1000); // 50 seconds in milliseconds
+
+      DEFAULT_COOKIE_SETTER("access_token", response.token,true, expirationTime);
+      
       return response;
     } catch (error) {
       return rejectWithValue(error.message); // Reject with the error message
@@ -30,7 +34,7 @@ export const authuserData = createAsyncThunk(
 
       return response;
     } catch (error) {
-      console.log(error);
+
       return rejectWithValue(error.message); 
     }
   }

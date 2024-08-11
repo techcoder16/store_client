@@ -317,23 +317,7 @@ const AddContact = () => {
                     </select>
                
                      
-                        {/* <Select
-                          {...formik.getFieldProps("country")}
-                          options={countries}
-                          value={selectedCountry}
-                          className="w-full  bg-transparent  rounded-md font-novasans  text-center placeholder:font-light  shadow-sm shadow-[#00487452] placeholder:font-novasans text-base focus:outline-none"
-                          onChange={(selectedOption) =>{
-                            console.log(selectedOption.label.split(" ").slice(1).join(" "));
-                            
-                            setCities(countryCityData[selectedOption.label.split(" ").slice(1).join(" ")])
-
-                            formik.setFieldValue("country", selectedOption.label.split(" ").slice(1).join(" "))
-
-                            setSelectedCountry(selectedOption)
-                              console.log(selectedOption)
-                          }
-                          }
-                        /> */}
+               
                       </div>
                       <div className="py-4 flex-1">
                         <span className="mb-2 text-md font-novasans font-normal text-base text-gray-600  leading-5 ">

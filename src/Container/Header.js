@@ -3,18 +3,23 @@ import { useState, useRef, useEffect } from "react";
 import logo from "../../src/assets/logo.png";
 import env from "react-dotenv";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
+import toast from 'react-hot-toast';
+
 import useLoginValid from "../utils/useLoginValid";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 import bell from "../assets/SVG.png";
-// import { socket } from "../utils/global";
+
 import { MdOutlineMenuOpen } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import {  DEFAULT_COOKIE_GETTER } from '../utils/Cookie';
 
 import getApiData from "../helpers/getApiData";
+import { DEFAULT_COOKIE_DELETE } from "../utils/Cookie";
+import postApiData from "../helpers/postApiData";
 const Header = () => {
-  const navigate = useNavigate();
 
   const [user, setuserData] = useLoginValid(null);
   const location = useLocation();
@@ -34,20 +39,41 @@ const Header = () => {
   const displayedFeeds = showAllFeeds ? feeds : feeds.slice(0, numberOfFeeds);
   const [filename, setFileName] = useState("");
   const [ContentType, setContentType] = useState("");
+  const navigate = useNavigate();
   
   useEffect(() => {
-    // socket.emit("initial_data");
-    // socket.on("get_data", getData);
-    // socket.on("change_data", changeData);
-    // return () => {
-    //   socket.off("get_data");
-    //   socket.off("change_data");
-    // };
-  }, []);
+    const interval = 1000; // Interval time in milliseconds
 
- 
+    const checkSession = async () => {
+      const { value, expired } = await DEFAULT_COOKIE_GETTER("access_token");
+
+      if (!value || expired) {
+        let user = JSON.parse(localStorage.getItem("user_data"));
+        
+        if (user) {
+          const userValues = { email: user.email };
+          DEFAULT_COOKIE_DELETE("access_token");
+          postApiData("auth/logout", userValues);
+        }
+        
+        localStorage.removeItem("user_data");
+        DEFAULT_COOKIE_DELETE("access_token");
+        toast.error("Session has expired");
+        navigate("/login");
+      }
+    };
+
+    const intervalId = setInterval(checkSession, interval);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [navigate]);
+
+
 
   const handleOption = (menu) => {
+    try{
     const  role = JSON.parse (localStorage.getItem("user_data")).role;
       console.log(menu)
     if (menu === "User" && role == 'admin') {
@@ -69,7 +95,8 @@ const Header = () => {
       const userValues = { email: user.email };
 
       const value = location.pathname;
-
+      DEFAULT_COOKIE_DELETE("access_token");
+      
         const logout = axios
           .post(env.API_URL + "auth/logout", userValues, {})
           .then((response) => {
@@ -95,6 +122,9 @@ const Header = () => {
     if (menu === "ADD MERCHANTS") {
       navigate("/user_list");
     }
+  }
+  catch (err) {};
+
   };
 
   useLayoutEffect(() => {
@@ -108,12 +138,19 @@ const Header = () => {
   });
 
   useEffect(() => {
+    try
+    {
     const userData = localStorage.getItem("user_data");
     if (!userData) {
       navigate("/");
     } else {
       setuserData(JSON.parse(userData));
     }
+  }
+  catch(e)
+  {
+
+  }
   }, []);
 
   useEffect(() => {
