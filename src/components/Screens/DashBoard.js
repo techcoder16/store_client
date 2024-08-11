@@ -148,7 +148,7 @@ const Dashboard = () => {
         
                 <div className="bg-white p-4 shadow-md rounded-md mt-4">
                   <h2 className="font-bold text-lg mb-2 border-b border-bg-gray-400">Company Count by Industry</h2>
-                  <div className=" h-80 lg:h-96 flex justify-center flex w-full">
+                  <div className=" h-80 lg:h-96 flex justify-center  w-full">
                     <Pie data={industryChartData} />
                     <Pie data={industryChartData2} />
                     
@@ -165,7 +165,7 @@ const Dashboard = () => {
       ) : (
         <></>
       )}
-    </>
+    </>  
   );
 };
 
