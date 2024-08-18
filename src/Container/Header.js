@@ -51,9 +51,11 @@ const Header = () => {
         let user = JSON.parse(localStorage.getItem("user_data"));
         
         if (user) {
+
           const userValues = { email: user.email };
           DEFAULT_COOKIE_DELETE("access_token");
           postApiData("auth/logout", userValues);
+
         }
         
         localStorage.removeItem("user_data");
@@ -75,7 +77,7 @@ const Header = () => {
   const handleOption = (menu) => {
     try{
     const  role = JSON.parse (localStorage.getItem("user_data")).role;
-      console.log(menu)
+      
     if (menu === "User" && role == 'admin') {
       
       navigate("/users");

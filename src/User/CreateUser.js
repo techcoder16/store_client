@@ -72,7 +72,7 @@ const CreateUser = ({ props, UserState }) => {
                 <div className="flex items-end  justify-end  p-0 ">
                   <button
                     className="p-1 border-0 text-maincolor  ml-auto bg-transparent   text-3xl leading-none font-semibold outline-none focus:outline-none "
-                   onClick={()=>{  console.log(props);props(false); }}
+                   onClick={()=>{  props(false); }}
                   >
                     <span className="bg-transparent text-maincolor ">×</span>
                   </button>

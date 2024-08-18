@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 export async function DEFAULT_COOKIE_GETTER(key) {
   try {
     const cookieValue = Cookies.get(key);
-    console.log(cookieValue)
+    
     if (cookieValue) {
       return { value: cookieValue, expired: false };
     }

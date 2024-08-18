@@ -1,0 +1,19 @@
+/* In your CompanyDetail.css */
+.table-container {
+    @apply relative overflow-auto;
+    max-height: 600px; /* Adjust based on your needs */
+  }
+  
+  .table-header {
+    @apply sticky top-0 bg-white z-10;
+  }
+  
+  .table-body {
+    @apply overflow-y-auto;
+    max-height: 500px; /* Adjust based on your needs */
+  }
+  
+  .table-body-row {
+    @apply border-b border-gray-200;
+  }
+  

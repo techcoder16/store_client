@@ -151,7 +151,7 @@ const Company = () => {
     switch (value) {
       case "name":
         return (
-          options.name 
+          options.name || null
           // &&
           // options.name.map((option,index) => (
           //   <option
@@ -426,11 +426,12 @@ const Company = () => {
         Object.entries(searchedFilters).filter(([key, val]) => val != null && val.trim() !== "")
       );
       const queryString = encodeURIComponent(JSON.stringify(filteredFilters));
- 
-     
-      console.log(searchedFilters)
-      const data = await GetApiData(`company/get_filters/${queryString}`, "");
+      let data= {};
+      try{
 
+       data = await GetApiData(`company/get_filters/${queryString}`, "");
+
+  
       let results = [];
       results.push({ key: 0, value: "" });
       data.name.map((value, index) => {
@@ -486,6 +487,13 @@ const Company = () => {
         results7.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, companyName: results7 }));
+    }
+      
+    catch(err)
+    {
+
+    }
+    
     }
 
     fetchData();
@@ -688,7 +696,7 @@ const Company = () => {
           >
             <div className="relative w-full   bg-[#F7FAFC] ">
               <div className="flex flex-col h-auto p-4 md:p-8 text-center">
-                <p className="font-bold   text-4xl  md:text-lg text-[#20253F]  font-novasans  mb-2">
+                <p className="font-normal   text-9xl  md:text-lg text-[#20253F]  font-novasans  mb-2">
                   Company Data
                 </p>
                 <p className="font-normal text-[#848E9C]  text-sm md:text-base leading-6 font-novasans"></p>
@@ -727,240 +735,118 @@ const Company = () => {
                     </div>
                     Filters
                     <form className="">
-                      <div className="relative mb-10 w-full flex  items-center justify-between rounded-md">
-                        <label
-                          htmlFor="default-search"
-                          class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-                        >
-                          Search
-                        </label>
-                        <div class="relative">
-                          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg
-                              class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 20 20"
-                            >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                              />
-                            </svg>
-                          </div>
-                          <input
-                            type="search"
-                            id="default-search"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="block w-full p-4 ps-10 font-novasans text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-900 focus:border-blue-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Search by Name..."
-                            required  
-                          />
-                        </div>
-                      </div>
-
-                      <div className=" flex justify-end w-full">
-                        {filter == true ? (
-                          <TiArrowSortedUp
-                            onClick={() => setFilter(false)}
-                          ></TiArrowSortedUp>
-                        ) : (
-                          <TiArrowSortedDown onClick={() => setFilter(true)} />
-                        )}
-                      </div>
-
-                      {/* <div
-                        className={`${
-                          filter
-                            ? "block transition duration-300 ease-in-out"
-                            : "transition duration-500 ease-in-out hidden"
-                        }`}
-                      >
-                        <div className="flex flex-col">
-                          <label
-                            htmlFor="manufacturer"
-                            className="text-sm font-medium text-stone-600"
-                          >
-                            Industry
-                          </label>
-
-                          <select
-                            id="status"
-                            onChange={(e) =>
-                              handleSelect("industry", e.target.value)
-                            }
-                            className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                          >
-                            {optionsElement("industry")}
-                          </select>
-                        </div>
-
-                        <label
-                          htmlFor="manufacturer"
-                          className="text-sm font-medium text-stone-600"
-                        >
-                          Company Name
-                        </label>
-
-                        <select
-                          id="status"
-                          onChange={(e) =>
-                            handleSelect("companyName", e.target.value)
-                          }
-                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        >
-                          {optionsElement("companyName")}
-                        </select>
-
-                        <label
-                          htmlFor="manufacturer"
-                          className="text-sm font-medium text-stone-600"
-                        >
-                          Industry 2
-                        </label>
-
-                        <select
-                          id="status"
-                          onChange={(e) =>
-                            handleSelect("industry2", e.target.value)
-                          }
-                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        >
-                          {optionsElement("industry2")}
-                        </select>
-
-                        <label
-                          htmlFor="manufacturer"
-                          className="text-sm font-medium text-stone-600"
-                        >
-                          Country
-                        </label>
-
-                        <select
-                          id="status"
-                          onChange={(e) =>
-                            handleSelect("country", e.target.value)
-                          }
-                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        >
-                          {optionsElement("country")}
-                        </select>
-
-        
-                        <label
-                          htmlFor="status"
-                          className="text-sm font-medium text-stone-600"
-                        >
-                          Website
-                        </label>
-
-                        <select
-                          id="status"
-                          onChange={(e) =>
-                            handleSelect("website", e.target.value)
-                          }
-                          className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-[#20253F] focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        >
-                          {optionsElement("website")}
-                        </select>
-
-                      
-
-                        <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex"></div>
-                      </div> */}
-
-<div
-      className={`${
-        filter
-          ? "block transition duration-300 ease-in-out"
-          : "transition duration-500 ease-in-out hidden"
-      }`}
+  <div className="relative mb-10 w-full flex items-center justify-between rounded-md">
+    <label
+      htmlFor="default-search"
+      className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
     >
-      <div className="flex flex-col">
-        <label
-          htmlFor="industry"
-          className="text-sm font-medium text-stone-600"
+      Search
+    </label>
+    <div className="relative">
+      <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+        <svg
+          className="w-4 h-4 text-gray-500 dark:text-gray-400"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
         >
-          Industry
-        </label>
-        <CustomSelect
-          options={optionsElement("industry")}
-          onChange={(value) => handleSelect("industry", value)}
-          onInputChange={(value) => handleSearch("industry", value)}
-          placeholder="Select Industry"
-        />
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+          />
+        </svg>
+      </div>
+      <input
+        type="search"
+        id="default-search"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="block w-full p-4 ps-10 font-novasans text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-900 focus:border-blue-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Search by Name..."
+        required  
+      />
+    </div>
+  </div>
 
-        <label
-          htmlFor="companyName"
-          className="text-sm font-medium text-stone-600"
+  <div className="flex justify-end w-full">
+    {filter ? (
+      <TiArrowSortedUp onClick={() => setFilter(false)} />
+    ) : (
+      <TiArrowSortedDown onClick={() => setFilter(true)} />
+    )}
+  </div>
+
+  <div
+    className={`${
+      filter
+        ? "block transition duration-300 ease-in-out"
+        : "transition duration-500 ease-in-out hidden"
+    }`}
+  >
+    <div className="flex flex-col">
+      <label htmlFor="industry" className="text-sm font-medium text-stone-600">
+        Industry
+      </label>
+      <CustomSelect
+        options={optionsElement("industry")}
+        onChange={(value) => handleSelect("industry", value)}
+        onInputChange={(value) => handleSearch("industry", value)}
+        placeholder="Select Industry"
+      />
+
+      <label htmlFor="companyName" className="text-sm font-medium text-stone-600">
+        Company Name
+      </label>
+      <CustomSelect
+        options={optionsElement("companyName")}
+        onChange={(value) => handleSelect("companyName", value)}
+        onInputChange={(value) => handleSearch("companyName", value)}
+        placeholder="Select Company Name"
+      />
+
+      <label htmlFor="country" className="text-sm font-medium text-stone-600">
+        Country
+      </label>
+      <CustomSelect
+        options={optionsElement("country")}
+        onChange={(value, label) => handleSelect("country", label)}
+        onInputChange={(value) => handleSearch("country", value)}
+        placeholder="Select Country"
+      />
+
+      <label htmlFor="website" className="text-sm font-medium text-stone-600">
+        Website
+      </label>
+      <CustomSelect
+        options={optionsElement("website")}
+        onChange={(value) => handleSelect("website", value)}
+        onInputChange={(value) => handleSearch("website", value)}
+        placeholder="Select Website"
+      />
+
+      <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex">
+        {/* Clear Filters Button */}
+        <button
+          type="button"
+          onClick={clearFilters}
+          className="w-full md:w-auto px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          Company Name
-        </label>
-        <CustomSelect
-          options={optionsElement("companyName")}
-          onChange={(value) => handleSelect("companyName", value)}
-          onInputChange={(value) => handleSearch("companyName", value)}
-
-          placeholder="Select Company Name"
-        />
-
-        <label
-          htmlFor="industry2"
-          className="text-sm font-medium text-stone-600"
-        >
-          Industry 2
-        </label>
-        <CustomSelect
-          options={optionsElement("industry2")}
-          onChange={(value) => handleSelect("industry2", value)}
-          onInputChange={(value) => handleSearch("industry2", value)}
-          placeholder="Select Industry 2"
-        />
-
-        <label
-          htmlFor="country"
-          className="text-sm font-medium text-stone-600"
-        >
-          Country
-        </label>
-        <CustomSelect
-          options={optionsElement("country")}
-          onChange={(value,label) => handleSelect("country", label  )}
-          onInputChange={(value) => handleSearch("country", value)}
-          
-          placeholder="Select Country"
-        />
-
-        <label
-          htmlFor="website"
-          className="text-sm font-medium text-stone-600"
-        >
-          Website
-        </label>
-        <CustomSelect
-          options={optionsElement("website")}
-          onChange={(value) => handleSelect("website", value)}
-          onInputChange={(value) => handleSearch("website", value)}
-
-          placeholder="Select Website"
-        />
-        
-        <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex"></div>
+          Clear Filters
+        </button>
       </div>
     </div>
+  </div>
+</form>
 
-
-                    </form>
                   </div>
                 </div>
               </div>
 
-              <div className=" lg:col-span-7 col-span-9 mt-0 bg-[#F7FAFC]   grid-cols-1 sm:grid-cols-5 gap-2  left-0 px-7  ">
+              <div className=" lg:col-span-7 col-span-9 mt-0 bg-[#F7FAFC]   grid-cols-1 sm:grid-cols-5 gap-2  left-0  ">
                 <div
                   className={`w-full col-span-4 ${
                     showFilters ? "col-span-5" : "col-span-5"

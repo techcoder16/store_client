@@ -37,7 +37,6 @@ const CreateAuthScreen = ({ props, UserState }) => {
       const  data =  await GetApiData("auth/get_user", '""');
       let results = [];
 
-      console.log("asd",data);
       data && data.users.map((value) => {
         results.push({
           key: value._id,

@@ -13,7 +13,7 @@ export const loginUser = createAsyncThunk(
       const response = await request.data;
 
       localStorage.setItem("user_data", JSON.stringify(response));
-      const expirationTime = new Date(new Date().getTime() + 50 *60 * 1000); // 50 seconds in milliseconds
+      const expirationTime = new Date(new Date().getTime() + 3*50 *60 * 1000); // 50 seconds in milliseconds
 
       DEFAULT_COOKIE_SETTER("access_token", response.token,true, expirationTime);
       

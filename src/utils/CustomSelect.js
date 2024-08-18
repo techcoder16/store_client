@@ -5,46 +5,50 @@ import Select from 'react-select';
 const customStyles = {
   container: (provided) => ({
     ...provided,
-    marginTop: '0.5rem', // Custom margin
-    width: '100%', // Full width
+    marginTop: '0.5rem',
+    width: '100%',
   }),
   control: (provided, state) => ({
     ...provided,
-    backgroundColor: state.isFocused ? 'white' : '#ffffff', // Background color
-    borderColor: state.isFocused ? '#20253F' : '#20253F', // Border color
-    boxShadow: state.isFocused ? '0 0 0 0.2rem rgba(32, 37, 63, 0.25)' : 'none', // Shadow when focused
+    backgroundColor: state.isFocused ? 'white' : '#ffffff',
+    borderColor: state.isFocused ? '#20253F' : '#20253F',
+    boxShadow: state.isFocused ? '0 0 0 0.2rem rgba(32, 37, 63, 0.25)' : 'none',
     '&:hover': {
-      borderColor: '#20253F', // Border color on hover
+      borderColor: '#20253F',
     },
   }),
   menu: (provided) => ({
     ...provided,
-    zIndex: 9999, // Ensure the menu is on top
+    zIndex: 9999,
   }),
   menuList: (provided) => ({
     ...provided,
-    maxHeight: '200px', // Max height of the dropdown menu
+    maxHeight: '200px',
   }),
   option: (provided, state) => ({
     ...provided,
-    backgroundColor: state.isSelected ? '#20253F' : state.isFocused ? '#20253F' : '#ffffff', // Background color of options
-    color: state.isSelected || state.isFocused ? 'white' : '#20253F', // Text color of options
+    backgroundColor: state.isSelected ? '#20253F' : state.isFocused ? '#20253F' : '#ffffff',
+    color: state.isSelected || state.isFocused ? 'white' : '#20253F',
+    padding: '10px 15px', // Adjust padding to ensure consistent height
+    fontSize: '14px', // Adjust font size if needed
+    lineHeight: '20px', // Ensure consistent line height
     '&:active': {
-      backgroundColor: '#20253F', // Background color when active
+      backgroundColor: '#20253F',
     },
   }),
   placeholder: (provided) => ({
     ...provided,
-    color: '#20253F', // Color of the placeholder
+    color: '#20253F',
   }),
   singleValue: (provided) => ({
     ...provided,
-    color: '#20253F', // Color of the selected value
+    color: '#20253F',
   }),
 };
 
 const CustomSelect = ({ options, onChange, placeholder,onInputChange }) => (
   <Select
+
     options={options}
     onChange={(selectedOption) => onChange(selectedOption?.label || null)}
     placeholder={placeholder}
@@ -52,6 +56,15 @@ const CustomSelect = ({ options, onChange, placeholder,onInputChange }) => (
     className="mt-2 block w-full"
     classNamePrefix="custom-select"
     styles={customStyles} // Apply custom styles
+    displayEmpty
+    defaultValue={"Select All"}
+    
+    isClearable={false}
+    renderValue={
+      (value) => {
+        return value || 'None'
+      }
+    }
   />
 );
 

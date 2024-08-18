@@ -30,7 +30,6 @@ const UserDetails = ({
 
   const handleUpdateClick = async (item) => {
     setuserState(item);
-    console.log("asdkajdlkajsd")
   
   
       setShowModal(true);
@@ -40,7 +39,7 @@ const UserDetails = ({
 
   const navigate = useNavigate();
   const handleDeleteButton = async (ID) => {
-    console.log(ID);
+    
     await postApiData("auth/delete_user", { ID: ID });
     typeNew((prev) => !prev);
 

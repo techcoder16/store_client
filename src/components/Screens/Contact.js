@@ -4,7 +4,7 @@ import Header from "../../Container/Header";
 import React from "react";
 import { contactData } from "../../helpers/AuthStore/contactSlice";
 import { useSelector, useDispatch, useCallback } from "react-redux";
-import { useLayoutEffect, useEffect, useState, useMemo } from "react";
+import { useLayoutEffect, useEffect, useState, useMemo,useRef } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
 import useAuthScreenCheck from "../../utils/useAuthScreenCheck";
@@ -41,7 +41,34 @@ const Contact = () => {
 
   const [file, setFile] = useState(null);
   const [selectedSearch, setSelectedSearch] = useState();
+  const [position, setPosition] = useState(false);
   
+  const theadRef = useRef(null);
+ 
+
+  useEffect(() => {
+    console.log("Effect is running");
+
+    const handleScroll = () => {
+      if (theadRef.current) {
+        const theadOffsetTop = theadRef.current.getBoundingClientRect().top;
+        const scrollTop = window.scrollY || window.pageYOffset; // To handle different browsers
+        const isScrolled = scrollTop > theadOffsetTop;
+        setPosition(isScrolled);
+        
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Initial check in case the page is loaded with some scroll position
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
 
   const user_id = JSON.parse(localStorage.getItem("user_data"))._id;
   const screen_name = "/contacts";
@@ -74,7 +101,12 @@ const Contact = () => {
       const userrole = JSON.parse(localStorage.getItem("user_data")).role;
     }
   }, []);
-
+  const clearFiltersData = () => {
+    // Reset search query
+   
+    // If you had additional filters, reset them similarly
+  };
+  
   const handleUpload = async (acceptedFiles) => {
     
     const fileReader = new FileReader();
@@ -253,13 +285,16 @@ setSelectedSearch(selected);
  
       // const data = await axios.get(
       //   `${env.API_URL}company/get_filters/${queryString}`
-      // ); 
+      // );
+      let data = {}; 
+      try{
 
-      console.log(searchedFilters)
+       data = await GetApiData(`contact/get_filters/${queryString}`, "");
+      }
+      catch(err)
+      {
 
-      console.log("ASdasd",queryString);
-      const data = await GetApiData(`contact/get_filters/${queryString}`, "");
-
+      }
 
       let results = [];
       results.push({ key: 0, value: "" });
@@ -704,6 +739,11 @@ setSelectedSearch(selected);
   const clearFilters = () => {
     setSelectedFilters({
       Website: "",
+      industry:"",
+      industry2:"",
+      country:"",
+
+
     });
   };
 
@@ -802,8 +842,8 @@ setSelectedSearch(selected);
             </div>
           </div>
 
-          <div className="grid grid-cols-9 gap-2 items-start ">
-            <div className=" lg:col-span-2 col-span-9  w-full font-novasans px-2">
+          <div ref={theadRef} className={`grid grid-cols-9 gap-2 items-start `}>  
+            <div className=" lg:col-span-2 col-span-9  w-full font-novasans px-2 ">
               <div className="flex flex-col">
                 <div className="rounded-xl border border-gray-200 bg-[#F7FAFC]  p-6 shadow-lg">
                   <div className="relative w-full">
@@ -834,7 +874,7 @@ setSelectedSearch(selected);
                     </div>
                   </div>
                   Filters
-                  <form className="">
+                  <form >
                     <div className=" flex justify-end w-full">
                       {" "}
                       {filter == true ? (
@@ -907,7 +947,7 @@ setSelectedSearch(selected);
           placeholder="Select Industry"
         />
                         </div>
-
+{/* 
                         <div className="flex flex-col">
                           <label
                             for="manufacturer"
@@ -922,7 +962,7 @@ setSelectedSearch(selected);
           onInputChange={(value) => handleSearch("companyName", value)}
           placeholder="Select Company Name"
         />
-                        </div>
+                        </div> */}
 
                         <div className="flex flex-col">
                           <label
@@ -940,7 +980,7 @@ setSelectedSearch(selected);
         />
                         </div>
 
-                        <div className="flex flex-col mt-2">
+                        {/* <div className="flex flex-col mt-2">
                           <label
                             for="manufacturer"
                             className="text-sm font-medium text-stone-600"
@@ -955,7 +995,7 @@ setSelectedSearch(selected);
           placeholder="Select Industry 2"
                         />
                         
-                        </div>
+                        </div> */}
 
                         <div className="flex flex-col">
                           <label
@@ -990,7 +1030,7 @@ setSelectedSearch(selected);
                         />
                         </div>
 
-                        <div className="flex flex-col mt-2">
+                        {/* <div className="flex flex-col mt-2">
                           <label
                             htmlFor="quality"
                             className="text-sm font-medium text-stone-600"
@@ -1026,9 +1066,9 @@ setSelectedSearch(selected);
                                 </div>
                               ))}
                           </div>
-                        </div>
+                        </div> */}
 
-                        <div className="flex flex-col mt-2">
+                        {/* <div className="flex flex-col mt-2">
                           <label
                             htmlFor="role"
                             className="text-sm font-medium text-stone-600"
@@ -1065,7 +1105,7 @@ setSelectedSearch(selected);
                               ))}
                           </div>
                         </div>
-
+ */}
 
                         <div className="flex flex-col mt-2">
                           <label
@@ -1115,12 +1155,26 @@ setSelectedSearch(selected);
 
                       <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex"></div>
                     </div>
+
+
+    <div className="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex">
+      {/* Clear Filters Button */}
+      <button
+        type="button"
+        onClick={clearFilters}
+        className="w-full md:w-auto px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Clear Filters
+      </button>
+    </div>
+
+
                   </form>
                 </div>
               </div>
             </div>
 
-            <div className=" lg:col-span-7 col-span-9 mt-0 bg-[#F7FAFC]   grid-cols-1 sm:grid-cols-5 gap-2  left-0 px-7  ">
+            <div className=" lg:col-span-7 col-span-9 mt-0 bg-[#F7FAFC]   grid-cols-1 sm:grid-cols-5 gap-2  left-0  ">
               <div
                 className={` col-span-4 ${
                   showFilters ? "col-span-5" : "col-span-5"
