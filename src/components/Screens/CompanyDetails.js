@@ -26,7 +26,8 @@ const CompanyDetails = ({
     // Define columns array
     const columns = [
       { header: 'Name', accessor: 'companyName' },
-      { header: 'Duplicate', accessor: 'duplicate', format: (value) => (value ? "True" : "False") },
+      // { header: 'Duplicate', accessor: 'duplicate', format: (value) => (value ? "True" : "False") },
+
       { header: 'Industry 1', accessor: 'industry' },
       { header: 'Industry 2', accessor: 'industry2' },
       { header: 'Website', accessor: 'website', isSortable: true, isLink: true },
@@ -78,7 +79,8 @@ const CompanyDetails = ({
   // Columns should be declared before using them
   const columns = [
     { header: 'Name', accessor: 'companyName' },
-    { header: 'Duplicate', accessor: 'duplicate', format: (value) => (value ? "True" : "False") },
+    // { header: 'Duplicate', accessor: 'duplicate', format: (value) => (value ? "True" : "False") },
+
     { header: 'Industry 1', accessor: 'industry' },
     { header: 'Industry 2', accessor: 'industry2' },
     { header: 'Website', accessor: 'website', isSortable: true, isLink: true },
