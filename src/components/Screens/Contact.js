@@ -394,7 +394,18 @@ setSelectedSearch(selected);
         results14.push({ value: index, label: value });
       });
 
+
       setOptions((prev) => ({ ...prev, empcount: results14 }));
+
+
+      let results15 = [];
+      
+
+      data.city.map((value, index) => {
+        results15.push({ value: index, label: value });
+      });
+      setOptions((prev) => ({ ...prev, city: results15 }));
+
 
 
 
@@ -440,7 +451,9 @@ setSelectedSearch(selected);
         break;
       case "role":
         setSearchedFilters( {role: value });
-       
+         
+      case "city":
+        setSearchedFilters( {city: value });
       case "quality":
         setSearchedFilters( {quality: value });
       case "result":
@@ -552,6 +565,10 @@ setSelectedSearch(selected);
         return (
           options.industry2 
         );
+        case "city":
+          return (
+            options.city 
+          );
 
       case "Region":
         return (
@@ -673,6 +690,14 @@ setSelectedSearch(selected);
           date: value,
         }));
         break;
+
+        case "city":
+          setSelectedFilters((prevFilters) => ({
+            ...prevFilters,
+            city: value,
+          }));
+          break;
+
         case "empcount":
           setSelectedFilters((prevFilters) => ({
             ...prevFilters,
@@ -1027,6 +1052,23 @@ setSelectedSearch(selected);
           onChange={(value) => handleSelect("website", value)}
           onInputChange={(value) => handleSearch("website", value)}
           placeholder="Select Website"
+                        />
+                        </div>
+
+                        
+                        <div className="flex flex-col">
+                          <label
+                            for="status"
+                            className="text-sm font-medium text-stone-600"
+                          >
+                            City
+                          </label>
+
+                          <CustomSelect
+          options={optionsElement("city")}
+          onChange={(value) => handleSelect("city", value)}
+          onInputChange={(value) => handleSearch("city", value)}
+          placeholder="Select City"
                         />
                         </div>
 
