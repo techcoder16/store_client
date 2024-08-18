@@ -297,56 +297,56 @@ setSelectedSearch(selected);
       }
 
       let results = [];
-      results.push({ key: 0, value: "" });
+ 
       data && data.name.map((value, index) => {
         results.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, name: results }));
 
       let results1 = [];
-      results1.push({ key: 0, value: "" });
+      
       data &&   data.website.map((value, index) => {
         results1.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, website: results1 }));
 
       let results2 = [];
-      results2.push({ key: 0, value: "" });
+   
       data &&    data.industry.map((value, index) => {
         results2.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, industry: results2 }));
 
       let results3 = [];
-      results3.push({ key: 0, value: "" });
+ 
       data &&     data.industry2.map((value, index) => {
         results3.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, industry2: results3 }));
 
       let results4 = [];
-      results4.push({ key: 0, value: "" });
+    
       data &&    data.companyLinkedIn.map((value, index) => {
         results4.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, companyLinkedIn: results4 }));
 
       let results5 = [];
-      results5.push({ key: 0, value: "" });
+  
       data &&   data.Region.map((value, index) => {
         results5.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, Region: results5 }));
 
       let results6 = [];
-      results6.push({ key: 0, value: "" });
+      
       data &&   data.Country.map((value, index) => {
         results6.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, country: results6 }));
 
       let results7 = [];
-      results7.push({ key: 0, value: "" });
+
       data &&   data.companyName.map((value, index) => {
         results7.push({ value: index, label: value });
       });
@@ -367,21 +367,21 @@ setSelectedSearch(selected);
       setOptions((prev) => ({ ...prev, quality: results10 }));
 
       let results11 = [];
-      results11.push({ key: 0, value: "" });
+ 
       data.result.map((value, index) => {
         results11.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, result: results11 }));
 
       let results12 = [];
-      results12.push({ key: 0, value: "" });
+   
       data.free.map((value, index) => {
         results12.push({ value: index, label: value });
       });
       setOptions((prev) => ({ ...prev, free: results12 }));
 
       let results13 = [];
-      results13.push({ key: 0, value: "" });
+  
       data.date.map((value, index) => {
         results13.push({ value: index, label: value });
       });
