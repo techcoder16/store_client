@@ -252,23 +252,44 @@ const Dashboard = () => {
 
         const contactData = await getApiData("contact/get_number_of_contacts", "");
         setNumberOfContacts(contactData.contact);
-
         const countryResponse = await getApiData('contact/get_contact_by_country', "");
         const countryData = countryResponse;
-
+        
         const countryLabels = countryData.map(item => item.country);
         const countryCounts = countryData.map(item => item.count);
         const countryColors = countryLabels.map(() => `#${Math.floor(Math.random() * 16777215).toString(16)}`);
-
+        
         setChartData({
           labels: countryLabels,
           datasets: [{
             data: countryCounts,
             backgroundColor: countryColors,
             hoverOffset: 6
-          }]
+          }],
+          options: {
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function(tooltipItem) {
+                    const label = tooltipItem.label || '';
+                    const value = tooltipItem.raw;
+                    return `${label}: ${value} contacts`;
+                  }
+                }
+              },
+              datalabels: {
+                display: true,
+                color: '#000',
+                formatter: (value, context) => {
+                  return `${context.chart.data.labels[context.dataIndex]}: ${value}`;
+                },
+                anchor: 'end',
+                align: 'top'
+              }
+            }
+          }
         });
-
+        
         const industryResponse = await getApiData('company/get_company_count_by_industry', "");
         const industryData = industryResponse;
         const industryLabels = industryData.map(item => item._id || 'Unknown');

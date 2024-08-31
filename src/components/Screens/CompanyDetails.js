@@ -89,7 +89,7 @@ const CompanyDetails = ({
     { header: 'Country', accessor: 'country' },
   ];
 
-  const columnsPerPage = 4;
+  const columnsPerPage = 8;
   const totalPages = Math.ceil(columns.length / columnsPerPage);
 
   const visibleColumns = columns

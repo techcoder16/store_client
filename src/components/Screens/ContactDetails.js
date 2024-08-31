@@ -50,7 +50,7 @@ const ContactDetails = ({
   // Define columns array here
 
 
-  const columnsPerPage = 4;
+  const columnsPerPage = 15;
   const totalPages = Math.ceil(columns.length / columnsPerPage);
 
   const handleNextColumns = () => {
